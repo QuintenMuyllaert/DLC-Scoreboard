@@ -1,0 +1,65 @@
+.p-search {
+	width: 100%;
+	height: 100%;
+	display: grid;
+	justify-items: center;
+
+	header {
+		width: 100%;
+		justify-items: center;
+		display: grid;
+		grid-template-columns: 1fr;
+		grid-template-rows: 1fr;
+		height: fit-content;
+	}
+
+	p {
+		font-family: Rajdhani;
+		font-size: 2rem;
+		font-weight: 700;
+		text-align: center;
+	}
+
+	.p-search-iconcontainer {
+		padding: 2rem;
+		padding-top: 6rem;
+		background-color: var(--color-black);
+		z-index: 1;
+		padding-bottom: 1.5rem;
+
+		.icon,
+		.icon * {
+			stroke: var(--color-white);
+		}
+	}
+
+	.p-search-topbar {
+		position: absolute;
+		top: 0;
+		left: 0;
+		height: 11rem;
+		background-color: var(--color-black);
+		width: 100vw;
+	}
+
+	.p-search-message {
+		text-align: center;
+		height: fit-content;
+		display: grid;
+		gap: 1rem;
+		align-self: start;
+	}
+
+	.p-search-message-single-line {
+		text-align: center;
+		margin-top: -10rem;
+	}
+
+	.p-search-retry {
+		display: grid;
+		gap: 1rem;
+
+		width: min(18rem, 70%);
+		height: fit-content;
+	}
+}

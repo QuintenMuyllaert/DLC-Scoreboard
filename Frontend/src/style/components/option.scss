@@ -1,0 +1,40 @@
+.c-option {
+	position: relative;
+	width: 100%;
+	height: min-content;
+	color: var(--global-color-text);
+
+	label {
+		position: absolute;
+		top: 0;
+		left: 1rem;
+		padding-inline: 0.5rem;
+		background-color: var(--global-color-background);
+		color: var(--global-color-text);
+		font-size: 1rem;
+	}
+
+	& select {
+		width: 100%;
+		font-size: 1rem;
+		margin-top: 0.75rem;
+		border: var(--global-border-size) solid var(--global-color-input-border);
+		background-color: var(--global-color-background);
+		height: 3.25rem;
+		padding-inline: 1rem;
+		border-radius: var(--global-border-radius);
+		display: flex;
+		align-items: center;
+
+		&:focus {
+			border-color: var(--color--alpha);
+		}
+	}
+
+	& svg {
+		position: absolute;
+		right: 1rem;
+		top: 50%;
+		transform: translate(0, -20%);
+	}
+}

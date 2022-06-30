@@ -1,0 +1,50 @@
+.c-input {
+	position: relative;
+	width: 100%;
+	height: min-content;
+	color: var(--global-color-text);
+
+	label {
+		position: absolute;
+		top: 0;
+		left: 1rem;
+		padding-inline: 0.5rem;
+		background-color: var(--global-color-background);
+		color: var(--global-color-text);
+		font-size: 1rem;
+
+		&:focus {
+			color: var(--global-border-size) solid var(--color--alpha);
+		}
+	}
+
+	input {
+		width: 100%;
+		font-size: 1rem;
+		margin-top: 0.75rem;
+		border: var(--global-border-size) solid var(--global-color-input-border);
+		background-color: var(--global-color-background);
+		height: 3.25rem;
+		padding-inline: 1rem;
+		border-radius: var(--global-border-radius);
+
+		&:focus {
+			border: var(--global-border-size) solid var(--color--alpha);
+		}
+
+		&:focus + label {
+			color: var(--global-border-size) solid var(--color--alpha);
+		}
+	}
+
+	input:-webkit-autofill,
+	input:-webkit-autofill:hover,
+	input:-webkit-autofill:focus,
+	input:-webkit-autofill:active {
+		box-shadow: 0 0 0 30px var(--global-color-background) inset;
+	}
+
+	input:-webkit-autofill {
+		-webkit-text-fill-color: var(--global-color-text);
+	}
+}

@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" color="inherit" dur="indefinite" height="100%" id="rUgTzxeHMW" viewBox="0 0 336 168" viewport-fill="none" width="100%">
+ <spx:properties xmlns:spx="http://www.spinetix.com/namespace/1.0/spx" dur="auto" xml:id="zsvSTVqHHZ">
+  <spx:version date="$Date: 2016-04-05 10:42:54 +0200 (Tue, 05 Apr 2016) $" revision="$Revision: 28352 $"/>
+  <spx:json-array defaultPage="yes" name="Layers" preview="#layers" xlink:href="#jsonLayers">
+   <spx:json-layer name="Layers" positionable="yes" repeatDur="indefinite"/>
+  </spx:json-array>
+  <spx:dialog name="layout"/>
+ </spx:properties>
+ <script xlink:href="http://download.spinetix.com/spxjslibs/jSignage.js"/>
+ <script xlink:href="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.5.1/socket.io.js"/>
+ <script><![CDATA[
+	$(function(){
+		//Quinten Muyllaert 30-05-2022
+		//$("#background").attr("style","fill: #444444");
+		var len = 16;
+
+		var socket = io('https://dlcscoreboard.westeurope.cloudapp.azure.com/',{
+			'forceNew':true
+   		});
+		   
+		socket.on('connect', function() {
+			socket.emit("data",DEVICE_NAME); // send serial number to server TODO: get serial number from device
+			//$("#background").attr("style","fill: #000000");
+		});
+		
+		socket.on("data",function (element,thing,type,value){
+			//$("#wauw").attr('style',dat[0]+": "+dat[1]); // update data
+			if(value){
+				$(element)[thing](type,value);
+			}else{
+				$(element)[thing](type); 
+			}
+
+			if(element == "#message" && thing == "text"){
+				len = type.length;
+			}
+		});
+
+		var clockData = {
+			clockStart: 0,
+			pauseStart: 0,
+			pauseStop: 0,
+			clockOffset: 0,
+			paused: true,
+			clock: "00:00:00",
+		}
+
+		function clockify() {
+			var now = Date.now();
+			var ms = 0;
+			if(clockData.paused){
+				ms = clockData.pauseStart - clockData.clockStart - clockData.clockOffset;
+			}else{
+				ms = now - clockData.clockStart - clockData.clockOffset;
+			}
+			
+			var seconds = Math.floor(ms / 1000);
+			var minutes = Math.floor(seconds / 60);
+
+			function to2digits(num){
+				return num < 10 ? "0" + num : num;
+			};
+
+			return to2digits(minutes) + ":" + to2digits(seconds % 60);
+		}
+
+		socket.on("clock",function(data){
+			clockData = data;
+		});
+
+		$("#sponsorbackground").attr("style","opacity: 0");
+		socket.on("sponsor",function(data){
+			if(!data){
+				$("#sponsorbackground").attr("style","opacity: 0");
+			}else{
+				$("#sponsorbackground").attr("style","opacity: 1");
+			}
+			$("#sponsorimg").attr("xlink:href",data);
+		});
+
+		setInterval(function(){
+			$("#timer").text(clockify());
+		},50);
+
+		socket.on("sponsor",function (uri) { 
+			$("#img").attr("xlink:href",uri);
+		})
+
+		socket.on("invokeuri",function (uri){
+			$.get(uri);
+		});
+
+		var pos = 336;
+		setInterval(function(){
+			$("#message").attr("x",pos);
+			pos = pos - 1;//0.2;
+			if(pos < -len * 16){
+				pos = 336;
+			}
+		},16);
+
+	   });
+ ]]></script> 
+ 
+<rect fill="black" height="168" id="background" stroke="none" width="336"/>
+
+<rect fill="white" x="9" y="13" height="34" stroke="none" width="50"/>
+<rect fill="white" x="277" y="13" height="34" stroke="none" width="50"/>
+
+<rect fill="white" x="10" y="14" height="16" id="hb" stroke="none" width="48"/>
+<rect fill="white" x="10" y="30" height="16" id="ho" stroke="none" width="48"/>
+<rect fill="white" x="278" y="14" height="16" id="ub" stroke="none" width="48"/>
+<rect fill="white" x="278" y="30" height="16" id="uo" stroke="none" width="48"/>
+
+<text id="timer" x="168" y="50" font-family="DSEG7 Classic" font-size="36" text-anchor="middle" fill="white">00:00</text>
+<text id="t1" x="84" y="100" font-family="DSEG7 Classic" font-size="36" text-anchor="middle" fill="white">0</text>
+<text id="t2" x="252" y="100" font-family="DSEG7 Classic" font-size="36" text-anchor="middle" fill="white">0</text>
+<text id="message" x="168" y="155" font-family="Raleway" font-size="32" text-anchor="left" fill="white">DLC Sportsystems</text>
+
+<rect fill="black" height="168" id="sponsorbackground" stroke="none" width="336"/>
+<image id="sponsorimg"  width="336" height="168" xlink:href=""  />
+</svg>

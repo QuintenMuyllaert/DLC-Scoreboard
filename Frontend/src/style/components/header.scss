@@ -1,0 +1,15 @@
+.c-header {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	background-color: var(--color-black);
+	padding: 0.5rem;
+	align-items: flex-start;
+	height: fit-content;
+
+	&__back {
+		stroke: var(--color-white);
+		align-self: start;
+		cursor: pointer;
+	}
+}

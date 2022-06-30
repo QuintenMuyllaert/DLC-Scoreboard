@@ -1,0 +1,74 @@
+.p-score {
+	height: 100%;
+	overflow: hidden;
+	padding: 1rem;
+	width: min(24rem, 100%);
+
+	display: grid;
+	gap: 1rem;
+	grid-template-rows: auto;
+	align-items: end;
+
+	.scorevalue-container {
+		display: grid;
+		gap: 0.5rem 0;
+		grid-template-rows: 1fr;
+		height: fit-content;
+		width: 100%;
+		grid-template-columns: 1fr max-content 1fr;
+		justify-items: center;
+	}
+
+	.teamname {
+		font-family: Rajdhani;
+		font-size: 2rem;
+		font-weight: 600;
+	}
+
+	.seperator {
+		text-align: center;
+		justify-self: center;
+		font-family: DSEG7-Classic;
+		font-weight: 500;
+		font-size: min(7.5rem, 20vmin);
+		align-self: start;
+		width: min-content;
+	}
+
+	.t-rocker + .seperator {
+		height: 100%;
+		text-align: center center;
+		display: grid;
+		place-items: center;
+	}
+
+	&__textedit {
+		& .c-iconbutton {
+			position: relative;
+			width: fit-content;
+			height: min-content;
+			gap: 1rem;
+			align-items: center;
+			cursor: pointer;
+			color: var(--color--alpha);
+			border: none;
+			border: 2px solid var(--color--alpha);
+			font-family: Rajdhani;
+			font-weight: 700;
+			font-size: 1.2rem;
+			border-radius: var(--global-border-radius);
+			display: flex;
+			align-items: cneter;
+			justify-content: center;
+			align-items: center;
+			margin: 0 auto;
+			padding: 0.5rem 4rem;
+			background-color: #353535;
+			border: none;
+
+			& svg {
+				stroke: var(--color--alpha);
+			}
+		}
+	}
+}

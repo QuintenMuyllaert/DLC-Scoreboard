@@ -1,0 +1,77 @@
+.p-livestream {
+	//background-color: greenyellow;
+	width: 100vw;
+	height: 100vh;
+	position: absolute;
+	overflow: hidden;
+
+	.scoreboard {
+		padding-top: 2rem;
+		padding-right: 2rem;
+		display: flex;
+		flex-direction: row;
+		justify-self: right;
+		float: right;
+		height: fit-content;
+
+		.teamcolors {
+			display: grid;
+			grid-template-rows: repeat(2, 1fr);
+			width: 0.8rem;
+
+			div {
+				height: 100%;
+			}
+
+			.color-home-top {
+				background-color: green;
+			}
+
+			.color-home-bottom {
+				background-color: red;
+			}
+
+			.color-out-top {
+				background-color: yellow;
+			}
+
+			.color-out-bottom {
+				background-color: blue;
+			}
+		}
+
+		.score-container {
+			width: 5rem;
+			background-color: #121212;
+			color: #f5f5f5;
+
+			.score {
+				font-family: Rajdhani;
+				font-size: 2rem;
+				font-weight: 700;
+				text-align: center;
+			}
+		}
+
+		.time-container {
+			width: 10rem;
+			background-color: #95d1b5;
+			color: #121212;
+
+			.time {
+				font-family: DSEG7-Classic;
+				font-size: 2rem;
+				font-weight: 700;
+				text-align: center;
+				height: fit-content;
+			}
+		}
+
+		p {
+			//TODO : no important.
+			height: min-content;
+			padding: 0 !important;
+			margin: 0 !important;
+		}
+	}
+}

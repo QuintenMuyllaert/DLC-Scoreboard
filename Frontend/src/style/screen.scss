@@ -1,0 +1,51 @@
+// @import -> maakt scss file beschikbaar verderop in de imports
+// @use -> gebruikt file in huidige scope
+
+// GENERIC
+@import "./generic/reset";
+
+// ELEMENTS
+@import "./elements/fonts.scss";
+@import "./elements/root.scss";
+@import "./elements/page.scss";
+@import "./elements/elements.scss";
+
+// UTILS
+@import "./utils/grid.scss";
+
+// PAGES
+@import "./pages/login.scss";
+@import "./pages/score.scss";
+@import "./pages/matchSetup.scss";
+@import "./pages/search.scss";
+@import "./pages/spectate.scss";
+@import "./pages/manual.scss";
+@import "./pages/livestream.scss";
+@import "./pages/users.scss";
+@import "./pages/usersettings.scss";
+@import "./pages/scoreboard.scss";
+@import "./pages/templates.scss";
+@import "./pages/templatesettings.scss";
+@import "./pages/sponsorTemplates.scss";
+@import "./pages/sponsors.scss";
+@import "./pages/addSponsor.scss";
+
+// COMPONENTS
+@import "./components/input.scss";
+@import "./components/iconbutton.scss";
+@import "./components/clock.scss";
+@import "./components/clockedit.scss";
+@import "./components/flag.scss";
+@import "./components/digit.scss";
+@import "./components/bottomtab.scss";
+@import "./components/colorpicker.scss";
+@import "./components/scrollbar.scss";
+@import "./components/textedit.scss";
+@import "./components/user.scss";
+@import "./components/usersetting.scss";
+@import "./components/scrolltext.scss";
+@import "./components/option.scss";
+@import "./components/checkbox.scss";
+@import "./components/scorebordToggle.scss";
+@import "./components/modal.scss";
+@import "./components/header.scss";

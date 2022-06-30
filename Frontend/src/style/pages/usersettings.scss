@@ -1,0 +1,111 @@
+.p-usersettings {
+	width: 100%;
+	padding: 0 0 1rem 0;
+	height: 100%;
+	display: grid;
+	grid-template-rows: fit-content 1fr;
+	grid-template-columns: 1fr;
+	overflow: hidden;
+	max-width: 450px;
+
+	.logout {
+		height: fit-content;
+
+		.logout-icon {
+			padding-top: 1rem;
+			stroke: var(--global-color-text);
+			width: 3rem;
+			height: 3rem;
+		}
+	}
+
+	& h1 {
+		padding: 0 1rem;
+	}
+
+	.content {
+		padding: 0 1rem;
+
+		.item {
+			padding-bottom: 2vmin;
+
+			.title {
+				padding-bottom: 0.8rem;
+				font-family: Raleway;
+				font-weight: 500;
+				padding-left: 0.5rem;
+			}
+		}
+	}
+
+	.buttons {
+		display: flex;
+		justify-content: space-between;
+		padding: 0 1rem;
+
+		.save {
+			padding-top: 1.5rem;
+			width: 65%;
+		}
+
+		.title {
+			padding-bottom: 0.8rem;
+			font-family: Raleway;
+			font-weight: 500;
+			padding-left: 0.5rem;
+		}
+
+		/* css for the slider */
+
+		.switch {
+			position: relative;
+			display: inline-block;
+			width: 60px;
+			height: 34px;
+		}
+
+		.switch input {
+			opacity: 0;
+			width: 0;
+			height: 0;
+		}
+
+		.slider {
+			position: absolute;
+			cursor: pointer;
+			top: 0;
+			left: 0;
+			right: 0;
+			bottom: 0;
+			background-color: var(--global-color-text);
+			-webkit-transition: 0.4s;
+			transition: 0.4s;
+		}
+
+		.slider:before {
+			position: absolute;
+			content: "";
+			height: 26px;
+			width: 26px;
+			left: 4px;
+			bottom: 4px;
+			background-color: var(--color-white);
+			-webkit-transition: 0.4s;
+			transition: 0.4s;
+		}
+
+		input:checked + .slider {
+			background-color: var(--color--alpha);
+		}
+
+		input:focus + .slider {
+			box-shadow: 0 0 1px var(--color--alpha);
+		}
+
+		input:checked + .slider:before {
+			-webkit-transform: translateX(26px);
+			-ms-transform: translateX(26px);
+			transform: translateX(26px);
+		}
+	}
+}

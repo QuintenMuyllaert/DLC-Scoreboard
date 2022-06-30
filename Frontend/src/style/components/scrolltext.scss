@@ -1,0 +1,36 @@
+.c-scroll {
+	width: max-content;
+	height: fit-content;
+	position: relative;
+	width: 100%;
+	overflow-x: scroll;
+	.scrollcontainer {
+		position: absolute;
+		top: 0;
+		left: 0;
+		animation-name: scrollText;
+		animation-duration: 100s;
+		animation-iteration-count: infinite;
+		animation-timing-function: linear;
+		animation-direction: start;
+		width: fit-content;
+	}
+
+	h1 {
+		font-size: 4em;
+		width: max-content;
+		font-weight: 600;
+	}
+}
+::-webkit-scrollbar {
+	display: none;
+}
+
+@keyframes scrollText {
+	from {
+		transform: translateX(calc(100vw + 1em));
+	}
+	to {
+		transform: translateX(calc(-100% - 1em));
+	}
+}

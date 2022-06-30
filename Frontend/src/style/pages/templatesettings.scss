@@ -1,0 +1,31 @@
+.p-templatesettings {
+	padding: 0 0rem 1rem 0rem;
+	height: 100%;
+	display: grid;
+	gap: 1rem;
+	grid-template-rows: auto auto 1fr auto auto;
+	overflow: hidden;
+	width: 100%;
+	max-width: 450px;
+	overflow: hidden;
+
+	.content {
+		align-self: center;
+		display: grid;
+		grid-template-rows: auto;
+		grid-template-columns: 1fr;
+		padding: 0 1rem;
+
+		gap: 1.5rem;
+
+		.item {
+			.title {
+				padding-bottom: 0.5rem;
+			}
+		}
+	}
+
+	&__btn {
+		padding: 0 1rem;
+	}
+}

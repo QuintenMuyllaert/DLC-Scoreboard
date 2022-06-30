@@ -1,0 +1,40 @@
+.p-login {
+	width: 100%;
+	height: 100%;
+	display: grid;
+	grid-template-columns: 1fr;
+	grid-template-rows: fit-content fit-content fit-content;
+	justify-items: center;
+
+	header {
+		width: 100%;
+		justify-items: center;
+		display: grid;
+		grid-template-columns: 1fr;
+		grid-template-rows: 1fr;
+		height: fit-content;
+	}
+
+	.p-login-logocontainer {
+		grid-area: 1/1/1/1;
+		width: fit-content;
+		height: fit-content;
+		padding: 2rem;
+		padding-top: 4rem;
+		background-color: var(--color-black);
+		z-index: 1;
+	}
+
+	.p-login-topbar {
+		position: absolute;
+		top: 0;
+		left: 0;
+		height: 11rem;
+		background-color: var(--color-black);
+		width: 100vw;
+	}
+
+	.p-login-maxwidth {
+		width: min(18rem, 70%);
+	}
+}

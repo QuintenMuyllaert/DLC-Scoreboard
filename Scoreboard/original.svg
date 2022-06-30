@@ -1,0 +1,364 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Generator: SpinetiX Elementi 2015 -->
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" color="inherit" dur="indefinite" height="100%" id="rUgTzxeHMW" viewBox="0 0 336 168" viewport-fill="none" width="100%">
+ <spx:properties xmlns:spx="http://www.spinetix.com/namespace/1.0/spx" dur="auto" xml:id="zsvSTVqHHZ">
+  <spx:version date="$Date: 2016-04-05 10:42:54 +0200 (Tue, 05 Apr 2016) $" revision="$Revision: 28352 $"/>
+  <spx:json-array defaultPage="yes" name="Layers" preview="#layers" xlink:href="#jsonLayers">
+   <spx:json-layer name="Layers" positionable="yes" repeatDur="indefinite"/>
+  </spx:json-array>
+  <spx:dialog name="layout"/>
+ </spx:properties>
+ <script xlink:href="http://download.spinetix.com/spxjslibs/jSignage.js"/>
+ <script><![CDATA[
+   $(function(){
+     var txt = $('#jsonLayers').text();
+     if ( $.trim(txt)=="") { txt = $('#defaultContent').text(); }
+     $('#layers').add( $.uncan( $.parseJSON( txt ) ) );
+   });
+ ]]></script>
+ <defs>
+  <title id="defaultContent"><![CDATA[[
+   { "ctor": "textArea", "args": { "begin": "0s", "left": "25%", "top": "25%", "width": "50%", "height": "50%", "frame": { "backColor": "#FFFFFF", "frameColor": "#8FB2FC", "frameSize": 1 }, "fontFamily": "Arial", "fontSize": "10%" }, "textContent": "Nieuwe Lay-out" }
+  ]]]></title>
+  <title id="jsonLayers"><![CDATA[[
+	{
+		"args": {
+			"begin": "0s",
+			"dur": "indefinite",
+			"fill": "black",
+			"fontFamily": "Arial",
+			"fontSize": 4,
+			"frame": {
+				"backColor": "black"
+			},
+			"height": 168,
+			"id": "TSmeDP3Euq",
+			"left": 0,
+			"top": 0,
+			"width": 336
+		},
+		"changeNumber": "6.1",
+		"ctor": "textArea",
+		"locked": true,
+		"textContent": {
+			"fill": "#000000",
+			"fontFamily": "Arial",
+			"fontSize": 4
+		}
+	},
+	{
+		"args": {
+			"begin": "0s",
+			"dur": "indefinite",
+			"height": 55,
+			"href": "Text%20Ticker.svg",
+			"id": "Xr5gTzpArG",
+			"left": 0,
+			"repeatDur": "indefinite",
+			"top": 113,
+			"width": 336
+		},
+		"changeNumber": "39",
+		"ctor": "animation"
+	},
+	{
+		"args": {
+			"begin": "0s",
+			"dur": "indefinite",
+			"fill": "black",
+			"fontFamily": "Arial",
+			"fontSize": 4,
+			"frame": {
+				"backColor": "#FFFFFF"
+			},
+			"height": 32,
+			"id": "zw1WSaDIV1",
+			"left": 53,
+			"top": 5,
+			"width": 1
+		},
+		"changeNumber": "34",
+		"ctor": "textArea",
+		"textContent": {
+			"fill": "#000000",
+			"fontFamily": "Arial",
+			"fontSize": 4
+		}
+	},
+	{
+		"args": {
+			"begin": "0s",
+			"dur": "indefinite",
+			"fill": "black",
+			"fontFamily": "Arial",
+			"fontSize": 4,
+			"frame": {
+				"backColor": "#FFFFFF"
+			},
+			"height": 1,
+			"id": "HNwWAw2nnl",
+			"left": 4,
+			"top": 37,
+			"width": 50
+		},
+		"changeNumber": "18",
+		"ctor": "textArea",
+		"textContent": {
+			"fill": "#000000",
+			"fontFamily": "Arial",
+			"fontSize": 4
+		}
+	},
+	{
+		"args": {
+			"begin": "0s",
+			"dur": "indefinite",
+			"fill": "black",
+			"fontFamily": "Arial",
+			"fontSize": 4,
+			"frame": {
+				"backColor": "#FFFFFF"
+			},
+			"height": 1,
+			"id": "zcxHfzgcfd",
+			"left": 4,
+			"top": 4,
+			"width": 50
+		},
+		"changeNumber": "19",
+		"ctor": "textArea",
+		"textContent": {
+			"fill": "#000000",
+			"fontFamily": "Arial",
+			"fontSize": 4
+		}
+	},
+	{
+		"args": {
+			"begin": "0s",
+			"dur": "indefinite",
+			"fill": "black",
+			"fontFamily": "Arial",
+			"fontSize": 4,
+			"frame": {
+				"backColor": "#FFFFFF"
+			},
+			"height": 32,
+			"id": "XfbGY5rMXt",
+			"left": 4,
+			"top": 5,
+			"width": 1
+		},
+		"changeNumber": "16",
+		"ctor": "textArea",
+		"textContent": {
+			"fill": "#000000",
+			"fontFamily": "Arial",
+			"fontSize": 4
+		}
+	},
+	{
+		"args": {
+			"begin": "0s",
+			"dur": "indefinite",
+			"fill": "black",
+			"fontFamily": "Arial",
+			"fontSize": 4,
+			"frame": {
+				"backColor": "#FFFFFF"
+			},
+			"height": 32,
+			"id": "vDmrEHpb75",
+			"left": 331,
+			"top": 5,
+			"width": 1
+		},
+		"changeNumber": "1",
+		"ctor": "textArea",
+		"textContent": {
+			"fill": "#000000",
+			"fontFamily": "Arial",
+			"fontSize": 4
+		}
+	},
+	{
+		"args": {
+			"begin": "0s",
+			"dur": "indefinite",
+			"fill": "black",
+			"fontFamily": "Arial",
+			"fontSize": 4,
+			"frame": {
+				"backColor": "#FFFFFF"
+			},
+			"height": 1,
+			"id": "npWskjdbC3",
+			"left": 282,
+			"top": 37,
+			"width": 50
+		},
+		"changeNumber": "1",
+		"ctor": "textArea",
+		"textContent": {
+			"fill": "#000000",
+			"fontFamily": "Arial",
+			"fontSize": 4
+		}
+	},
+	{
+		"args": {
+			"begin": "0s",
+			"dur": "indefinite",
+			"fill": "black",
+			"fontFamily": "Arial",
+			"fontSize": 4,
+			"frame": {
+				"backColor": "#FFFFFF"
+			},
+			"height": 1,
+			"id": "fRHtGCSbI0",
+			"left": 282,
+			"top": 4,
+			"width": 50
+		},
+		"changeNumber": "1",
+		"ctor": "textArea",
+		"textContent": {
+			"fill": "#000000",
+			"fontFamily": "Arial",
+			"fontSize": 4
+		}
+	},
+	{
+		"args": {
+			"begin": "0s",
+			"dur": "indefinite",
+			"fill": "black",
+			"fontFamily": "Arial",
+			"fontSize": 4,
+			"frame": {
+				"backColor": "#FFFFFF"
+			},
+			"height": 32,
+			"id": "X31tmeGbMx",
+			"left": 282,
+			"top": 5,
+			"width": 1
+		},
+		"changeNumber": "1",
+		"ctor": "textArea",
+		"textContent": {
+			"fill": "#000000",
+			"fontFamily": "Arial",
+			"fontSize": 4
+		}
+	},
+	{
+		"args": {
+			"begin": "0s",
+			"dur": "media",
+			"height": 16,
+			"href": "Kleur%20onder%20uit.svg",
+			"id": "n71BjyssJm",
+			"left": 283,
+			"repeatDur": "indefinite",
+			"top": 21,
+			"width": 48
+		},
+		"changeNumber": "27",
+		"ctor": "animation"
+	},
+	{
+		"args": {
+			"begin": "0s",
+			"dur": "media",
+			"height": 16,
+			"href": "Kleur%20bouven%20uit.svg",
+			"id": "DsbnjrrEvk",
+			"left": 283,
+			"repeatDur": "indefinite",
+			"top": 5,
+			"width": 48
+		},
+		"changeNumber": "19",
+		"ctor": "animation"
+	},
+	{
+		"args": {
+			"begin": "0s",
+			"dur": "media",
+			"height": 16,
+			"href": "Kleur%20onder%20thuis.svg",
+			"id": "fLGYHcYmS6",
+			"left": 5,
+			"repeatDur": "indefinite",
+			"top": 21,
+			"width": 48
+		},
+		"changeNumber": "26",
+		"ctor": "animation"
+	},
+	{
+		"args": {
+			"begin": "0s",
+			"dur": "media",
+			"height": 16,
+			"href": "Kleur%20boven%20thuis.svg",
+			"id": "b0Ozxvjej2",
+			"left": 5,
+			"repeatDur": "indefinite",
+			"top": 5,
+			"width": 48
+		},
+		"changeNumber": "23",
+		"ctor": "animation"
+	},
+	{
+		"args": {
+			"begin": "0s",
+			"dur": "media",
+			"height": 128,
+			"href": "Interactive%20Playlist%20+-%20B.svg",
+			"id": "bIIbZdyoVm",
+			"left": 176,
+			"repeatDur": "indefinite",
+			"top": 16,
+			"width": 160
+		},
+		"changeNumber": "21.8",
+		"ctor": "animation"
+	},
+	{
+		"args": {
+			"begin": "0s",
+			"dur": "media",
+			"height": 128,
+			"href": "Interactive%20Playlist%20+-%20T.svg",
+			"id": "zw5m1sHH2i",
+			"left": 0,
+			"repeatDur": "indefinite",
+			"top": 16,
+			"width": 176
+		},
+		"changeNumber": "13.8",
+		"ctor": "animation"
+	},
+	{
+		"args": {
+			"dur": "indefinite",
+			"height": 48,
+			"href": "Action%20to%20Switch%20%284%29.svg",
+			"id": "HJmQreOrPe",
+			"left": 64,
+			"repeatDur": "indefinite",
+			"top": 0,
+			"width": 208
+		},
+		"changeNumber": "1.24",
+		"ctor": "animation"
+	}
+]]]></title>
+ </defs>
+ <rect fill="none" height="168" id="bgrect" stroke="none" width="336"/>
+ <g id="layers"/>
+</svg>

@@ -1,0 +1,48 @@
+:root {
+	--global-border-size: 0.125rem;
+	/*--global-border-radius: 0.5rem;*/
+	--global-border-radius: 0;
+	--app-height: 100%;
+
+	.dark {
+		--global-color-background: #121212;
+		--global-color-text: #eeeeee;
+
+		/*White input*/
+		--global-color-input-border: #eeeeee;
+
+		/*Button*/
+		--global-color-button-border: #eeeeee;
+	}
+
+	.light {
+		--global-color-background: #eeeeee;
+		--global-color-text: #121212;
+
+		/*Input*/
+		--global-color-input-border: #121212;
+
+		/*Button*/
+		--global-color-button-border: #121212;
+	}
+
+	.withbottom-tab.dark {
+		--global-color-background: #202020;
+	}
+
+	.withbottom-tab {
+		--color-black: #202020;
+	}
+
+	--color-black: #121212;
+	--color-white: #eeeeee;
+	--color--alpha: #95d1b5;
+}
+
+/*
+@media (prefers-color-scheme: dark) {
+	:root {
+		--global-color-background: var(#222222);
+	}
+}
+*/

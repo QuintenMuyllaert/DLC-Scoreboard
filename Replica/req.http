@@ -1,0 +1,106 @@
+http://192.168.15.140/content/336x168/
+
+### G1 SCORE ++
+http://172.23.8.23:1234/update?G1=NEXT
+
+####TEXT
+
+### MESSAGE STUREN
+http://192.168.15.140:1234/update?message=QMA%20ROCKS!&submit=Send+message
+
+
+#### TIMER
+
+### TIMER Woosh
+http://192.168.15.140:1234/update?Timer=Ti0
+
+### TIMER RESET
+http://192.168.15.140:1234/update?Timer=Ti1
+
+### TIMER 45Min???
+http://192.168.15.140:1234/update?Timer=Ti2
+
+### CURRENT REALTIME 7segment
+http://192.168.15.140:1234/update?Timer=Ti3
+
+### TIMER 5min??
+http://192.168.15.140:1234/update?Timer=Ti4
+
+### TIMER STOP 7segment?
+http://192.168.15.140:1234/update?Timer=Ti7
+
+
+#### SCORE
+### G1 SCORE ++
+http://192.168.15.140:1234/update?G1=NEXT
+
+### G1 SCORE --
+http://192.168.15.140:1234/update?G1=PREVIOUS
+
+### G1 RESET 
+http://192.168.15.140:1234/update?G1=T0
+
+### G2 SCORE ++
+http://192.168.15.140:1234/update?G2=NEXT
+
+### G2 SCORE --
+http://192.168.15.140:1234/update?G2=PREVIOUS
+
+
+### G2 RESET 
+http://192.168.15.140:1234/update?G2=U0
+
+
+
+####KLEURTJES
+
+### TEAM1 TOP
+http://192.168.15.140:1234/update?K1B=Rood
+
+### TEAM2 TOP
+http://192.168.15.140:1234/update?K2B=Groen
+
+### TEAM1 BOTTOM
+http://192.168.15.140:1234/update?K1O=Blauw
+
+### TEAM2 BOTTOM
+http://192.168.15.140:1234/update?K2O=Geel
+
+
+####MODI
+
+### SCORE
+http://192.168.15.140:1234/update?Keuze=P0
+
+
+### SPONSERS
+http://192.168.15.140:1234/update?Keuze=P1
+
+### DLC
+http://192.168.15.140:1234/update?Keuze=P2
+
+### Blank
+http://192.168.15.140:1234/update?Keuze=P3
+
+### NOG SPONSERS
+http://192.168.15.140:1234/update?Keuze=P4
+
+### Royal
+http://192.168.15.140:1234/update?Keuze=P5
+
+### COVID
+http://192.168.15.140:1234/update?Keuze=P6
+
+### COVID
+http://192.168.15.140:1234/update?Keuze=P7
+
+### COVID
+http://192.168.15.140:1234/update?Keuze=P8
+
+
+### QMA SVG
+http://192.168.15.140:1234/update?Keuze=P100
+
+### QMA WEB
+http://192.168.15.140:1234/update?Keuze=P101
+

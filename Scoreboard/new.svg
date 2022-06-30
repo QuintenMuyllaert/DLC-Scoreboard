@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" color="inherit" dur="indefinite" height="100%" id="rUgTzxeHMW" viewBox="0 0 588 336" viewport-fill="none" width="100%">
+ <spx:properties xmlns:spx="http://www.spinetix.com/namespace/1.0/spx" dur="auto" xml:id="zsvSTVqHHZ">
+  <spx:version date="$Date: 2016-04-05 10:42:54 +0200 (Tue, 05 Apr 2016) $" revision="$Revision: 28352 $"/>
+  <spx:json-array defaultPage="yes" name="Layers" preview="#layers" xlink:href="#jsonLayers">
+   <spx:json-layer name="Layers" positionable="yes" repeatDur="indefinite"/>
+  </spx:json-array>
+  <spx:dialog name="layout"/>
+ </spx:properties>
+ <script xlink:href="http://download.spinetix.com/spxjslibs/jSignage.js"/>
+ <script xlink:href="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.5.1/socket.io.js"/>
+ <script><![CDATA[
+	$(function(){
+		//Quinten Muyllaert 30-05-2022
+		//$("#background").attr("style","fill: #444444");
+		var len = 16;
+
+		var socket = io('https://dlcscoreboard.westeurope.cloudapp.azure.com/',{
+			'forceNew':true
+   		});
+		   
+		socket.on('connect', function() {
+			socket.emit("data",DEVICE_NAME); // send serial number to server TODO: get serial number from device
+			//$("#background").attr("style","fill: #000000");
+		});
+		
+		socket.on("data",function (element,thing,type,value){
+			//$("#wauw").attr('style',dat[0]+": "+dat[1]); // update data
+			if(value){
+				$(element)[thing](type,value);
+			}else{
+				$(element)[thing](type); 
+			}
+
+			if(element == "#message" && thing == "text"){
+				len = type.length;
+			}
+		});
+
+		var clockData = {
+			clockStart: 0,
+			pauseStart: 0,
+			pauseStop: 0,
+			clockOffset: 0,
+			paused: true,
+			clock: "00:00:00",
+		}
+ 
+		function clockify() {
+			var now = Date.now();
+			var ms = 0;
+			if(clockData.paused){
+				ms = clockData.pauseStart - clockData.clockStart - clockData.clockOffset;
+			}else{
+				ms = now - clockData.clockStart - clockData.clockOffset;
+			}
+			
+			var seconds = Math.floor(ms / 1000);
+			var minutes = Math.floor(seconds / 60);
+
+			function to2digits(num){
+				return num < 10 ? "0" + num : num;
+			};
+
+			return to2digits(minutes) + ":" + to2digits(seconds % 60);
+		}
+
+		socket.on("clock",function(data){
+			clockData = data;
+		});
+
+		$("#sponsorbackground").attr("style","opacity: 0");
+		socket.on("sponsor",function(data){
+			$("#sponsorimg").attr("xlink:href",data);
+			$("#sponsorimgsmall").attr("xlink:href",data);
+		});
+
+		socket.on("fullscreen",function(data){
+			if(data){
+				$("#sponsorbackground").attr("style","opacity: 1");
+				$("#sponsorimg").attr("style","opacity: 1");
+				$("#sponsorimgsmall").attr("style","opacity: 0");
+			}else{
+				$("#sponsorbackground").attr("style","opacity: 0");
+				$("#sponsorimg").attr("style","opacity: 0");
+				$("#sponsorimgsmall").attr("style","opacity: 1");
+			}
+		});
+
+		setInterval(function(){
+			$("#timer").text(clockify());
+		},50);
+
+		socket.on("sponsor",function (uri) { 
+			$("#img").attr("xlink:href",uri);
+		})
+
+		socket.on("invokeuri",function (uri){
+			$.get(uri);
+		});
+
+		var pos = 588;
+		setInterval(function(){
+			$("#message").attr("x",pos);
+			pos = pos - 2;//0.2;
+			if(pos < -len * 16 * 2){
+				pos = 588;
+			}
+		},16);
+
+	   });
+ ]]></script> 
+ 
+<rect fill="black" height="336" id="background" stroke="none" width="588"/>
+
+<rect fill="white" x="80" y="8" width="88" height="48" stroke="none"/>
+<rect fill="white" x="419" y="8" width="88" height="48" stroke="none"/>
+
+<rect fill="white" x="82" y="10" width="84" height="22" id="hb" stroke="none" />
+<rect fill="white" x="82" y="32" width="84" height="22" id="ho" stroke="none"/>
+<rect fill="white" x="421" y="10" width="84" height="22" id="ub" stroke="none"/>
+<rect fill="white" x="421" y="32" width="84" height="22" id="uo" stroke="none"/>
+
+<text id="timer" x="294" y="55" font-family="DSEG7 Classic" font-size="40" text-anchor="middle" fill="white">00:00</text>
+<text id="t1" x="72" y="55" font-family="DSEG7 Classic" font-size="40" text-anchor="end" fill="white">0</text>
+<text id="t2" x="515" y="55" font-family="DSEG7 Classic" font-size="40" text-anchor="start" fill="white">0</text>
+<text id="message" x="294" y="327" font-family="Raleway" font-size="51" text-anchor="left" fill="white">DLC Sportsystems</text>
+
+<image id="sponsorimgsmall" x="0" y="64" width="588" height="208" xlink:href=""  />
+
+<rect fill="black" width="588" height="336" id="sponsorbackground" stroke="none"/>
+<image id="sponsorimg" x="0" y="0" width="588" height="336" xlink:href=""  />
+</svg>

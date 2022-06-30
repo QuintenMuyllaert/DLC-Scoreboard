@@ -1,0 +1,32 @@
+.p-spectate {
+	height: 100%;
+	display: grid;
+	grid-template-rows: auto;
+	width: 100%;
+	overflow: hidden;
+	max-width: 450px;
+	padding: 1rem;
+
+	.team {
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+
+		.teamname {
+			height: fit-content;
+			font-family: Rajdhani;
+			font-size: 2rem;
+			text-align: center;
+		}
+	}
+
+	p {
+		font-family: DSEG7 Classic;
+		font-size: 5rem;
+		text-align: center;
+	}
+
+	.c-clock {
+		height: fit-content;
+	}
+}

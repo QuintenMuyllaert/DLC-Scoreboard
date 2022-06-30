@@ -1,0 +1,26 @@
+.u-grid-vertical-gap {
+	display: grid;
+	grid-template-columns: 1fr;
+	grid-template-rows: auto;
+	gap: 1rem;
+	height: fit-content;
+	width: 100%;
+}
+
+.u-grid-horizontal-2 {
+	display: grid;
+	grid-template-rows: 1fr;
+	height: fit-content;
+	width: 100%;
+	grid-template-columns: 1fr 1fr;
+}
+
+.u-flex-horizontal-space {
+	display: flex;
+	justify-content: space-between;
+	flex-direction: row;
+}
+
+.gap1 {
+	gap: 1rem;
+}

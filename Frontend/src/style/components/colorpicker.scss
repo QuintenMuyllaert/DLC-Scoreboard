@@ -1,0 +1,184 @@
+.c-colorpicker {
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	display: grid;
+
+	&__overlay {
+		opacity: 0.7;
+		z-index: 1;
+		background-color: #121212;
+		position: absolute;
+		top: 0;
+		left: 0;
+		bottom: 0;
+		right: 0;
+	}
+
+	&__container {
+		padding: 1.25rem;
+		background-color: var(--color-white);
+		height: 90vh;
+		overflow-y: auto;
+		width: 90%;
+		margin: auto;
+		z-index: 2;
+		max-width: 25rem;
+
+		.buttons {
+			display: flex;
+			justify-content: space-between;
+
+			.close {
+				& svg {
+					stroke: var(--color-black);
+				}
+			}
+
+			.garbage {
+				& svg {
+					stroke: var(--color-black);
+				}
+			}
+		}
+	}
+
+	&__hidden {
+		display: none;
+	}
+
+	& .c-flag {
+		margin-bottom: 1.875rem;
+	}
+
+	& p {
+		color: var(--color-black);
+		text-align: center;
+		margin-bottom: 1.25rem;
+	}
+
+	&__colors {
+		gap: 0.9375rem 0;
+		margin-bottom: 1.875rem;
+		display: grid;
+		grid-template-columns: 25% 25% 25% 25%;
+		justify-content: space-between;
+		align-items: center;
+		align-content: center;
+		justify-items: center;
+
+		&-color {
+			width: 3.75rem;
+			height: 3.75rem;
+			border-radius: 0.5rem;
+			position: relative;
+			text-align: center;
+
+			display: flex;
+			justify-content: center;
+			align-items: center;
+
+			@media screen and (max-width: 460px) {
+				width: 2.5rem;
+				height: 2.5rem;
+			}
+
+			@media screen and (max-width: 295px) {
+				width: 1.875rem;
+				height: 1.875rem;
+			}
+
+			.delete-icon {
+				stroke: var(--color-black);
+				opacity: 60%;
+			}
+		}
+
+		&-colorSelected {
+			position: absolute;
+			top: 0;
+			left: 0;
+			right: 0;
+			bottom: 0;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			background-color: var(--color-black);
+			opacity: 0.5;
+			border-radius: 0.5rem;
+			outline: #00000000;
+		}
+
+		&-colorAdd {
+			background-color: var(--color-black);
+			opacity: 0.5;
+			border-radius: 0.5rem;
+			width: 3.75rem;
+			height: 3.75rem;
+			border: var(--global-border-size) dashed var(--color-white);
+			display: grid;
+			justify-content: center;
+			align-items: center;
+
+			::-moz-color-swatch {
+				border: none;
+			}
+
+			&-input {
+				grid-area: a;
+				height: 100%;
+				outline: none;
+				border: none;
+				background-color: transparent;
+				opacity: 0;
+			}
+
+			&-label {
+				padding: 1rem;
+				grid-area: a;
+				grid-template-columns: 1;
+				grid-template-rows: 1;
+				z-index: 1;
+
+				@media screen and (max-width: 460px) {
+					padding: 0.5rem;
+				}
+
+				@media screen and (max-width: 295px) {
+					padding: 0.2rem;
+				}
+
+				.icon {
+					align-self: center;
+					justify-self: center;
+					grid-area: 1;
+					z-index: 10;
+				}
+			}
+
+			& svg {
+				stroke-width: 0.25rem;
+				stroke: var(--color-white);
+
+				@media screen and (max-width: 460px) {
+					stroke-width: 0.125rem;
+				}
+			}
+
+			@media screen and (max-width: 460px) {
+				width: 2.5rem;
+				height: 2.5rem;
+			}
+
+			@media screen and (max-width: 295px) {
+				width: 1.875rem;
+				height: 1.875rem;
+			}
+		}
+	}
+
+	& .c-iconbutton {
+		max-width: 15.625rem;
+		margin: 0 auto;
+	}
+}

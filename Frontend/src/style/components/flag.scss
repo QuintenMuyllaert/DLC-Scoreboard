@@ -1,0 +1,26 @@
+.c-flag {
+	display: grid;
+	grid-template-columns: 1fr;
+	grid-template-rows: 1fr 1fr;
+	width: 100%;
+	justify-items: center;
+	cursor: pointer;
+
+	.top,
+	.bottom {
+		border: var(--global-border-size) solid var(--global-color-button-border);
+	}
+
+	.top {
+		background-color: attr(colorvalue);
+		width: min(100%, 9rem);
+		height: 2rem;
+		border-bottom: none;
+	}
+	.bottom {
+		background-color: attr(colorvalue);
+		width: min(100%, 9rem);
+		height: 2rem;
+		border-top: none;
+	}
+}

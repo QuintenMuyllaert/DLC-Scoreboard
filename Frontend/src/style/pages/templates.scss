@@ -1,0 +1,108 @@
+.p-templates {
+	width: 100%;
+	padding: 0 0 1rem 0;
+	height: 100%;
+	display: grid;
+	gap: 0.5rem;
+	grid-template-rows: auto auto 1fr auto 1fr;
+	overflow: hidden;
+	max-width: 450px;
+
+	& h1 {
+		padding: 0 1rem;
+		height: fit-content;
+		font-size: 1.7rem;
+	}
+
+	&__form {
+		padding: 0 1rem;
+		display: grid;
+		gap: 0.5rem;
+
+		& .c-iconbutton {
+			margin-top: 0.5rem;
+		}
+	}
+
+	&__formgroup {
+		display: flex;
+		justify-content: space-between;
+
+		& .c-input {
+			width: 48%;
+		}
+	}
+
+	&__list {
+		overflow-y: auto;
+		height: 100%;
+		display: flex;
+		flex-direction: column;
+		gap: 1rem;
+		padding: 0 1rem;
+
+		&-info {
+			width: 100%;
+			padding: 1rem 1.125rem;
+			padding-right: 0;
+		}
+
+		&-item {
+			display: grid;
+			grid-template-columns: auto auto;
+			//justify-content: space-between;
+			//align-items: center;
+			background-color: var(--global-color-text);
+			color: var(--global-color-background);
+			//padding: 1rem 1.125rem;
+			cursor: pointer;
+			position: relative;
+			z-index: 1;
+		}
+
+		&-naam {
+			width: fit-content;
+			margin: 0;
+			& p {
+				font-family: Raleway, "sans-serif";
+				font-size: 1.3125rem;
+				font-weight: bold;
+			}
+		}
+
+		&-detail {
+			display: flex;
+			width: fit-content;
+			margin: 0;
+			gap: 1.25rem;
+
+			&_helften {
+				display: flex;
+				gap: 0.625rem;
+			}
+
+			&_duur {
+				display: flex;
+				gap: 0.625rem;
+			}
+		}
+
+		&-btns {
+			display: flex;
+			gap: 0.9375rem;
+			position: absolute;
+			right: 1.25rem;
+			top: 50%;
+			transform: translateY(-50%);
+
+			& svg {
+				width: 1.5625rem;
+				cursor: pointer;
+			}
+		}
+
+		&-delete {
+			z-index: 100;
+		}
+	}
+}

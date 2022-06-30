@@ -1,0 +1,75 @@
+.p-addSponsor {
+	height: 100%;
+	display: grid;
+	gap: 1rem;
+	grid-template-rows: auto;
+	align-items: self-start;
+	overflow: hidden;
+	width: 100%;
+	max-width: 450px;
+	padding: 0 0 1rem 0;
+
+	&__form {
+		display: flex;
+		flex-direction: column;
+	}
+
+	&__validatie {
+		color: red;
+		text-align: center;
+	}
+
+	&__hidden {
+		display: none;
+	}
+
+	& .c-input {
+		padding: 0 1rem 0.5rem 1rem;
+
+		& label {
+			left: 2rem;
+		}
+	}
+
+	h1 {
+		padding: 0 1rem 1rem 1rem;
+	}
+
+	p {
+		text-align: center;
+
+		strong {
+			font-weight: bold;
+		}
+	}
+
+	&__logo {
+		padding: 1rem 1rem 0 1rem;
+		cursor: pointer;
+
+		&-container {
+			border: 2px dashed var(--global-color-text);
+			height: fit-content;
+			display: flex;
+			flex-direction: column;
+			justify-content: center;
+			align-items: center;
+			font-size: 25px;
+			font-weight: bold;
+			padding: 10px 0 25px 0;
+		}
+
+		& p {
+			margin-bottom: 25pxv;
+		}
+
+		&-svg {
+			width: 40px;
+			height: 40px;
+		}
+	}
+
+	&__btn {
+		padding: 0 1rem;
+	}
+}
