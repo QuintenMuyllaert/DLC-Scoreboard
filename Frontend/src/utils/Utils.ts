@@ -3,19 +3,6 @@ import { LooseObject } from "./Interfaces";
 
 export const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
-export const colorLUT: LooseObject = {
-	green: "Groen",
-	lightblue: "LichtBlauw",
-	darkblue: "DonkerBlauw",
-	blue: "Blauw",
-	white: "Wit",
-	black: "Zwart",
-	yellow: "Geel",
-	red: "Rood",
-	orange: "Oranje",
-	darkred: "bordeaux",
-};
-
 export const getCookies = () => {
 	const arrayb = document.cookie.split(";");
 	const cookies: LooseObject = {};
@@ -42,16 +29,6 @@ export const getQuery = () => {
 		querryObject[key] = value;
 	}
 	return querryObject;
-};
-
-export const xml2json = (xml: string) => {
-	const json: LooseObject = {};
-	for (const res of xml.matchAll(/(?:<(\w*)(?:\s[^>]*)*>)((?:(?!<\1).)*)(?:<\/\1>)|<(\w*)(?:\s*)*\/>/gm)) {
-		const key = res[1] || res[3];
-		const value = res[2] && xml2json(res[2]);
-		json[key] = (value && Object.keys(value).length ? value : res[2]) || null;
-	}
-	return json;
 };
 
 export const fetchToState = async (url: string, data: any = {}) => {

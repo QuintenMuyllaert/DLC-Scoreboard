@@ -3,7 +3,6 @@ import { LooseObject } from "../utils/Interfaces";
 import IconButton from "./IconButton";
 import { scoreboardInterface } from "../utils/ScoreboardInterface";
 import { updateGlobalState as updateState, globalState as state } from "../utils/Appstate";
-import { trigger } from "../utils/Networking";
 
 export const TextEdit = ({
 	active,
@@ -50,7 +49,6 @@ export const TextEdit = ({
 						<p>Type hier je bericht:</p>
 						<div className="c-textedit__header-btn">
 							<button onClick={handleClickMessage ? handleClickMessage : () => {}}>
-								{/* <link href="#" onClick={(event) => { func1(event); func2();}}>Trigger here</link> */}
 								<svg
 									xmlns="http://www.w3.org/2000/svg"
 									width="24"
