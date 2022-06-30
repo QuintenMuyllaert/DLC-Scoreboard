@@ -1,10 +1,8 @@
-import { ping, findApi } from "../utils/Networking";
 import { io } from "socket.io-client";
 
-import { colorLUT, getQuery, xml2json } from "../utils/Utils";
+import { getQuery } from "../utils/Utils";
 import Appstate from "./Appstate";
 
-const usingHTTP = false;
 const loopback = "http://127.0.0.1:1234";
 
 export class InterfaceScoreboard {
@@ -28,59 +26,6 @@ export class InterfaceScoreboard {
 	};
 	setSponsorReel(sponsor: Array<string>) {}
 	setFullScreenSponsors(value: boolean) {}
-	upload = (element: any) => {};
-	uploadProperties = (folder: string, name: string) => {};
-	updateColorArray(colorArray: string[]) {}
-	async startMatch() {}
-	setMatchData(matchData: any) {}
-	async stopMatch() {}
-}
-
-export class InterfaceHTTP {
-	uri: string;
-	t1score: number = 0;
-	t2score: number = 0;
-	message: string = "";
-	constructor(uri: string) {
-		this.uri = uri;
-	}
-	changeColor(team: `${1 | 2}${"B" | "O"}`, color: string) {
-		ping(`${this.uri}/update?K${team}=${colorLUT[color]}`);
-	}
-	resetScore() {
-		//Reset both teams
-		ping(`${this.uri}/update?G1=T0`);
-		ping(`${this.uri}/update?G2=U0`);
-	}
-	addScore(team: "G1" | "G2", amt: number) {
-		const dir = amt >= 1 ? "NEXT" : "PREVIOUS";
-		ping(`${this.uri}/update?${team}=${dir}`);
-	}
-	resetTimer() {
-		//Reset timer
-		ping(`${this.uri}/update?Timer=Ti1`);
-	}
-	setTimer(time: number) {
-		//TODO : Implement
-		//ISSUE : http api from DLC doesnt support this
-	}
-	pauseTimer() {}
-	resumeTimer() {}
-	sendMessage(message: string) {
-		ping(`${this.uri}/update?message=${encodeURI(message)}&submit=Send+message`);
-	}
-	getMessage() {
-		return this.message;
-	}
-	setScreen(screen: `P${number}`) {
-		ping(`${this.uri}/update?Keuze=${screen}`);
-	}
-	setSponsorReel(sponsor: Array<string>) {}
-	setFullScreenSponsors(value: boolean) {}
-	detect = async () => {
-		const api = await findApi(true);
-		return api ? (api as string) : loopback;
-	};
 	upload = (element: any) => {};
 	uploadProperties = (folder: string, name: string) => {};
 	updateColorArray(colorArray: string[]) {}
@@ -268,4 +213,4 @@ export class InterfaceSocket {
 	}
 }
 
-export const scoreboardInterface: InterfaceScoreboard = usingHTTP ? new InterfaceHTTP("http://127.0.0.1:1234") : new InterfaceSocket(document.location.origin);
+export const scoreboardInterface: InterfaceScoreboard = new InterfaceSocket(document.location.origin);
