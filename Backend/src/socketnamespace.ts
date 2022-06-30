@@ -6,44 +6,19 @@ export const SocketNamespace = class SocketNamespace {
 	displays: Array<any> = [];
 	data: any = {};
 	time: number = 0;
-	clock = new Timer();
+	timer = new Timer();
 	sponsors = [];
 	showSponsors = false;
 
-	pauseAt: number = -1;
-	halfLength: number = -1;
-	halfs: number = -1;
-	useTemplateSystem: boolean = false;
 	constructor(serial: string, data: any) {
 		console.log("Created namespace", serial);
 		this.serial = serial;
 		this.data = data;
-		this.clock.setData(data);
-		this.clock.set(0);
-
-		setInterval(() => {
-			if (this.useTemplateSystem) {
-				if (this.halfs > 0 && this.pauseAt >= 0) {
-					const timeP = this.clock.getSecondsPassed();
-					if (timeP >= this.pauseAt) {
-						console.log("PAUSE!!!!");
-						this.clock.pause();
-						this.clock.set(this.pauseAt);
-						this.halfs--;
-						this.pauseAt += this.halfLength;
-					}
-				} else {
-					console.log("no halfs", this.halfs, this.pauseAt);
-				}
-			}
-
-			if (this.clock.changes) {
-				console.log("Clockchanges");
-				this.clock.changes = false;
-				this.emitAll("clock", this.clock.data);
-				this.data.clockData = this.clock.data;
-			}
-		}, 50);
+		this.timer.pause();
+		this.timer.set(0);
+		this.timer.emit = (event: string, data: any) => {
+			this.emitAll(event, data);
+		};
 
 		setInterval(() => {
 			this.attemptShowsponsors();
@@ -68,7 +43,7 @@ export const SocketNamespace = class SocketNamespace {
 		socket.emit("data", "#t1", "text", this.data.t1);
 		socket.emit("data", "#t2", "text", this.data.t2);
 
-		socket.emit("clock", this.clock.data);
+		socket.emit("clock", this.timer.data);
 		socket.emit("sponsor", "");
 
 		this.displays.push(socket);
@@ -76,16 +51,10 @@ export const SocketNamespace = class SocketNamespace {
 			this.displays.splice(this.displays.indexOf(socket), 1);
 		});
 	}
-	tick() {
-		this.time++;
-		this.data.timer = clockify(this.time);
-		this.emitUsers("state", { timer: this.data.timer });
-		this.emitDisplays("data", "#timer", "text", this.data.timer);
-	}
 	addUser(socket: any) {
 		console.log("Added user to namespace", this.serial);
 		socket.emit("state", this.data);
-		socket.emit("clock", this.clock.data);
+		//socket.emit("clock", this.timer.data);
 		this.users.push(socket);
 		socket.on("disconnect", () => {
 			this.users.splice(this.users.indexOf(socket), 1);
@@ -109,19 +78,6 @@ export const SocketNamespace = class SocketNamespace {
 			this.emitDisplays("fullscreen", value ? true : false);
 		});
 
-		socket.on("clock", (data: any) => {
-			if (data.action === "set") {
-				this.clock.set(data.value || 0);
-			}
-			if (data.action === "pause") {
-				this.clock.pause();
-			}
-			if (data.action === "resume") {
-				this.clock.resume();
-			}
-			this.emitAll("clock", this.clock.data);
-		});
-
 		socket.on("startmatch", (data: any) => {
 			this.data.isPlaying = data ? true : false;
 			this.emitUsers("startmatch", this.data.isPlaying);
@@ -129,17 +85,31 @@ export const SocketNamespace = class SocketNamespace {
 
 		socket.emit("startmatch", this.data.isPlaying);
 
-		socket.on("matchtemplate", (data: any) => {
-			const { halfs, halfLength } = data;
-			this.useTemplateSystem = true;
-			console.log("TEMPLATE", data);
-			if (halfs && halfLength) {
-				console.log("Apply template");
-				this.pauseAt = parseInt(halfLength);
-				this.halfs = parseInt(halfs);
-			} else {
-				console.log("Reject template");
+		console.log("########################\nlisten to clockevent!!");
+		socket.on("clockEvent", (data: any) => {
+			console.log("clockEvent", data);
+
+			switch (data.type) {
+				case "set":
+					this.timer.set(data.value);
+					break;
+				case "pause":
+					this.timer.pause();
+					break;
+				case "resume":
+					this.timer.resume();
+					break;
+				case "autoPause":
+					this.timer.autoPause(data.value);
+					break;
+				case "realTime":
+					this.timer.realTime = data.value;
+					break;
+				default:
+					console.error("Unknown type", data.type);
 			}
+
+			this.emitAll("clockData", this.timer.data);
 		});
 	}
 	emitAll(event: string, ...args: any[]) {

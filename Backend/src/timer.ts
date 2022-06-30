@@ -1,71 +1,68 @@
 export const Timer = class Timer {
-	clockStart = Date.now();
-	pauseStart = Date.now();
-	pauseStop = 0;
-	clockOffset = 0;
-	paused = true;
-	changes = true;
+	realTime = false;
+	paused = false;
+	startTime = Date.now();
+	startPauseTime = 0;
+	pauseTime = 0;
+	pauseAt: number[] = [];
+	emit = (event: string, data: any) => {};
 	get data() {
 		return {
-			clockStart: this.clockStart,
-			pauseStart: this.pauseStart,
-			pauseStop: this.pauseStop,
-			clockOffset: this.clockOffset,
+			realTime: this.realTime,
 			paused: this.paused,
-			clock: this.clockify(),
+			startTime: this.startTime,
+			startPauseTime: this.startPauseTime,
+			pauseTime: this.pauseTime,
 		};
 	}
-	constructor() {}
-	setData(data: any) {
-		if (!data) {
-			return;
-		}
-		this.clockStart = data.clockStart || this.clockStart;
-		this.pauseStart = data.pauseStart || this.pauseStart;
-		this.pauseStop = data.pauseStop || this.pauseStop;
-		this.clockOffset = data.clockOffset || this.clockOffset;
-		this.paused = data.paused || this.paused;
-	}
-	clockify() {
-		const now = Date.now();
-		const ms = this.paused ? this.pauseStart - this.clockStart - this.clockOffset : now - this.clockStart - this.clockOffset;
-		const seconds = Math.floor(ms / 1000);
-		const minutes = Math.floor(seconds / 60);
+	constructor() {
+		setInterval(() => {
+			if (this.paused) {
+				return;
+			}
+			if (!this.pauseAt.length) {
+				return;
+			}
 
-		const to2digits = (num: number) => {
-			return num < 10 ? `0${num}` : num;
-		};
-
-		return `${to2digits(minutes)}:${to2digits(seconds % 60)}`;
+			const millis = Date.now() - this.startTime - this.pauseTime;
+			if (millis >= this.pauseAt[0]) {
+				this.pauseAt.shift();
+				this.pause();
+				console.log("autoPause hit", millis);
+				this.emit("clockData", this.data);
+			}
+		}, 1);
 	}
 	set(time = 0) {
-		this.clockStart = Date.now();
-		this.pauseStart = Date.now();
-		this.pauseStop = 0;
-		this.clockOffset = -time * 1000;
-		this.changes = true;
+		console.log("set", time);
+		this.startTime = Date.now();
+		this.startPauseTime = Date.now();
+		this.pauseTime = -time * 1000;
 	}
 	pause() {
+		console.log("pause");
 		if (this.paused) {
 			return;
 		}
 		this.paused = true;
-		this.pauseStart = Date.now();
-		this.changes = true;
+		this.startPauseTime = Date.now();
 	}
 	resume() {
+		console.log("resume");
 		if (!this.paused) {
 			return;
 		}
 		this.paused = false;
-		this.pauseStop = Date.now();
-		this.clockOffset += this.pauseStop - this.pauseStart;
-		this.changes = true;
+		this.pauseTime += Date.now() - this.startPauseTime;
 	}
-	getSecondsPassed() {
-		const now = Date.now();
-		const ms = this.paused ? this.pauseStart - this.clockStart - this.clockOffset : now - this.clockStart - this.clockOffset;
-
-		return Math.floor(ms / 1000);
+	autoPause(millis: number) {
+		console.log("autoPause", millis);
+		if (this.pauseAt.includes(millis)) {
+			console.warn("autoPause: already paused at", millis);
+			return;
+		}
+		this.pauseAt.push(millis);
+		this.pauseAt.sort((a, b) => a - b);
+		console.log("autoPause:", this.pauseAt);
 	}
 };
