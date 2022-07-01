@@ -39,11 +39,10 @@ export const SocketNamespace = class SocketNamespace {
 		socket.emit("data", "#ho", "attr", "style", `fill:${this.data.ho}`);
 		socket.emit("data", "#uo", "attr", "style", `fill:${this.data.uo}`);
 		socket.emit("data", "#message", "text", this.data.message);
-		//socket.emit("data", "#timer", "text", this.data.timer);
 		socket.emit("data", "#t1", "text", this.data.t1);
 		socket.emit("data", "#t2", "text", this.data.t2);
 
-		socket.emit("clock", this.timer.data);
+		socket.emit("clockData", this.timer.data);
 		socket.emit("sponsor", "");
 
 		this.displays.push(socket);
@@ -54,6 +53,8 @@ export const SocketNamespace = class SocketNamespace {
 	addUser(socket: any) {
 		console.log("Added user to namespace", this.serial);
 		socket.emit("state", this.data);
+		socket.emit("clockData", this.timer.data);
+
 		//socket.emit("clock", this.timer.data);
 		this.users.push(socket);
 		socket.on("disconnect", () => {

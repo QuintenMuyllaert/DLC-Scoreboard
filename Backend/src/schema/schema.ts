@@ -15,16 +15,9 @@ export interface Scoreboard {
 	t1: number;
 	t2: number;
 	message: string;
-	timer: string;
 	nameHome: string;
 	nameOut: string;
-	clockData: {
-		clockStart: number;
-		pauseStart: number;
-		pauseStop: number;
-		clockOffset: number;
-		paused: boolean;
-	};
+	clockData: clockData;
 	serial: string;
 	hasAdmin: boolean;
 	colors: string[];
@@ -54,14 +47,21 @@ export const defaultScoreboard: Scoreboard = {
 	t1: 0,
 	t2: 0,
 	message: "DLC Sportsystems - Made with 💙 by QMA",
-	timer: "00:00",
 	nameHome: "THUIS",
 	nameOut: "UIT",
-	clockData: { clockStart: Date.now(), pauseStart: Date.now(), pauseStop: 0, clockOffset: 0, paused: true },
+	clockData: { realTime: true, paused: true, startTime: Date.now(), startPauseTime: Date.now(), pauseTime: 0 },
 	colors: ["green", "lightblue", "darkblue", "purple", "white", "black", "yellow", "red", "orange", "darkred"],
 	hasAdmin: false,
 };
 
 export interface LooseObject {
 	[key: string]: any;
+}
+
+export interface clockData {
+	realTime: boolean;
+	paused: boolean;
+	startTime: number;
+	startPauseTime: number;
+	pauseTime: number;
 }
