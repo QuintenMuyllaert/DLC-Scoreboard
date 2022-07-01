@@ -1,3 +1,5 @@
+import { clockData } from "./schema/schema";
+
 export const Timer = class Timer {
 	realTime = false;
 	paused = false;
@@ -14,6 +16,13 @@ export const Timer = class Timer {
 			startPauseTime: this.startPauseTime,
 			pauseTime: this.pauseTime,
 		};
+	}
+	set data(data: clockData) {
+		this.realTime = data.realTime;
+		this.paused = data.paused;
+		this.startTime = data.startTime;
+		this.startPauseTime = data.startPauseTime;
+		this.pauseTime = data.pauseTime;
 	}
 	constructor() {
 		setInterval(() => {

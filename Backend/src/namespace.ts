@@ -1,3 +1,4 @@
+import database from "./database";
 import { Timer } from "./timer";
 import { Scoreboard, defaultScoreboard } from "./schema/schema";
 export const Namespace = class Namespace {
@@ -11,6 +12,7 @@ export const Namespace = class Namespace {
 	constructor(serial: string, io: any) {
 		console.log("Created namespace", serial);
 		this.serial = serial;
+		this.scoreboard.serial = serial;
 		this.io = io;
 		this.timer.pause();
 		this.timer.set(0);
@@ -22,6 +24,25 @@ export const Namespace = class Namespace {
 			this.attemptShowsponsors();
 			this.spIndex++;
 		}, 5000);
+
+		(async () => {
+			const exists = await database.exists("scoreboards", { serial });
+			if (exists) {
+				console.log("Existing scoreboard found", serial);
+				const [scoreboardRecord] = await database.read("scoreboards", { serial });
+
+				//@ts-ignore
+				this.scoreboard = scoreboardRecord;
+			} else {
+				console.log("Scoreboard not found, creating new scoreboard", serial);
+				await database.create("scoreboards", { ...this.scoreboard, serial });
+			}
+
+			this.timer.data = this.scoreboard.clockData;
+			this.emitUsers("Appstate", "scoreboard", this.scoreboard);
+			this.emitUsers("Appstate", "clockData", this.timer.data);
+			this.emitDisplays("clockData", this.timer.data);
+		})();
 	}
 	spIndex = 0;
 	attemptShowsponsors() {
@@ -87,7 +108,6 @@ export const Namespace = class Namespace {
 			this.emitUsers("startmatch", this.scoreboard.isPlaying);
 		});
 
-		console.log("########################\nlisten to clockevent!!");
 		socket.on("clockEvent", (data: any) => {
 			console.log("clockEvent", data);
 
@@ -111,7 +131,9 @@ export const Namespace = class Namespace {
 					console.error("Unknown type", data.type);
 			}
 
+			this.scoreboard.clockData = this.timer.data;
 			this.emitAll("clockData", this.timer.data);
+			database.update("scoreboards", { serial: this.serial }, this.scoreboard);
 		});
 
 		socket.on("input", (type: any, value: any) => {
@@ -191,6 +213,7 @@ export const Namespace = class Namespace {
 			}
 
 			this.emitUsers("Appstate", "scoreboard", this.scoreboard);
+			database.update("scoreboards", { serial: this.serial }, this.scoreboard);
 		});
 	}
 };
