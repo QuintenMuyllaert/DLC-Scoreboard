@@ -1,4 +1,4 @@
-import { LooseObject } from "./Interfaces";
+import { LooseObject, clockData } from "./Interfaces";
 
 export const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
@@ -28,4 +28,49 @@ export const getQuery = () => {
 		querryObject[key] = value;
 	}
 	return querryObject;
+};
+
+export const to2digits = (num: number) => {
+	return num < 10 ? `0${num}` : num;
+};
+
+export const processTime = (ms: number) => {
+	const totalSeconds = ms / 1000;
+	const minutes = Math.floor(totalSeconds / 60);
+	const seconds = Math.floor(totalSeconds % 60);
+	const millis = Math.floor(ms % 1000);
+	return { minutes, seconds, millis };
+};
+
+export const clockify = (ms: number) => {
+	const { minutes, seconds } = processTime(ms);
+	return `${to2digits(minutes)}:${to2digits(seconds)}`;
+};
+
+export const calculateClockData = (clockData: clockData) => {
+	const now = Date.now();
+
+	let delta = 0;
+	if (clockData.paused) {
+		delta = clockData.startPauseTime - clockData.startTime - clockData.pauseTime;
+	} else {
+		delta = now - clockData.startTime - clockData.pauseTime;
+	}
+
+	return processTime(delta);
+};
+
+export const calculateClock = (clockData: clockData) => {
+	let display = "00:00";
+	const now = Date.now();
+
+	if (clockData.paused) {
+		const delta = clockData.startPauseTime - clockData.startTime - clockData.pauseTime;
+		display = clockify(delta);
+	} else {
+		const delta = now - clockData.startTime - clockData.pauseTime;
+		display = clockify(delta);
+	}
+
+	return display;
 };
