@@ -1,64 +1,8 @@
-import { scoreboardInterface } from "../utils/ScoreboardInterface";
-import { updateGlobalState as updateState, globalState as state } from "../utils/Appstate";
-
-export const Color = ({
-	color,
-	Ecolor,
-	team,
-	side,
-	updateColorState,
-	updateScoreState,
-	onClick,
-}: {
-	color: string;
-	Ecolor: string;
-	team: 1 | 2;
-	side: "B" | "O";
-	updateColorState: Function;
-	updateScoreState: Function;
-	onClick?: (event?: any) => any;
-}) => {
-	const SetValue = (team: number, side: string) => {
-		switch (team.toString() + side) {
-			case "1B":
-				return "hb";
-			case "1O":
-				return "ho";
-			case "2B":
-				return "ub";
-			case "2O":
-				return "uo";
-		}
-	};
-
+export const Color = ({ color, removing = false, onClick }: { color: string; removing?: boolean; onClick?: (event?: any) => any }) => {
 	return (
-		<div
-			className="c-colorpicker__colors-color"
-			style={{ backgroundColor: Ecolor }}
-			onClick={
-				//somethings not right here.
-				onClick
-					? onClick
-					: () => {
-							if (state.isRemove) {
-								let index = state.colors.indexOf(color);
-								let newColorArray: string[] = state.colors;
-								newColorArray.splice(index, 1);
-								updateState("colors", newColorArray);
-								scoreboardInterface.updateColorArray(state.colors);
-								updateState("colors", state.colors);
-								console.log(state.colors);
-							} else {
-								scoreboardInterface.changeColor(`${team}${side}`, Ecolor);
-							}
-
-							updateColorState(SetValue(team, side), Ecolor);
-							updateScoreState(SetValue(team, side), Ecolor);
-					  }
-			}>
+		<div className="c-colorpicker__colors-color" style={{ backgroundColor: color }} onClick={onClick}>
 			<svg
-				// className="delete-icon"
-				className={state.isRemove ? "delete-icon" : ""}
+				className={removing ? "delete-icon" : ""}
 				xmlns="http://www.w3.org/2000/svg"
 				width="24"
 				height="24"

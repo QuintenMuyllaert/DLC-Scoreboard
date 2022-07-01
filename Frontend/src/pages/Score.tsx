@@ -98,6 +98,12 @@ export const Score = () => {
 			<Overlay visible={displayOverlayMessage} setVisible={setDisplayOverlayMessage}>
 				<TextEdit setVisible={setDisplayOverlayMessage} />
 			</Overlay>
+			<Overlay visible={displayOverlayColorpickerT} setVisible={setDisplayOverlayColorpickerT}>
+				<Colorpicker team={1} setVisible={setDisplayOverlayColorpickerT} />
+			</Overlay>
+			<Overlay visible={displayOverlayColorpickerU} setVisible={setDisplayOverlayColorpickerU}>
+				<Colorpicker team={2} setVisible={setDisplayOverlayColorpickerU} />
+			</Overlay>
 			<BottomTab />
 		</>
 	);
