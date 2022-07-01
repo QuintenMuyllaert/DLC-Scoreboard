@@ -9,7 +9,6 @@ export const Clock = ({ onClick }: { onClick?: (event?: any) => any }) => {
 
 	useRafLoop(() => {
 		const time = calculateClock(Socketstate.getState().clockData);
-		console.log(time);
 		if (time != value) {
 			setValue(time);
 		}

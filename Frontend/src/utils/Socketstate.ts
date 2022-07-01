@@ -24,7 +24,7 @@ export const setSocketState = (val: any) => {
 };
 
 export const getSocketState = () => {
-	console.log("getSocketState", socketState);
+	//console.log("getSocketState", socketState);
 	return socketState;
 };
 
