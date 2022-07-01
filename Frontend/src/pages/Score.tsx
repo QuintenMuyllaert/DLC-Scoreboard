@@ -12,7 +12,7 @@ import ClockEdit from "../components/ClockEdit";
 import Overlay from "../components/Overlay";
 
 import { scoreboardInterface } from "../utils/ScoreboardInterface";
-import { socketState } from "../utils/Socketstate";
+import Appstate from "../utils/Appstate";
 
 export const Score = () => {
 	/*if (!state.isPlaying) {
@@ -23,10 +23,12 @@ export const Score = () => {
 	const [displayOverlayColorpickerT, setDisplayOverlayColorpickerT] = useState(false);
 	const [displayOverlayColorpickerU, setDisplayOverlayColorpickerU] = useState(false);
 
+	const scoreboard = Appstate.getState().scoreboard;
+
 	const score = (team: string, amt: number) => {
 		const name = team == "t1" ? "G1" : "G2";
 
-		if (socketState[team] == 0 && amt <= 0) {
+		if (scoreboard[team] == 0 && amt <= 0) {
 			return;
 		}
 
@@ -38,16 +40,16 @@ export const Score = () => {
 			<div className="p-score">
 				<Clock onClick={() => setDisplayOverlayClock(true)}></Clock>
 				<div className="scorevalue-container">
-					<Flag top={socketState.hb} bottom={socketState.ho} onClick={() => setDisplayOverlayColorpickerT(true)} />
+					<Flag top={scoreboard.hb} bottom={scoreboard.ho} onClick={() => setDisplayOverlayColorpickerT(true)} />
 					<div className="empty"></div>
-					<Flag top={socketState.ub} bottom={socketState.uo} onClick={() => setDisplayOverlayColorpickerU(true)} />
+					<Flag top={scoreboard.ub} bottom={scoreboard.uo} onClick={() => setDisplayOverlayColorpickerU(true)} />
 
-					<h2 className="teamname">{socketState.nameHome}</h2>
+					<h2 className="teamname">{scoreboard.nameHome}</h2>
 					<div className="empty"></div>
-					<h2 className="teamname">{socketState.nameOut}</h2>
+					<h2 className="teamname">{scoreboard.nameOut}</h2>
 
 					<Digit
-						value={socketState.t1}
+						value={scoreboard.t1}
 						style="^v"
 						onClickUp={() => {
 							score("t1", 1);
@@ -58,7 +60,7 @@ export const Score = () => {
 					/>
 					<p className="seperator">-</p>
 					<Digit
-						value={socketState.t2}
+						value={scoreboard.t2}
 						style="^v"
 						onClickUp={() => {
 							score("t2", 1);

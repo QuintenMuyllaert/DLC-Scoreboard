@@ -5,7 +5,7 @@ import { IconButton } from "../components/IconButton";
 import { LooseObject } from "../utils/Interfaces";
 import Flag from "../components/Flag";
 import BottomTab from "../components/BottomTab";
-import { updateGlobalState as updateState, globalState as state } from "../utils/Appstate";
+import { updateGlobalState as updateState, state } from "../utils/Appstate";
 import Colorpicker from "../components/Colorpicker";
 import Logo from "../components/Logo";
 import Header from "../components/Header";

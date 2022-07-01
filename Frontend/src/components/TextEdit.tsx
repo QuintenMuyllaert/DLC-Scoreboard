@@ -1,10 +1,10 @@
 import { useState } from "react";
 import { IconButton } from "./IconButton";
 import { scoreboardInterface } from "../utils/ScoreboardInterface";
-import { socketState } from "../utils/Socketstate";
+import Appstate from "../utils/Appstate";
 
 export const TextEdit = ({ setVisible = () => {} }: { setVisible?: (event?: any) => any }) => {
-	const [message, setMessage] = useState(socketState.message);
+	const [message, setMessage] = useState(Appstate.getState().scoreboard.message);
 
 	const onTextUpdate = (event: any) => {
 		setMessage(event.target.value);

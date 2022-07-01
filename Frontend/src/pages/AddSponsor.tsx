@@ -9,7 +9,7 @@ import Header from "../components/Header";
 import { scoreboardInterface } from "../utils/ScoreboardInterface";
 import { getQuery } from "../utils/Utils";
 import { useNavigate } from "react-router-dom";
-import { updateGlobalState as updateState, globalState as state } from "../utils/Appstate";
+import { updateGlobalState as updateState, state } from "../utils/Appstate";
 
 export const AddSponsor = () => {
 	const navigate = useNavigate();

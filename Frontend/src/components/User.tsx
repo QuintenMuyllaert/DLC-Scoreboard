@@ -1,5 +1,5 @@
 import { LooseObject } from "../utils/Interfaces";
-import { globalState as state, updateGlobalState as updateState } from "../utils/Appstate";
+import { state, updateGlobalState as updateState } from "../utils/Appstate";
 
 export const User = ({ username }: { username: string }) => {
 	const requestBody: LooseObject = {

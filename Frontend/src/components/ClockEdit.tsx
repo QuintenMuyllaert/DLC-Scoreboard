@@ -1,13 +1,13 @@
 import IconButton from "./IconButton";
-import socketState from "../utils/Socketstate";
+import Appstate from "../utils/Appstate";
 import { scoreboardInterface } from "../utils/ScoreboardInterface";
 import { calculateClockData, to2digits } from "../utils/Utils";
 
 import { useState, useRef, useEffect } from "react";
 
 export const ClockEdit = ({ setVisible = () => {} }: { setVisible?: (event?: any) => any }) => {
-	const state = socketState.getState();
-	const clockData = calculateClockData(state.clockData);
+	const scoreboard = Appstate.getState().scoreboard;
+	const clockData = calculateClockData(scoreboard.clockData);
 	const [minutes, setMinutes] = useState(clockData.minutes || 0);
 	const [seconds, setSeconds] = useState(clockData.seconds || 0);
 
@@ -29,7 +29,7 @@ export const ClockEdit = ({ setVisible = () => {} }: { setVisible?: (event?: any
 	};
 
 	const onClickPause = () => {
-		state.clockData.paused ? scoreboardInterface.resumeTimer() : scoreboardInterface.pauseTimer();
+		scoreboard.clockData.paused ? scoreboardInterface.resumeTimer() : scoreboardInterface.pauseTimer();
 	};
 
 	const onClickStopMatch = () => {
@@ -80,7 +80,7 @@ export const ClockEdit = ({ setVisible = () => {} }: { setVisible?: (event?: any
 					color="black"
 					onClick={onClickPause}
 					icon={
-						state.clockData.paused ? (
+						scoreboard.clockData.paused ? (
 							<svg
 								xmlns="http://www.w3.org/2000/svg"
 								width="24"

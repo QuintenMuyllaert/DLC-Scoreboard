@@ -1,7 +1,7 @@
 import { io } from "socket.io-client";
 
 import { getQuery } from "../utils/Utils";
-import Socketstate from "./Socketstate";
+import Appstate from "./Appstate";
 
 const loopback = "http://127.0.0.1:1234";
 
@@ -73,19 +73,19 @@ export class InterfaceSocket {
 				console.log(element, thing, type, value);
 
 				if (["#hb", "#ub", "#ho", "#uo"].includes(element)) {
-					Socketstate.updateState(element.replace("#", ""), value.replace("fill:", ""));
+					Appstate.updateState(element.replace("#", ""), value.replace("fill:", ""));
 				}
 				if (element == "#timer" && thing == "text") {
-					Socketstate.updateState("timer", type);
+					Appstate.updateState("timer", type);
 				}
 				if (element == "#t1" && thing == "text") {
-					Socketstate.updateState("t1", type);
+					Appstate.updateState("t1", type);
 				}
 				if (element == "#t2" && thing == "text") {
-					Socketstate.updateState("t2", type);
+					Appstate.updateState("t2", type);
 				}
 				if (element == "#message" && thing == "text") {
-					Socketstate.updateState("message", type);
+					Appstate.updateState("message", type);
 				}
 			});
 
@@ -101,27 +101,27 @@ export class InterfaceSocket {
 
 		this.socket.on("state", (data: any) => {
 			console.log("state", data);
-			Socketstate.mergeState(data);
+			Appstate.mergeState(data);
 		});
 
 		this.socket.on("clockData", (data: any) => {
 			console.log("clockData", data);
-			Socketstate.updateState("clockData", data);
+			Appstate.updateState("clockData", data);
 		});
 
 		this.socket.on("uploaded", () => {
 			console.log("uploaded");
-			Socketstate.updateState("fileIsUploaded", true);
+			Appstate.updateState("fileIsUploaded", true);
 		});
 
 		this.socket.on("startmatch", (data: boolean) => {
 			console.log("startmatch", data);
-			Socketstate.updateState("isPlaying", data);
+			Appstate.updateState("isPlaying", data);
 		});
 
 		this.socket.on("scoreboard", (data: any) => {
 			console.log("scoreboard", data);
-			Socketstate.updateState("scoreboard", data);
+			Appstate.updateState("scoreboard", data);
 		});
 	}
 	changeColor(team: `${1 | 2}${"B" | "O"}`, color: string) {
@@ -197,7 +197,7 @@ export class InterfaceSocket {
 	};
 	uploadProperties = (folder: string, name: string) => {
 		console.log("uploadProperties", folder, name);
-		Socketstate.updateState("fileIsUploaded", false);
+		Appstate.updateState("fileIsUploaded", false);
 		this.socket.emit("upload", folder, name);
 	};
 	updateColorArray(colorArray: string[]) {
@@ -209,7 +209,7 @@ export class InterfaceSocket {
 		//Screen to scoreboard
 		this.socket.emit("startmatch", true);
 
-		const state = Socketstate.getState();
+		const state = Appstate.getState();
 		//scoreboardInterface.setScreen("P0");
 
 		scoreboardInterface.resetScore();

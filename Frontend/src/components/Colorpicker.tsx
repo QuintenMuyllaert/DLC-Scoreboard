@@ -3,18 +3,18 @@ import Color from "./Color";
 import Flag from "./Flag";
 import IconButton from "./IconButton";
 
-import SocketState from "../utils/Socketstate";
+import Appstate from "../utils/Appstate";
 import { scoreboardInterface } from "../utils/ScoreboardInterface";
 
 export const Colorpicker = ({ team, setVisible = () => {} }: { team: 1 | 2; setVisible?: (event?: any) => any }) => {
-	const state = SocketState.getState();
+	const scoreboard = Appstate.getState().scoreboard;
 
 	const [removing, setRemoving] = useState(false);
 
 	const onClickColor = (color: string, position: "B" | "O") => {
 		if (removing) {
-			//remove color from state.colors
-			const colors = state.colors.filter((c: string) => c != color);
+			//remove color from scoreboard.colors
+			const colors = scoreboard.colors.filter((c: string) => c != color);
 			scoreboardInterface.updateColorArray(colors);
 			return;
 		}
@@ -23,12 +23,12 @@ export const Colorpicker = ({ team, setVisible = () => {} }: { team: 1 | 2; setV
 
 	const onAddColor = (event: any) => {
 		const color = event.target.value;
-		scoreboardInterface.updateColorArray([...state.colors, color]);
+		scoreboardInterface.updateColorArray([...scoreboard.colors, color]);
 	};
 
 	const colorsB = [];
 	const colorsO = [];
-	for (const color of state.colors) {
+	for (const color of scoreboard.colors) {
 		colorsB.push(<Color color={color} removing={removing} onClick={() => onClickColor(color, "B")} />);
 		colorsO.push(<Color color={color} removing={removing} onClick={() => onClickColor(color, "O")} />);
 	}
@@ -68,7 +68,7 @@ export const Colorpicker = ({ team, setVisible = () => {} }: { team: 1 | 2; setV
 					</svg>
 				</button>
 			</div>
-			<Flag top={team == 1 ? state.hb : state.ub} bottom={team == 1 ? state.ho : state.uo} />
+			<Flag top={team == 1 ? scoreboard.hb : scoreboard.ub} bottom={team == 1 ? scoreboard.ho : scoreboard.uo} />
 			<p>Kies een kleur voor de bovenkant</p>
 			<div className="c-colorpicker__colors">
 				<>{colorsB}</>

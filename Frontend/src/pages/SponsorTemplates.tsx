@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 
-import { updateGlobalState as updateState, globalState as state } from "../utils/Appstate";
+import { updateGlobalState as updateState, state } from "../utils/Appstate";
 import BottomTab from "../components/BottomTab";
 import IconButton from "../components/IconButton";
 import Logo from "../components/Logo";

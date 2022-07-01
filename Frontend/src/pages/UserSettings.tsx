@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { LooseObject } from "../utils/Interfaces";
-import { updateGlobalState as updateState, globalState as state } from "../utils/Appstate";
+import { updateGlobalState as updateState, state } from "../utils/Appstate";
 
 import BottomTab from "../components/BottomTab";
 import UserSetting from "../components/UserSetting";

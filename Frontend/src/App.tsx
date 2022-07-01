@@ -1,8 +1,7 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 import Appstate from "./utils/Appstate";
-import Socketstate from "./utils/Socketstate";
 import "./style/screen.scss";
 
 import Protect from "./components/Protect";
@@ -23,38 +22,10 @@ import Sponsors from "./pages/Sponsors";
 import TemplateSettings from "./pages/TemplateSettings";
 import AddSponsor from "./pages/AddSponsor";
 import AddSponsorBundel from "./pages/AddSponsorBundel";
-import Refetch from "./pages/Refetch";
 
 export const App = () => {
 	Appstate.attachUseState(...useState(Appstate.defaultState));
-
-	const [refetch, setRefetch] = useState(false);
-	Appstate.attachRefetch(refetch, setRefetch);
-	const state = Appstate.getGlobalState();
-
-	Socketstate.attachUseState(...useState(Socketstate.defaultState));
-
-	useEffect(() => {
-		(async () => {
-			console.log("App useEffect");
-			const status = await fetch("/status");
-			const json = await status.json();
-			console.log(json);
-			Appstate.mergeGlobalState(json);
-
-			const templates = await fetch(`/template?serial=${encodeURI(json.serial)}`);
-			const templatesJson = await templates.json();
-			console.log(templatesJson);
-
-			Appstate.updateGlobalState("templates", templatesJson);
-
-			const sponsors = await fetch(`/sponsors?serial=${encodeURI(json.serial)}`);
-			const sponsorsJson = await sponsors.json();
-			console.log(sponsorsJson);
-
-			Appstate.updateGlobalState("sponsors", sponsorsJson);
-		})();
-	}, [refetch]);
+	const state = Appstate.getState();
 
 	return (
 		<Router>
@@ -77,7 +48,6 @@ export const App = () => {
 					<Route path="/addsponsor" element={<Protect element={<AddSponsor />} />} />
 					<Route path="/addsponsorbundel" element={<Protect element={<AddSponsorBundel />} />} />
 					<Route path="/changepassword" element={<Protect element={<ChangePassword />} />} />
-					<Route path="/refetch" element={<Refetch />}></Route>
 				</Routes>
 			</div>
 		</Router>

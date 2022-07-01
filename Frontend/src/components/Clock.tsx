@@ -1,14 +1,14 @@
 import { useState } from "react";
 import { useRafLoop } from "react-use";
 
-import Socketstate from "../utils/Socketstate";
+import Appstate from "../utils/Appstate";
 import { calculateClock } from "../utils/Utils";
 
 export const Clock = ({ onClick }: { onClick?: (event?: any) => any }) => {
 	const [value, setValue] = useState("00:00");
 
 	useRafLoop(() => {
-		const time = calculateClock(Socketstate.getState().clockData);
+		const time = calculateClock(Appstate.getState().scoreboard.clockData);
 		if (time != value) {
 			setValue(time);
 		}

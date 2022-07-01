@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import { updateGlobalState as updateState, globalState as state } from "../utils/Appstate";
+import { updateGlobalState as updateState, state } from "../utils/Appstate";
 
 export const SponsorTemplate = ({ name, aantal, handleClickDeletePopup }: { name: string; aantal: number; handleClickDeletePopup: (event?: any) => any }) => {
 	const navigate = useNavigate();

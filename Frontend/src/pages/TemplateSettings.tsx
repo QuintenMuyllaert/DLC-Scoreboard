@@ -4,7 +4,7 @@ import BottomTab from "../components/BottomTab";
 import UserSetting from "../components/UserSetting";
 import IconButton from "../components/IconButton";
 import { getQuery } from "../utils/Utils";
-import { updateGlobalState as updateState, globalState as state } from "../utils/Appstate";
+import { updateGlobalState as updateState, state } from "../utils/Appstate";
 import { useNavigate } from "react-router-dom";
 import Header from "../components/Header";
 

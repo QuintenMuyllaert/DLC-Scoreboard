@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { scoreboardInterface } from "../utils/ScoreboardInterface";
-import { updateGlobalState as updateState, globalState as state } from "../utils/Appstate";
+import { updateGlobalState as updateState, state } from "../utils/Appstate";
 
 export const ToggleSponsors = ({ handleClickToggle }: { handleClickToggle: (event?: any) => any }) => {
 	const [selectedSponsorbundel, setSelectedSponsorbundel] = useState("");

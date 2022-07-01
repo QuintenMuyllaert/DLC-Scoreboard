@@ -6,7 +6,7 @@ import Input from "../components/Input";
 import Logo from "../components/Logo";
 import Template from "../components/Template";
 import { LooseObject } from "../utils/Interfaces";
-import { updateGlobalState as updateState, globalState as state } from "../utils/Appstate";
+import { updateGlobalState as updateState, state } from "../utils/Appstate";
 import ModalConfirm from "../components/ModalConfirm";
 import Header from "../components/Header";
 

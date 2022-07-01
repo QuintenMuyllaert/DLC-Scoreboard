@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { updateGlobalState as updateState, globalState as state } from "../utils/Appstate";
+import { updateGlobalState as updateState, state } from "../utils/Appstate";
 import { LooseObject } from "../utils/Interfaces";
 
 export const Sponsor = ({ img, map, handleClickDeletePopup }: { img: string; map: string; handleClickDeletePopup: (event?: any) => any }) => {
