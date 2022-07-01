@@ -25,7 +25,7 @@ export const Score = () => {
 	const score = (team: string, amt: number) => {
 		const name = team == "t1" ? "G1" : "G2";
 
-		if (state[team] == 0 && amt <= 0) {
+		if (socketState[team] == 0 && amt <= 0) {
 			return;
 		}
 
