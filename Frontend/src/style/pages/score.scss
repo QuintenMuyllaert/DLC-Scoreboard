@@ -2,6 +2,7 @@
 	height: 100%;
 	overflow: hidden;
 	padding: 1rem;
+	padding-inline: 2.75rem;
 	width: min(24rem, 100%);
 
 	display: grid;
@@ -44,25 +45,14 @@
 
 	&__textedit {
 		& .c-iconbutton {
-			position: relative;
-			width: fit-content;
-			height: min-content;
-			gap: 1rem;
-			align-items: center;
-			cursor: pointer;
+			width: 100%;
 			color: var(--color--alpha);
-			border: none;
-			border: 2px solid var(--color--alpha);
 			font-family: Rajdhani;
 			font-weight: 700;
 			font-size: 1.2rem;
 			border-radius: var(--global-border-radius);
-			display: flex;
-			align-items: cneter;
-			justify-content: center;
+			justify-items: center;
 			align-items: center;
-			margin: 0 auto;
-			padding: 0.5rem 4rem;
 			background-color: #353535;
 			border: none;
 

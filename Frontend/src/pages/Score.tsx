@@ -1,28 +1,27 @@
 import { useState } from "react";
 import { Navigate } from "react-router-dom";
-import { Flag } from "../components/Flag";
-import { Clock } from "../components/Clock";
-import { Digit } from "../components/Digit";
-import { IconButton } from "../components/IconButton";
-import { BottomTab } from "../components/BottomTab";
-import { Colorpicker } from "../components/Colorpicker";
-import { TextEdit } from "../components/TextEdit";
-import { ClockEdit } from "../components/ClockEdit";
-import { Overlay } from "../components/Overlay";
+
+import Flag from "../components/Flag";
+import Clock from "../components/Clock";
+import Digit from "../components/Digit";
+import IconButton from "../components/IconButton";
+import BottomTab from "../components/BottomTab";
+import Colorpicker from "../components/Colorpicker";
+import TextEdit from "../components/TextEdit";
+import ClockEdit from "../components/ClockEdit";
+import Overlay from "../components/Overlay";
 
 import { scoreboardInterface } from "../utils/ScoreboardInterface";
-
 import { socketState } from "../utils/Socketstate";
-import ToggleSponsors from "../components/ToggleSponsors";
 
 export const Score = () => {
+	/*if (!state.isPlaying) {
+		return <Navigate to={`/matchsetup`} />;
+	}*/
 	const [displayOverlayClock, setDisplayOverlayClock] = useState(false);
 	const [displayOverlayMessage, setDisplayOverlayMessage] = useState(false);
 	const [displayOverlayColorpickerT, setDisplayOverlayColorpickerT] = useState(false);
 	const [displayOverlayColorpickerU, setDisplayOverlayColorpickerU] = useState(false);
-	/*if (!state.isPlaying) {
-		return <Navigate to={`/matchsetup`} />;
-	}*/
 
 	const score = (team: string, amt: number) => {
 		const name = team == "t1" ? "G1" : "G2";
@@ -32,7 +31,6 @@ export const Score = () => {
 		}
 
 		scoreboardInterface.addScore(name, amt);
-		//updateState(team, state[team] + amt);
 	};
 
 	return (
@@ -89,8 +87,6 @@ export const Score = () => {
 						label="WIJZIG BERICHT"
 						onClick={() => setDisplayOverlayMessage(true)}></IconButton>
 				</div>
-
-				{/*<ToggleSponsors handleClickToggle={handleClickToggle} />*/}
 			</div>
 			<Overlay visible={displayOverlayClock} setVisible={setDisplayOverlayClock}>
 				<ClockEdit setVisible={setDisplayOverlayClock} />
