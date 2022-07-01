@@ -12,7 +12,7 @@
 	overflow: hidden;
 
 	.c-overlay-content {
-		width: fit-content;
+		width: max(90%);
 		height: fit-content;
 		z-index: 1;
 	}
