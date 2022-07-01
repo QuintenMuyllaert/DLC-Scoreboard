@@ -1,40 +1,20 @@
 import { Server } from "socket.io";
-//@ts-ignore
-import siofu from "socketio-file-upload";
-import { mkdirSync, renameSync } from "fs";
 import database from "./database";
-import { SocketNamespace } from "./socketnamespace";
 import { extractToken, jwtVerifyAsync } from "./crypto";
-import { LooseObject, Scoreboard, defaultScoreboard } from "./schema/schema";
-import { delay } from "./util";
-
-// WS(S) server
-const namespaces: LooseObject = {};
-export const gengetNamespace = async (serial: string, allowGeneration: boolean) => {
-	console.log(serial);
-	if (!namespaces[serial]) {
-		namespaces[serial] = true;
-
-		let reply: any[] = await database.read("scoreboards", { serial });
-		if (!reply.length && allowGeneration) {
-			const newScoreboard: Scoreboard = { ...defaultScoreboard, serial };
-			await database.create("scoreboards", newScoreboard);
-			reply = [newScoreboard];
-		}
-
-		namespaces[serial] = new SocketNamespace(serial, reply[0]);
-	}
-
-	while (namespaces[serial] === true) {
-		console.log("waiting to add to ns");
-		await delay(100);
-	}
-
-	return namespaces[serial];
-};
+import { LooseObject } from "./schema/schema";
+import { Namespace } from "./namespace";
 
 export const attachSocketIO = (server: any) => {
 	const io = new Server(server);
+
+	const namespace: LooseObject = {};
+	const getNamespace = (serial: string) => {
+		if (!namespace[serial]) {
+			namespace[serial] = new Namespace(serial, io);
+		}
+		return namespace[serial];
+	};
+
 	io.on("connection", async (socket: any) => {
 		console.log(socket.id, "Connection made to websocket");
 
@@ -50,7 +30,8 @@ export const attachSocketIO = (server: any) => {
 				return;
 			}
 			socket.serial = serial;
-			const ns = await gengetNamespace(serial, true);
+			console.log("Display joined", serial, socket.id);
+			const ns = getNamespace(serial);
 			ns.addDisplay(socket);
 		});
 
@@ -72,7 +53,7 @@ export const attachSocketIO = (server: any) => {
 				return;
 			}
 
-			const scoreboardSocket = namespaces[body.serial];
+			const scoreboardSocket = getNamespace(body.serial);
 			if (!scoreboardSocket) {
 				console.log("No scoreboard");
 				return;
@@ -141,6 +122,7 @@ export const attachSocketIO = (server: any) => {
 				}
 			}
 			scoreboardSocket.emitUsers("state", scoreboardSocket.data);
+			scoreboardSocket.emitUsers("scoreboard", scoreboardSocket.data);
 			database.update("scoreboards", { serial: scoreboardSocket.serial }, scoreboardSocket.data);
 		});
 
@@ -150,69 +132,9 @@ export const attachSocketIO = (server: any) => {
 		socket.body = body;
 		console.log(socket.id, "JWT :", valid, body);
 		if (socket.auth && body.serial) {
-			let uploadDetails: any = {
-				gotten: false,
-				folder: "",
-				name: "",
-			};
-
-			try {
-				console.log("making dir");
-				mkdirSync(`www/${body.serial}`);
-			} catch (err) {
-				console.log("dir exists");
-			}
-
-			socket.on("upload", (folder: string, name: string) => {
-				if (folder.includes(".")) {
-					console.log("NO");
-					return;
-				}
-				let fulln = folder + name;
-				if (fulln.includes("/") || fulln.includes("\\") || fulln.includes("..")) {
-					console.log("NO");
-					return;
-				}
-
-				uploadDetails = {
-					gotten: true,
-					folder: folder,
-					name: name,
-				};
-
-				try {
-					console.log("making dir");
-					mkdirSync(`www/${body.serial}/${folder}`);
-				} catch (err) {
-					console.log("dir exists");
-				}
-			});
-
-			const ns = await gengetNamespace(body.serial, true);
+			console.log("Client joined", body.serial, socket.id);
+			const ns = getNamespace(body.serial);
 			ns.addUser(socket);
-
-			const uploader = new siofu();
-			uploader.dir = `www/${body.serial}`;
-			uploader.on("saved", (data: any) => {
-				console.log(data, uploadDetails);
-				const { gotten, folder, name } = uploadDetails;
-				if (gotten && folder && name) {
-					try {
-						const from = data.file.pathName;
-						const to = `www/${body.serial}/${uploadDetails.folder}/${uploadDetails.name}.${data.file.name.split(".").pop()}`;
-						console.log(from, to);
-						renameSync(from, to);
-					} catch (e) {
-						console.log(e);
-					}
-				}
-
-				socket.emit("uploaded", true);
-			});
-			uploader.on("error", function (event: any) {
-				console.log("Error from uploader", event);
-			});
-			uploader.listen(socket);
 		}
 	});
 };

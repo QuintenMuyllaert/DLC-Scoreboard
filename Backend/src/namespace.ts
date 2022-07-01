@@ -1,19 +1,17 @@
-import { clockify } from "./util";
 import { Timer } from "./timer";
-export const SocketNamespace = class SocketNamespace {
+import { Scoreboard, defaultScoreboard } from "./schema/schema";
+export const Namespace = class Namespace {
 	serial: string;
-	users: Array<any> = [];
-	displays: Array<any> = [];
-	data: any = {};
-	time: number = 0;
+	io: any;
+	data: Scoreboard = defaultScoreboard;
 	timer = new Timer();
 	sponsors = [];
 	showSponsors = false;
 
-	constructor(serial: string, data: any) {
+	constructor(serial: string, io: any) {
 		console.log("Created namespace", serial);
 		this.serial = serial;
-		this.data = data;
+		this.io = io;
 		this.timer.pause();
 		this.timer.set(0);
 		this.timer.emit = (event: string, data: any) => {
@@ -32,7 +30,21 @@ export const SocketNamespace = class SocketNamespace {
 			this.emitDisplays("sponsor", sp);
 		}
 	}
+	emitDisplays = (event: string, ...args: any[]) => {
+		console.log("emitDisplays", event, args);
+		this.io.in(`DISPLAY-${this.serial}`).emit(event, ...args);
+	};
+	emitUsers = (event: string, ...args: any[]) => {
+		console.log("emitUsers", event, args);
+		this.io.in(`CLIENT-${this.serial}`).emit(event, ...args);
+	};
+	emitAll = (event: string, ...args: any[]) => {
+		console.log("emitAll", event, args);
+		this.io.in(this.serial).emit(event, ...args);
+	};
 	addDisplay(socket: any) {
+		socket.join([`DISPLAY-${this.serial}`, this.serial]);
+
 		console.log("Added display to namespace", this.serial);
 		socket.emit("data", "#hb", "attr", "style", `fill:${this.data.hb}`);
 		socket.emit("data", "#ub", "attr", "style", `fill:${this.data.ub}`);
@@ -44,22 +56,13 @@ export const SocketNamespace = class SocketNamespace {
 
 		socket.emit("clockData", this.timer.data);
 		socket.emit("sponsor", "");
-
-		this.displays.push(socket);
-		socket.on("disconnect", () => {
-			this.displays.splice(this.displays.indexOf(socket), 1);
-		});
 	}
 	addUser(socket: any) {
+		socket.join([`CLIENT-${this.serial}`, this.serial]);
+
 		console.log("Added user to namespace", this.serial);
 		socket.emit("state", this.data);
 		socket.emit("clockData", this.timer.data);
-
-		//socket.emit("clock", this.timer.data);
-		this.users.push(socket);
-		socket.on("disconnect", () => {
-			this.users.splice(this.users.indexOf(socket), 1);
-		});
 
 		socket.on("sponsors", (data: Array<string>) => {
 			if (data && data.length) {
@@ -111,26 +114,6 @@ export const SocketNamespace = class SocketNamespace {
 			}
 
 			this.emitAll("clockData", this.timer.data);
-		});
-	}
-	emitAll(event: string, ...args: any[]) {
-		//console.log(`Sending to ${this.displays.length} displays & ${this.users.length} users in ${this.serial}`);
-		this.displays.forEach((display) => {
-			display.emit(event, ...args);
-		});
-		this.users.forEach((user) => {
-			user.emit(event, ...args);
-		});
-	}
-	emitUsers(event: string, ...args: any[]) {
-		//console.log(`Sending to ${this.users.length} users in ${this.serial}`);
-		this.users.forEach((user) => {
-			user.emit(event, ...args);
-		});
-	}
-	emitDisplays(event: string, ...args: any[]) {
-		this.displays.forEach((display) => {
-			display.emit(event, ...args);
 		});
 	}
 };
