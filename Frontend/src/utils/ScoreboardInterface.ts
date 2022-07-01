@@ -65,6 +65,7 @@ export class InterfaceSocket {
 
 		const { serial } = getQuery();
 		if (serial && serial.length) {
+			//this is only for /scoreboard?serial=xxx
 			console.log(serial);
 			this.socket.emit("data", serial); // send serial number to server TODO: get serial number from device
 
@@ -88,10 +89,6 @@ export class InterfaceSocket {
 					Appstate.updateState("message", type);
 				}
 			});
-
-			this.socket.on("invokeuri", function (uri: string) {
-				//NYI
-			});
 		}
 
 		this.socket.on("disconnect", () => {
@@ -99,29 +96,9 @@ export class InterfaceSocket {
 			//this.socket.socket.reconnect();
 		});
 
-		this.socket.on("state", (data: any) => {
-			console.log("state", data);
-			Appstate.mergeState(data);
-		});
-
-		this.socket.on("clockData", (data: any) => {
-			console.log("clockData", data);
-			Appstate.updateState("clockData", data);
-		});
-
-		this.socket.on("uploaded", () => {
-			console.log("uploaded");
-			Appstate.updateState("fileIsUploaded", true);
-		});
-
-		this.socket.on("startmatch", (data: boolean) => {
-			console.log("startmatch", data);
-			Appstate.updateState("isPlaying", data);
-		});
-
-		this.socket.on("scoreboard", (data: any) => {
-			console.log("scoreboard", data);
-			Appstate.updateState("scoreboard", data);
+		this.socket.on("Appstate", (key: string, value: any) => {
+			console.log("Appstate", key, value);
+			Appstate.updateState(key, value);
 		});
 	}
 	changeColor(team: `${1 | 2}${"B" | "O"}`, color: string) {

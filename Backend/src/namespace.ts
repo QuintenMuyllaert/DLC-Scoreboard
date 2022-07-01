@@ -3,7 +3,7 @@ import { Scoreboard, defaultScoreboard } from "./schema/schema";
 export const Namespace = class Namespace {
 	serial: string;
 	io: any;
-	data: Scoreboard = defaultScoreboard;
+	scoreboard: Scoreboard = defaultScoreboard;
 	timer = new Timer();
 	sponsors = [];
 	showSponsors = false;
@@ -46,13 +46,13 @@ export const Namespace = class Namespace {
 		socket.join([`DISPLAY-${this.serial}`, this.serial]);
 
 		console.log("Added display to namespace", this.serial);
-		socket.emit("data", "#hb", "attr", "style", `fill:${this.data.hb}`);
-		socket.emit("data", "#ub", "attr", "style", `fill:${this.data.ub}`);
-		socket.emit("data", "#ho", "attr", "style", `fill:${this.data.ho}`);
-		socket.emit("data", "#uo", "attr", "style", `fill:${this.data.uo}`);
-		socket.emit("data", "#message", "text", this.data.message);
-		socket.emit("data", "#t1", "text", this.data.t1);
-		socket.emit("data", "#t2", "text", this.data.t2);
+		socket.emit("data", "#hb", "attr", "style", `fill:${this.scoreboard.hb}`);
+		socket.emit("data", "#ub", "attr", "style", `fill:${this.scoreboard.ub}`);
+		socket.emit("data", "#ho", "attr", "style", `fill:${this.scoreboard.ho}`);
+		socket.emit("data", "#uo", "attr", "style", `fill:${this.scoreboard.uo}`);
+		socket.emit("data", "#message", "text", this.scoreboard.message);
+		socket.emit("data", "#t1", "text", this.scoreboard.t1);
+		socket.emit("data", "#t2", "text", this.scoreboard.t2);
 
 		socket.emit("clockData", this.timer.data);
 		socket.emit("sponsor", "");
@@ -61,8 +61,8 @@ export const Namespace = class Namespace {
 		socket.join([`CLIENT-${this.serial}`, this.serial]);
 
 		console.log("Added user to namespace", this.serial);
-		socket.emit("state", this.data);
-		socket.emit("clockData", this.timer.data);
+		socket.emit("Appstate", "scoreboard", this.scoreboard);
+		socket.emit("Appstate", "clockData", this.timer.data);
 
 		socket.on("sponsors", (data: Array<string>) => {
 			if (data && data.length) {
@@ -83,11 +83,9 @@ export const Namespace = class Namespace {
 		});
 
 		socket.on("startmatch", (data: any) => {
-			this.data.isPlaying = data ? true : false;
-			this.emitUsers("startmatch", this.data.isPlaying);
+			this.scoreboard.isPlaying = data ? true : false;
+			this.emitUsers("startmatch", this.scoreboard.isPlaying);
 		});
-
-		socket.emit("startmatch", this.data.isPlaying);
 
 		console.log("########################\nlisten to clockevent!!");
 		socket.on("clockEvent", (data: any) => {
@@ -114,6 +112,85 @@ export const Namespace = class Namespace {
 			}
 
 			this.emitAll("clockData", this.timer.data);
+		});
+
+		socket.on("input", (type: any, value: any) => {
+			//When user sends input
+			console.log("Input received", type, value);
+			if (type === undefined || value === undefined) {
+				console.log("No type or value");
+				return;
+			}
+
+			if (!socket.auth) {
+				console.log("No auth");
+				return;
+			}
+
+			if (!socket.body) {
+				console.log("No body");
+				return;
+			}
+
+			console.log(type, value);
+			switch (type) {
+				case "1B": {
+					this.scoreboard.hb = value;
+					this.emitDisplays("data", "#hb", "attr", "style", `fill:${value}`);
+					break;
+				}
+				case "2B": {
+					this.scoreboard.ub = value;
+					this.emitDisplays("data", "#ub", "attr", "style", `fill:${value}`);
+					break;
+				}
+				case "1O": {
+					this.scoreboard.ho = value;
+					this.emitDisplays("data", "#ho", "attr", "style", `fill:${value}`);
+					break;
+				}
+				case "2O": {
+					this.scoreboard.uo = value;
+					this.emitDisplays("data", "#uo", "attr", "style", `fill:${value}`);
+					break;
+				}
+				case "screen": {
+					this.emitDisplays("sponsor", value);
+					break;
+				}
+				case "message": {
+					this.scoreboard.message = value;
+					this.emitDisplays("data", "#message", "text", value);
+					break;
+				}
+				case "G1": {
+					if (value === "reset") {
+						this.scoreboard.t1 = 0;
+					} else {
+						this.scoreboard.t1 += value;
+					}
+					this.emitDisplays("data", "#t1", "text", this.scoreboard.t1);
+					break;
+				}
+				case "G2": {
+					if (value === "reset") {
+						this.scoreboard.t2 = 0;
+					} else {
+						this.scoreboard.t2 += value;
+					}
+					this.emitDisplays("data", "#t2", "text", this.scoreboard.t2);
+					break;
+				}
+				case "COLORS": {
+					this.scoreboard.colors = value;
+				}
+				default: {
+					console.log("No type");
+					break;
+				}
+			}
+
+			this.emitUsers("Appstate", "scoreboard", this.scoreboard);
 		});
 	}
 };
