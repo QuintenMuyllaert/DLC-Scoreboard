@@ -106,7 +106,7 @@ export class InterfaceSocket {
 
 		this.socket.on("clockData", (data: any) => {
 			console.log("clockData", data);
-			Socketstate.mergeState({ clockData: data });
+			Socketstate.updateState("clockData", data);
 		});
 
 		this.socket.on("uploaded", () => {
@@ -117,6 +117,11 @@ export class InterfaceSocket {
 		this.socket.on("startmatch", (data: boolean) => {
 			console.log("startmatch", data);
 			Socketstate.updateState("isPlaying", data);
+		});
+
+		this.socket.on("scoreboard", (data: any) => {
+			console.log("scoreboard", data);
+			Socketstate.updateState("scoreboard", data);
 		});
 	}
 	changeColor(team: `${1 | 2}${"B" | "O"}`, color: string) {
