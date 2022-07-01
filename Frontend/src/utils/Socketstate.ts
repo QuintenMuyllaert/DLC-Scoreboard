@@ -7,8 +7,8 @@ export const defaultState: LooseObject = {
 	clockData: {
 		realTime: false,
 		paused: false,
-		startTime: 0,
-		startPauseTime: 0,
+		startTime: Date.now(),
+		startPauseTime: Date.now(),
 		pauseTime: 0,
 	},
 };
