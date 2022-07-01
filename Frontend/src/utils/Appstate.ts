@@ -3,8 +3,6 @@ import { LooseObject } from "./Interfaces";
 export let globalState: any;
 export let globalSetState: any;
 
-let time = {};
-
 export const defaultState: LooseObject = {
 	color: localStorage.getItem("theme") || "dark",
 	nameHome: "THUIS",
@@ -15,11 +13,11 @@ export const defaultState: LooseObject = {
 	ho: "black",
 	ub: "black",
 	uo: "black",
-	timer: "00:00",
+	message: "",
 	getClock: () => {
 		const that = globalState.clockData;
 		const now = Date.now();
-		const ms = that.paused ? that.pauseStart - that.clockStart - that.clockOffset : now - that.clockStart - that.clockOffset;
+		const ms = that.paused ? that.startPauseTime - that.startTime - that.pauseTime : now - that.startTime - that.pauseTime;
 		const seconds = Math.max(0, Math.floor(ms / 1000));
 		const minutes = Math.max(0, Math.floor(seconds / 60));
 
@@ -29,8 +27,7 @@ export const defaultState: LooseObject = {
 
 		return `${to2digits(minutes)}:${to2digits(seconds % 60)}`;
 	},
-	message: "",
-	screen: "P0",
+
 	serial: "N/A",
 	first: true,
 	messagePopup: false,
@@ -44,12 +41,11 @@ export const defaultState: LooseObject = {
 	users: [],
 	selectedTemplate: "",
 	clockData: {
-		clockStart: Date.now(),
-		pauseStart: Date.now(),
-		pauseStop: 0,
-		clockOffset: 0,
-		paused: true,
-		clock: "00:00",
+		realTime: false,
+		paused: false,
+		startTime: Date.now(),
+		startPauseTime: Date.now(),
+		pauseTime: 0,
 	},
 	isRemove: false,
 	deleteTemplatePopup: false,

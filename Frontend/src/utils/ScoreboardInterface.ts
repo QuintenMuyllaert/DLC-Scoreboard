@@ -1,7 +1,7 @@
 import { io } from "socket.io-client";
 
 import { getQuery } from "../utils/Utils";
-import Appstate from "./Appstate";
+import Socketstate from "./Socketstate";
 
 const loopback = "http://127.0.0.1:1234";
 
@@ -10,7 +10,6 @@ export class InterfaceScoreboard {
 	constructor(uri: string) {
 		this.uri = uri;
 	}
-	// TODO : Implement
 	changeColor(team: `${1 | 2}${"B" | "O"}`, color: string) {}
 	resetScore() {}
 	addScore(team: "G1" | "G2", score: number) {}
@@ -29,9 +28,9 @@ export class InterfaceScoreboard {
 	upload = (element: any) => {};
 	uploadProperties = (folder: string, name: string) => {};
 	updateColorArray(colorArray: string[]) {}
-	async startMatch() {}
+	startMatch() {}
 	setMatchData(matchData: any) {}
-	async stopMatch() {}
+	stopMatch() {}
 }
 
 export class InterfaceSocket {
@@ -42,7 +41,7 @@ export class InterfaceSocket {
 	constructor(uri: string) {
 		this.uri = uri;
 		this.socket = io(this.uri, {
-			transports: ["websocket"],
+			transports: ["websocket", "polling"],
 			reconnection: true,
 			reconnectionDelay: 1000,
 			reconnectionDelayMax: 5000,
@@ -74,19 +73,19 @@ export class InterfaceSocket {
 				console.log(element, thing, type, value);
 
 				if (["#hb", "#ub", "#ho", "#uo"].includes(element)) {
-					Appstate.updateGlobalState(element.replace("#", ""), value.replace("fill:", ""));
+					Socketstate.updateState(element.replace("#", ""), value.replace("fill:", ""));
 				}
 				if (element == "#timer" && thing == "text") {
-					Appstate.updateGlobalState("timer", type);
+					Socketstate.updateState("timer", type);
 				}
 				if (element == "#t1" && thing == "text") {
-					Appstate.updateGlobalState("t1", type);
+					Socketstate.updateState("t1", type);
 				}
 				if (element == "#t2" && thing == "text") {
-					Appstate.updateGlobalState("t2", type);
+					Socketstate.updateState("t2", type);
 				}
 				if (element == "#message" && thing == "text") {
-					Appstate.updateGlobalState("message", type);
+					Socketstate.updateState("message", type);
 				}
 			});
 
@@ -101,52 +100,70 @@ export class InterfaceSocket {
 		});
 
 		this.socket.on("state", (data: any) => {
-			Appstate.mergeGlobalState(data);
+			console.log("state", data);
+			Socketstate.mergeState(data);
 		});
 
-		this.socket.on("clock", (data: any) => {
-			Appstate.mergeGlobalState({ clockData: data });
+		this.socket.on("clockData", (data: any) => {
+			console.log("clockData", data);
+			Socketstate.mergeState({ clockData: data });
 		});
 
 		this.socket.on("uploaded", () => {
-			Appstate.updateGlobalState("fileIsUploaded", true);
+			console.log("uploaded");
+			Socketstate.updateState("fileIsUploaded", true);
 		});
 
 		this.socket.on("startmatch", (data: boolean) => {
-			Appstate.updateGlobalState("isPlaying", data);
+			console.log("startmatch", data);
+			Socketstate.updateState("isPlaying", data);
 		});
 	}
 	changeColor(team: `${1 | 2}${"B" | "O"}`, color: string) {
+		console.log("changeColor", team, color);
 		this.socket.emit("input", team, color);
 	}
 	resetScore() {
+		console.log("resetScore");
 		this.socket.emit("input", "G1", "reset");
 		this.socket.emit("input", "G2", "reset");
 	}
 	addScore(team: "G1" | "G2", score: number) {
+		console.log("addScore", team, score);
 		this.socket.emit("input", team, score);
 	}
 	resetTimer() {
-		this.socket.emit("clock", { action: "set", value: 0 });
+		console.log("resetTimer");
+		this.socket.emit("clockEvent", { type: "set", value: 0 });
 	}
 	setTimer(time: number) {
-		this.socket.emit("clock", { action: "set", value: time });
+		console.log("setTimer", time);
+		this.socket.emit("clockEvent", { type: "set", value: time });
 	}
 	pauseTimer() {
-		this.socket.emit("clock", { action: "pause" });
+		console.log("pauseTimer");
+		this.socket.emit("clockEvent", { type: "pause" });
 	}
 	resumeTimer() {
-		this.socket.emit("clock", { action: "resume" });
+		console.log("resumeTimer");
+		this.socket.emit("clockEvent", { type: "resume" });
+	}
+	setRealTime(toggle: boolean) {
+		console.log("setRealTime", toggle);
+		this.socket.emit("clockEvent", { type: "realTime", value: toggle });
 	}
 	sendMessage(message: string) {
+		console.log("sendMessage", message);
 		this.message = message;
 		this.socket.emit("input", "message", message);
 	}
 	getMessage() {
+		console.log("getMessage");
 		//TODO : Get from server
 		return this.message;
 	}
 	setScreen(screen: `P${number}`) {
+		console.log("setScreen", screen);
 		if (screen == "P0") {
 			this.socket.emit("input", "screen", null);
 			return;
@@ -154,33 +171,40 @@ export class InterfaceSocket {
 		this.socket.emit("input", "screen", screen);
 	}
 	setSponsorReel(sponsor: Array<string>) {
+		console.log("setSponsorReel", sponsor);
 		console.log("reel", sponsor);
 		this.socket.emit("sponsors", sponsor);
 	}
 	setFullScreenSponsors(value: boolean) {
+		console.log("setFullScreenSponsors", value);
 		console.log("fullscreen", value);
 		this.socket.emit("fullscreen", value);
 	}
 	detect = async () => {
+		console.log("detect");
 		return this.uri;
 	};
 	upload = (element: any) => {
+		console.log("upload", element);
 		setTimeout(() => {
 			this.uploader.listenOnInput(element.current);
 		}, 1000);
 	};
 	uploadProperties = (folder: string, name: string) => {
-		Appstate.updateGlobalState("fileIsUploaded", false);
+		console.log("uploadProperties", folder, name);
+		Socketstate.updateState("fileIsUploaded", false);
 		this.socket.emit("upload", folder, name);
 	};
 	updateColorArray(colorArray: string[]) {
+		console.log("updateColorArray", colorArray);
 		this.socket.emit("input", "COLORS", colorArray);
 	}
 	async startMatch() {
+		console.log("startMatch");
 		//Screen to scoreboard
 		this.socket.emit("startmatch", true);
 
-		const state = Appstate.getGlobalState();
+		const state = Socketstate.getState();
 		//scoreboardInterface.setScreen("P0");
 
 		scoreboardInterface.resetScore();
@@ -196,14 +220,14 @@ export class InterfaceSocket {
 		scoreboardInterface.setSponsorReel([]);
 	}
 	async stopMatch() {
+		console.log("stopMatch");
 		//Screen to scoreboard
 		this.socket.emit("startmatch", false);
-		scoreboardInterface.setFullScreenSponsors(true);
-		scoreboardInterface.setSponsorReel(["QMA"]);
+		//scoreboardInterface.setFullScreenSponsors(true);
+		//scoreboardInterface.setSponsorReel(["QMA"]);
 	}
 	setMatchData(data: { halfs: number; halfLength: number }) {
-		console.log("match data", data);
-
+		console.log("setMatchData", data);
 		const { halfs, halfLength } = data;
 		if (!halfs || !halfLength) {
 			console.log("Invalid data", data);
@@ -214,3 +238,6 @@ export class InterfaceSocket {
 }
 
 export const scoreboardInterface: InterfaceScoreboard = new InterfaceSocket(document.location.origin);
+
+//@ts-ignore
+document.scoreboardInterface = scoreboardInterface;

@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 import Appstate from "./utils/Appstate";
+import Socketstate from "./utils/Socketstate";
 import "./style/screen.scss";
 
 import Protect from "./components/Protect";
@@ -30,6 +31,8 @@ export const App = () => {
 	const [refetch, setRefetch] = useState(false);
 	Appstate.attachRefetch(refetch, setRefetch);
 	const state = Appstate.getGlobalState();
+
+	Socketstate.attachUseState(...useState(Socketstate.defaultState));
 
 	useEffect(() => {
 		(async () => {
