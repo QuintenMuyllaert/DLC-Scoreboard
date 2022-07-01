@@ -1,40 +1,19 @@
-import { useEffect, useState } from "react";
-import { getGlobalState } from "../utils/Appstate";
-export const Clock = ({ time, onClick }: { time: number | `${number}:${number}`; onClick?: (event?: any) => any }) => {
-	let display = "";
+import { useState } from "react";
+import { useRafLoop } from "react-use";
 
-	if (typeof time === "string") {
-		display = time;
-	} else {
-		let sec: number | string = time % 60;
-		let min: number | string = (time - sec) / 60;
+import Socketstate from "../utils/Socketstate";
+import { calculateClock } from "../utils/Utils";
 
-		sec = sec < 0 ? 0 : sec;
-		min = min < 0 ? 0 : min;
-
-		if (min < 10) {
-			min = `0${min}`;
-		}
-
-		if (sec < 10) {
-			sec = `0${sec}`;
-		}
-
-		display = `${min}:${sec}`;
-	}
-
+export const Clock = ({ onClick }: { onClick?: (event?: any) => any }) => {
 	const [value, setValue] = useState("00:00");
 
-	useEffect(() => {
-		const interval = setInterval(() => {
-			const state = getGlobalState();
-			setValue(state.getClock());
-		}, 50);
-
-		return () => {
-			clearInterval(interval);
-		};
-	}, []);
+	useRafLoop(() => {
+		const time = calculateClock(Socketstate.getState().clockData);
+		console.log(time);
+		if (time != value) {
+			setValue(time);
+		}
+	});
 
 	return (
 		<div className="c-clock" onClick={onClick}>

@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Navigate } from "react-router-dom";
 import { Flag } from "../components/Flag";
 import { Clock } from "../components/Clock";
@@ -7,33 +8,19 @@ import { BottomTab } from "../components/BottomTab";
 import Colorpicker from "../components/Colorpicker";
 import TextEdit from "../components/TextEdit";
 import ClockEdit from "../components/ClockEdit";
+import Overlay from "../components/Overlay";
 
 import { scoreboardInterface } from "../utils/ScoreboardInterface";
 
 import { updateGlobalState as updateState, globalState as state } from "../utils/Appstate";
+import { socketState } from "../utils/Socketstate";
 import ToggleSponsors from "../components/ToggleSponsors";
 
 export const Score = () => {
-	/*	//Dead code?, moving to backend before declaring it dead code.
-	if (state.first) {
-		updateState("first", false);
-
-		//Screen to scoreboard
-		scoreboardInterface.setScreen("P0");
-
-		scoreboardInterface.resetScore();
-		scoreboardInterface.resetTimer();
-
-		scoreboardInterface.changeColor("1B", state.hb);
-		scoreboardInterface.changeColor("1O", state.ho);
-		scoreboardInterface.changeColor("2B", state.ub);
-		scoreboardInterface.changeColor("2O", state.uo);
-	}
-	*/
-
-	if (!state.isPlaying) {
+	const [dislayClockOverlay, setDislayClockOverlay] = useState(false);
+	/*if (!state.isPlaying) {
 		return <Navigate to={`/matchsetup`} />;
-	}
+	}*/
 
 	const score = (team: string, amt: number) => {
 		const name = team == "t1" ? "G1" : "G2";
@@ -48,10 +35,6 @@ export const Score = () => {
 
 	const handleClickMessage = () => {
 		updateState("messagePopup", !state.messagePopup);
-	};
-
-	const handleClickClock = () => {
-		updateState("clockPopup", !state.clockPopup);
 	};
 
 	const handleClickSendMessage = (message: string) => {
@@ -79,18 +62,18 @@ export const Score = () => {
 	return (
 		<>
 			<div className="p-score">
-				<Clock time={state.getClock()} onClick={handleClickClock}></Clock>
+				<Clock onClick={() => setDislayClockOverlay(true)}></Clock>
 				<div className="scorevalue-container">
-					<Flag top={state.hb} bottom={state.ho} handleClickPopup={handleClickTeam1Color} />
+					<Flag top={socketState.hb} bottom={socketState.ho} handleClickPopup={handleClickTeam1Color} />
 					<div className="empty"></div>
-					<Flag top={state.ub} bottom={state.uo} handleClickPopup={handleClickTeam2Color} />
+					<Flag top={socketState.ub} bottom={socketState.uo} handleClickPopup={handleClickTeam2Color} />
 
-					<h2 className="teamname">{state.nameHome}</h2>
+					<h2 className="teamname">{socketState.nameHome}</h2>
 					<div className="empty"></div>
-					<h2 className="teamname">{state.nameOut}</h2>
+					<h2 className="teamname">{socketState.nameOut}</h2>
 
 					<Digit
-						value={state.t1}
+						value={socketState.t1}
 						style="^v"
 						onClickUp={() => {
 							score("t1", 1);
@@ -101,7 +84,7 @@ export const Score = () => {
 					/>
 					<p className="seperator">-</p>
 					<Digit
-						value={state.t2}
+						value={socketState.t2}
 						style="^v"
 						onClickUp={() => {
 							score("t2", 1);
@@ -133,12 +116,12 @@ export const Score = () => {
 
 				<ToggleSponsors handleClickToggle={handleClickToggle} />
 			</div>
-
+			<Overlay visible={dislayClockOverlay} setVisible={setDislayClockOverlay}>
+				<ClockEdit setVisible={setDislayClockOverlay} />
+			</Overlay>
 			<BottomTab />
-
 			<Colorpicker team={1} updateScoreState={updateState} active={state.teamColorTeam1Popup} handleClickPopup={handleClickTeam1Color} />
 			<Colorpicker team={2} updateScoreState={updateState} active={state.teamColorTeam2Popup} handleClickPopup={handleClickTeam2Color} />
-			<ClockEdit active={state.clockPopup} />
 			<TextEdit active={state.messagePopup} handleClickMessage={handleClickMessage} handleClickSendMessage={handleClickSendMessage} />
 		</>
 	);
