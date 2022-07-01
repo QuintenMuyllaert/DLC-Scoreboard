@@ -40,7 +40,6 @@ export const Namespace = class Namespace {
 
 			this.timer.data = this.scoreboard.clockData;
 			this.emitUsers("Appstate", "scoreboard", this.scoreboard);
-			this.emitUsers("Appstate", "clockData", this.timer.data);
 			this.emitDisplays("clockData", this.timer.data);
 		})();
 	}
@@ -83,7 +82,6 @@ export const Namespace = class Namespace {
 
 		console.log("Added user to namespace", this.serial);
 		socket.emit("Appstate", "scoreboard", this.scoreboard);
-		socket.emit("Appstate", "clockData", this.timer.data);
 
 		socket.on("sponsors", (data: Array<string>) => {
 			if (data && data.length) {
@@ -132,7 +130,8 @@ export const Namespace = class Namespace {
 			}
 
 			this.scoreboard.clockData = this.timer.data;
-			this.emitAll("clockData", this.timer.data);
+			this.emitDisplays("clockData", this.timer.data);
+			this.emitUsers("Appstate", "scoreboard", this.scoreboard);
 			database.update("scoreboards", { serial: this.serial }, this.scoreboard);
 		});
 
