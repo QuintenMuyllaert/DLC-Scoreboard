@@ -1,4 +1,3 @@
-import Appstate from "./Appstate";
 import { LooseObject } from "./Interfaces";
 
 export const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
@@ -29,31 +28,4 @@ export const getQuery = () => {
 		querryObject[key] = value;
 	}
 	return querryObject;
-};
-
-export const fetchToState = async (url: string, data: any = {}) => {
-	const defaultFetch = {
-		method: "GET",
-		mode: "no-cors",
-		cache: "no-cache",
-		credentials: "same-origin",
-		headers: {
-			"Content-Type": "application/json",
-		},
-		redirect: "follow",
-		referrerPolicy: "no-referrer",
-	};
-
-	const res = await fetch(url, { ...defaultFetch, ...data });
-	if (res.status >= 400) {
-		return false;
-	}
-
-	try {
-		const json = await res.json();
-		Appstate.mergeGlobalState(json);
-		return json;
-	} catch (err) {
-		return false;
-	}
 };
