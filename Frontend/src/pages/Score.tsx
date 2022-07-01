@@ -5,19 +5,21 @@ import { Clock } from "../components/Clock";
 import { Digit } from "../components/Digit";
 import { IconButton } from "../components/IconButton";
 import { BottomTab } from "../components/BottomTab";
-import Colorpicker from "../components/Colorpicker";
-import TextEdit from "../components/TextEdit";
-import ClockEdit from "../components/ClockEdit";
-import Overlay from "../components/Overlay";
+import { Colorpicker } from "../components/Colorpicker";
+import { TextEdit } from "../components/TextEdit";
+import { ClockEdit } from "../components/ClockEdit";
+import { Overlay } from "../components/Overlay";
 
 import { scoreboardInterface } from "../utils/ScoreboardInterface";
 
-import { updateGlobalState as updateState, globalState as state } from "../utils/Appstate";
 import { socketState } from "../utils/Socketstate";
 import ToggleSponsors from "../components/ToggleSponsors";
 
 export const Score = () => {
-	const [dislayClockOverlay, setDislayClockOverlay] = useState(false);
+	const [displayOverlayClock, setDisplayOverlayClock] = useState(false);
+	const [displayOverlayMessage, setDisplayOverlayMessage] = useState(false);
+	const [displayOverlayColorpickerT, setDisplayOverlayColorpickerT] = useState(false);
+	const [displayOverlayColorpickerU, setDisplayOverlayColorpickerU] = useState(false);
 	/*if (!state.isPlaying) {
 		return <Navigate to={`/matchsetup`} />;
 	}*/
@@ -30,43 +32,17 @@ export const Score = () => {
 		}
 
 		scoreboardInterface.addScore(name, amt);
-		updateState(team, state[team] + amt);
-	};
-
-	const handleClickMessage = () => {
-		updateState("messagePopup", !state.messagePopup);
-	};
-
-	const handleClickSendMessage = (message: string) => {
-		updateState("messagePopup", !state.messagePopup);
-		scoreboardInterface.sendMessage(message);
-		console.log(message);
-	};
-
-	const handleClickTeam1Color = () => {
-		updateState("teamColorTeam1Popup", !state.teamColorTeam1Popup);
-	};
-
-	const handleClickTeam2Color = () => {
-		updateState("teamColorTeam2Popup", !state.teamColorTeam2Popup);
-	};
-
-	const handleClickToggle = (clicked: string) => {
-		if (clicked == "left" && state.scorbordSponsorsToggle != "left") {
-			updateState("scorbordSponsorsToggle", "left");
-		} else if (clicked == "right" && state.scorbordSponsorsToggle != "right") {
-			updateState("scorbordSponsorsToggle", "right");
-		}
+		//updateState(team, state[team] + amt);
 	};
 
 	return (
 		<>
 			<div className="p-score">
-				<Clock onClick={() => setDislayClockOverlay(true)}></Clock>
+				<Clock onClick={() => setDisplayOverlayClock(true)}></Clock>
 				<div className="scorevalue-container">
-					<Flag top={socketState.hb} bottom={socketState.ho} handleClickPopup={handleClickTeam1Color} />
+					<Flag top={socketState.hb} bottom={socketState.ho} onClick={() => setDisplayOverlayColorpickerT(true)} />
 					<div className="empty"></div>
-					<Flag top={socketState.ub} bottom={socketState.uo} handleClickPopup={handleClickTeam2Color} />
+					<Flag top={socketState.ub} bottom={socketState.uo} onClick={() => setDisplayOverlayColorpickerU(true)} />
 
 					<h2 className="teamname">{socketState.nameHome}</h2>
 					<div className="empty"></div>
@@ -111,18 +87,18 @@ export const Score = () => {
 						}
 						color="white"
 						label="WIJZIG BERICHT"
-						onClick={handleClickMessage}></IconButton>
+						onClick={() => setDisplayOverlayMessage(true)}></IconButton>
 				</div>
 
-				<ToggleSponsors handleClickToggle={handleClickToggle} />
+				{/*<ToggleSponsors handleClickToggle={handleClickToggle} />*/}
 			</div>
-			<Overlay visible={dislayClockOverlay} setVisible={setDislayClockOverlay}>
-				<ClockEdit setVisible={setDislayClockOverlay} />
+			<Overlay visible={displayOverlayClock} setVisible={setDisplayOverlayClock}>
+				<ClockEdit setVisible={setDisplayOverlayClock} />
+			</Overlay>
+			<Overlay visible={displayOverlayMessage} setVisible={setDisplayOverlayMessage}>
+				<TextEdit setVisible={setDisplayOverlayMessage} />
 			</Overlay>
 			<BottomTab />
-			<Colorpicker team={1} updateScoreState={updateState} active={state.teamColorTeam1Popup} handleClickPopup={handleClickTeam1Color} />
-			<Colorpicker team={2} updateScoreState={updateState} active={state.teamColorTeam2Popup} handleClickPopup={handleClickTeam2Color} />
-			<TextEdit active={state.messagePopup} handleClickMessage={handleClickMessage} handleClickSendMessage={handleClickSendMessage} />
 		</>
 	);
 };
