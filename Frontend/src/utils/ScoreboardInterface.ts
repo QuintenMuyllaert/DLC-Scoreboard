@@ -31,6 +31,7 @@ export class InterfaceScoreboard {
 	updateColorArray(colorArray: string[]) {}
 	startMatch(halfs: number, halfLength: number) {}
 	stopMatch() {}
+	emit(event: string, ...args: any[]) {}
 }
 
 export class InterfaceSocket {
@@ -58,6 +59,8 @@ export class InterfaceSocket {
 				console.log(serial);
 				this.socket.emit("data", serial); // send serial number to server TODO: get serial number from device
 			}
+
+			this.socket.emit("template", { type: "read" });
 		});
 
 		//@ts-ignore SIFO...
@@ -100,6 +103,10 @@ export class InterfaceSocket {
 			console.log("Appstate", key, value);
 			Appstate.updateState(key, value);
 		});
+	}
+	emit(event: string, ...args: any[]) {
+		console.log("emit", event, ...args);
+		this.socket.emit(event, ...args);
 	}
 	changeColor(team: `${1 | 2}${"B" | "O"}`, color: string) {
 		console.log("changeColor", team, color);
