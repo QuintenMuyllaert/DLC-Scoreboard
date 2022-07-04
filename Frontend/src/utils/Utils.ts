@@ -25,7 +25,7 @@ export const getQuery = () => {
 	for (const item of arrayb) {
 		const key = item.split("=")[0];
 		const value = item.replace(`${key}=`, "");
-		querryObject[key] = value;
+		querryObject[key] = decodeURIComponent(value);
 	}
 	return querryObject;
 };
