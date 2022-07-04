@@ -9,6 +9,8 @@ export const defaultState: LooseObject = {
 	scoreboard: {
 		serial: "N/A",
 		isPlaying: false,
+		fullscreen: false,
+		sponsors: [],
 		hb: "black",
 		ho: "black",
 		ub: "black",
