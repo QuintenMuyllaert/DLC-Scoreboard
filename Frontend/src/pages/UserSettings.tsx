@@ -1,94 +1,29 @@
-import { useEffect, useRef, useState } from "react";
-import { LooseObject } from "../utils/Interfaces";
-import { updateGlobalState as updateState, state } from "../utils/Appstate";
+import { useRef } from "react";
+import Appstate from "../utils/Appstate";
 
 import BottomTab from "../components/BottomTab";
-import UserSetting from "../components/UserSetting";
 import IconButton from "../components/IconButton";
-import Logo from "../components/Logo";
 import Header from "../components/Header";
+import Input from "../components/Input";
 
 export const UserSettings = () => {
+	const { color, jwt } = Appstate.getState();
+
 	const refThemeSwitch = useRef<HTMLInputElement>(null);
-	const defaultUser: LooseObject = {
-		currentUsername: "",
-		newUsername: "",
-		currentPassword: "",
-		newPassword: "",
-		checkNewPassword: "",
-	};
 
-	const [user, setUser] = useState(defaultUser);
-
-	const fetchStatus = async () => {
-		const res = await fetch(`/status`, { mode: "no-cors", method: "GET" });
-		const json = await res.json();
-		updateUser("currentUsername", json.username);
-	};
-
-	useEffect(() => {
-		fetchStatus();
-	}, []);
-
-	const onThemeChange = () => {
+	const onChangeTheme = () => {
 		console.log(refThemeSwitch.current?.checked);
 
 		if (refThemeSwitch.current?.checked) {
 			localStorage.setItem("theme", "dark");
-			updateState("color", "dark");
+			Appstate.updateState("color", "dark");
 		} else {
 			localStorage.setItem("theme", "light");
-			updateState("color", "light");
+			Appstate.updateState("color", "light");
 		}
 	};
 
-	const updateUser = (key: any, value: string) => {
-		user[key] = value;
-		setUser(user);
-	};
-
-	const sendUpdates = async () => {
-		console.log(user);
-
-		if (user.newPassword && user.newPassword == user.checkNewPassword) {
-			const res = await fetch(`/changepassword`, {
-				method: "PUT",
-				mode: "cors",
-				cache: "no-cache",
-				credentials: "same-origin",
-				headers: {
-					"Content-Type": "application/json",
-				},
-				redirect: "follow",
-				referrerPolicy: "no-referrer",
-				body: JSON.stringify({ currentPassword: user.currentPassword, newPassword: user.newPassword }),
-			});
-			console.log("changed password");
-		} else {
-			console.log("password en bevestig password zijn niet hetzelfde!");
-		}
-
-		if (user.newUsername && user.newUsername != user.currentUsername) {
-			const res = await fetch(`/edituser`, {
-				method: "PUT",
-				mode: "cors",
-				cache: "no-cache",
-				credentials: "same-origin",
-				headers: {
-					"Content-Type": "application/json",
-				},
-				redirect: "follow",
-				referrerPolicy: "no-referrer",
-				body: JSON.stringify({ currentUsername: user.currentUsername, newUsername: user.newUsername }),
-			});
-
-			if (res.status == 200) {
-				document.location.href = "/logout";
-			}
-		} else {
-			console.log("De nieuwe username is dezelfde als de oude username");
-		}
-	};
+	const onClickSave = () => {};
 
 	const onLogout = () => {
 		console.log("logging out");
@@ -119,61 +54,24 @@ export const UserSettings = () => {
 					page={onLogout}
 				/>
 
-				<h1>Hallo {state.username}</h1>
+				<h1>Hallo {jwt?.username}</h1>
 
 				<div className="content">
-					<div className="item">
-						<p className="title">name:</p>
-						<UserSetting
-							content={user.currentUsername}
-							id="usernameInput"
-							password={false}
-							onChange={(event: React.FormEvent<HTMLInputElement>) => {
-								updateUser("newUsername", event.currentTarget.value);
-							}}
-						/>
-					</div>
-					<div className="item">
-						<p className="title">huidig wachtwoord:</p>
-						<UserSetting
-							id="currentPasswordnput"
-							password={true}
-							onChange={(event: React.FormEvent<HTMLInputElement>) => {
-								updateUser("currentPassword", event.currentTarget.value);
-							}}
-						/>
-					</div>
-					<div className="item">
-						<p className="title">nieuw wachtwoord:</p>
-						<UserSetting
-							id="newPasswordInput"
-							password={true}
-							onChange={(event: React.FormEvent<HTMLInputElement>) => {
-								updateUser("newPassword", event.currentTarget.value);
-							}}
-						/>
-					</div>
-					<div className="item">
-						<p className="title">bevestig nieuw wachtwoord:</p>
-						<UserSetting
-							id="confirmNewPasswordInput"
-							password={true}
-							onChange={(event: React.FormEvent<HTMLInputElement>) => {
-								updateUser("checkNewPassword", event.currentTarget.value);
-							}}
-						/>
-					</div>
+					<Input label="Naam" type="text" />
+					<Input label="Huidig wachtwoord" type="password" />
+					<Input label="Nieuw wachtwoord" type="password" />
+					<Input label="Herhaal nieuw wachtwoord" type="password" />
 				</div>
 				<div className="buttons">
 					<div>
 						<p className="title">theme:</p>
 						<label className="switch">
-							<input ref={refThemeSwitch} type="checkbox" defaultChecked={state.color === "dark"} onChange={onThemeChange} />
+							<input ref={refThemeSwitch} type="checkbox" defaultChecked={color === "dark"} onChange={onChangeTheme} />
 							<span className="slider"></span>
 						</label>
 					</div>
 					<div className="save">
-						<IconButton label="OPSLAAN" color="white" onClick={sendUpdates} />
+						<IconButton label="OPSLAAN" color="white" onClick={onClickSave} />
 					</div>
 				</div>
 			</div>

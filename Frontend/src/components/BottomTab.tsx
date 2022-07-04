@@ -1,26 +1,20 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { updateGlobalState } from "../utils/Appstate";
+import Appstate from "../utils/Appstate";
 
 export const BottomTab = () => {
 	const navigate = useNavigate();
 
-	const [admin, setAdmin] = useState(false);
-
-	const fetchStatus = async () => {
-		const res = await fetch(`/status`, { mode: "no-cors", method: "GET" });
-		const json = await res.json();
-		setAdmin(json.isAdmin);
-	};
+	const { jwt } = Appstate.getState();
+	const admin = jwt?.isAdmin;
 
 	useEffect(() => {
-		fetchStatus();
 		console.log("hello bottomtab");
-		updateGlobalState("bottomtab", "withbottom-tab");
+		Appstate.updateState("bottomtab", "withbottom-tab");
 
 		return () => {
 			console.log("woosh bottomtab");
-			updateGlobalState("bottomtab", "");
+			Appstate.updateState("bottomtab", "");
 		};
 	}, []);
 

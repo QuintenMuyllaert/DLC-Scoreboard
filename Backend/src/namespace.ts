@@ -86,6 +86,8 @@ export const Namespace = class Namespace {
 		console.log("Added user to namespace", this.serial);
 		socket.emit("Appstate", "scoreboard", this.scoreboard);
 
+		socket.emit("Appstate", "jwt", socket.body);
+
 		(async () => {
 			const templates = await database.read("templates", { serial: this.serial });
 			socket.emit("Appstate", "templates", templates);
