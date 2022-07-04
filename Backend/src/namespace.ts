@@ -16,8 +16,11 @@ export const Namespace = class Namespace {
 		this.io = io;
 		this.timer.pause();
 		this.timer.set(0);
-		this.timer.emit = (event: string, data: any) => {
-			this.emitAll(event, data);
+		this.timer.triggerUpdate = () => {
+			this.scoreboard.clockData = this.timer.data;
+			this.emitUsers("Appstate", "scoreboard", this.scoreboard);
+			this.emitDisplays("clockData", this.timer.data);
+			database.update("scoreboards", { serial: this.serial }, this.scoreboard);
 		};
 
 		setInterval(() => {
@@ -101,11 +104,6 @@ export const Namespace = class Namespace {
 			this.emitDisplays("fullscreen", value ? true : false);
 		});
 
-		socket.on("startmatch", (data: any) => {
-			this.scoreboard.isPlaying = data ? true : false;
-			this.emitUsers("startmatch", this.scoreboard.isPlaying);
-		});
-
 		socket.on("clockEvent", (data: any) => {
 			console.log("clockEvent", data);
 
@@ -155,6 +153,10 @@ export const Namespace = class Namespace {
 
 			console.log(type, value);
 			switch (type) {
+				case "match": {
+					this.scoreboard.isPlaying = value;
+					break;
+				}
 				case "1B": {
 					this.scoreboard.hb = value;
 					this.emitDisplays("data", "#hb", "attr", "style", `fill:${value}`);

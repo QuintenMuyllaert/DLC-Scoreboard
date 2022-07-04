@@ -7,7 +7,7 @@ export const Timer = class Timer {
 	startPauseTime = 0;
 	pauseTime = 0;
 	pauseAt: number[] = [];
-	emit = (event: string, ...data: any) => {};
+	triggerUpdate = () => {};
 	get data() {
 		return {
 			realTime: this.realTime,
@@ -38,7 +38,7 @@ export const Timer = class Timer {
 				this.pauseAt.shift();
 				this.pause();
 				console.log("autoPause hit", millis);
-				this.emit("Appstate", "clockData", this.data);
+				this.triggerUpdate();
 			}
 		}, 1);
 	}
@@ -47,7 +47,6 @@ export const Timer = class Timer {
 		this.startTime = Date.now();
 		this.startPauseTime = Date.now();
 		this.pauseTime = -time * 1000;
-		this.emit("Appstate", "clockData", this.data);
 	}
 	pause() {
 		console.log("pause");
@@ -56,7 +55,6 @@ export const Timer = class Timer {
 		}
 		this.paused = true;
 		this.startPauseTime = Date.now();
-		this.emit("Appstate", "clockData", this.data);
 	}
 	resume() {
 		console.log("resume");
@@ -65,7 +63,6 @@ export const Timer = class Timer {
 		}
 		this.paused = false;
 		this.pauseTime += Date.now() - this.startPauseTime;
-		this.emit("Appstate", "clockData", this.data);
 	}
 	autoPause(millis: number) {
 		console.log("autoPause", millis);
