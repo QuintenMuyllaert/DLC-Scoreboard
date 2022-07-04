@@ -74,4 +74,8 @@ export const Timer = class Timer {
 		this.pauseAt.sort((a, b) => a - b);
 		console.log("autoPause:", this.pauseAt);
 	}
+	clearAutoPause() {
+		console.log("clearAutoPause");
+		this.pauseAt = [];
+	}
 };

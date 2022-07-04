@@ -117,6 +117,7 @@ export class InterfaceSocket {
 	resetTimer() {
 		console.log("resetTimer");
 		this.socket.emit("clockEvent", { type: "set", value: 0 });
+		this.socket.emit("clockEvent", { type: "clearAutoPause" });
 	}
 	setTimer(time: number) {
 		console.log("setTimer", time);

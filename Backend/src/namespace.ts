@@ -120,6 +120,9 @@ export const Namespace = class Namespace {
 				case "autoPause":
 					this.timer.autoPause(data.value);
 					break;
+				case "clearAutoPause":
+					this.timer.clearAutoPause();
+					break;
 				case "realTime":
 					this.timer.realTime = data.value;
 					break;
