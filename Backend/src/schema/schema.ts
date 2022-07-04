@@ -8,6 +8,8 @@ export interface User {
 
 export interface Scoreboard {
 	isPlaying: boolean;
+	fullscreen: boolean;
+	sponsors: string[];
 	hb: string;
 	ho: string;
 	ub: string;
@@ -40,6 +42,8 @@ export const defaultTemplate: Template = {
 export const defaultScoreboard: Scoreboard = {
 	serial: "N/A",
 	isPlaying: false,
+	fullscreen: false,
+	sponsors: [],
 	hb: "black",
 	ho: "black",
 	ub: "black",
