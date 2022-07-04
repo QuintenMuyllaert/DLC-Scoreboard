@@ -26,7 +26,7 @@ export const BottomTab = () => {
 	return (
 		<div className="c-bottomtab">
 			<BottomTabItem
-				name="Match"
+				name="Screen"
 				path="/screen"
 				svg={
 					<svg
