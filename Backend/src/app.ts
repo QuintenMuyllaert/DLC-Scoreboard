@@ -16,6 +16,16 @@ export const app = express();
 app.use(cookieParser());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
+app.use((req: Request, res: Response, next: any) => {
+	//set cache header on png & jpg
+	console.log("req.url", req.url);
+	if (req.url.endsWith(".png") || req.url.endsWith(".jpg")) {
+		console.log("setting cache header");
+		res.setHeader("Cache-Control", "public, max-age=7200");
+	}
+	next();
+});
+
 app.use(siofu.router);
 
 //DEFINE API ROUTES BELOW !!!
