@@ -23,13 +23,13 @@ export class InterfaceScoreboard {
 	detect = async () => {
 		return loopback;
 	};
+	pauseAt(ms: number) {}
 	setSponsorReel(sponsor: Array<string>) {}
 	setFullScreenSponsors(value: boolean) {}
 	upload = (element: any) => {};
 	uploadProperties = (folder: string, name: string) => {};
 	updateColorArray(colorArray: string[]) {}
-	startMatch() {}
-	setMatchData(matchData: any) {}
+	startMatch(halfs: number, halfLength: number) {}
 	stopMatch() {}
 }
 
@@ -126,6 +126,10 @@ export class InterfaceSocket {
 		console.log("pauseTimer");
 		this.socket.emit("clockEvent", { type: "pause" });
 	}
+	pauseAt(ms: number) {
+		console.log("pauseAt", ms);
+		this.socket.emit("clockEvent", { type: "autoPause", value: ms });
+	}
 	resumeTimer() {
 		console.log("resumeTimer");
 		this.socket.emit("clockEvent", { type: "resume" });
@@ -181,22 +185,29 @@ export class InterfaceSocket {
 		console.log("updateColorArray", colorArray);
 		this.socket.emit("input", "COLORS", colorArray);
 	}
-	async startMatch() {
+	async startMatch(halfs: number = 0, halfLength: number = 0) {
 		console.log("startMatch");
 		//Screen to scoreboard
-		this.socket.emit("startmatch", true);
+		this.socket.emit("input", "match", true);
 
-		const state = Appstate.getState();
+		const { scoreboard } = Appstate.getState();
 		//scoreboardInterface.setScreen("P0");
 
 		scoreboardInterface.resetScore();
 		scoreboardInterface.pauseTimer();
 		scoreboardInterface.resetTimer();
 
-		scoreboardInterface.changeColor("1B", state.hb);
-		scoreboardInterface.changeColor("1O", state.ho);
-		scoreboardInterface.changeColor("2B", state.ub);
-		scoreboardInterface.changeColor("2O", state.uo);
+		if (halfs && halfLength) {
+			for (let i = 1; i <= halfs; i++) {
+				console.log("Pausing at ", halfLength * i * 60);
+				scoreboardInterface.pauseAt(halfLength * i * 1000 * 60);
+			}
+		}
+
+		scoreboardInterface.changeColor("1B", scoreboard.hb);
+		scoreboardInterface.changeColor("1O", scoreboard.ho);
+		scoreboardInterface.changeColor("2B", scoreboard.ub);
+		scoreboardInterface.changeColor("2O", scoreboard.uo);
 
 		scoreboardInterface.setFullScreenSponsors(false);
 		scoreboardInterface.setSponsorReel([]);
@@ -204,18 +215,9 @@ export class InterfaceSocket {
 	async stopMatch() {
 		console.log("stopMatch");
 		//Screen to scoreboard
-		this.socket.emit("startmatch", false);
+		this.socket.emit("input", "match", false);
 		//scoreboardInterface.setFullScreenSponsors(true);
 		//scoreboardInterface.setSponsorReel(["QMA"]);
-	}
-	setMatchData(data: { halfs: number; halfLength: number }) {
-		console.log("setMatchData", data);
-		const { halfs, halfLength } = data;
-		if (!halfs || !halfLength) {
-			console.log("Invalid data", data);
-			return;
-		}
-		this.socket.emit("matchtemplate", data);
 	}
 }
 
