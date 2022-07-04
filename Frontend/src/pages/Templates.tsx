@@ -1,112 +1,42 @@
-import { ReactElement, ReactEventHandler, useEffect, useState } from "react";
+import { ReactElement, ReactEventHandler, useState } from "react";
+
 import BottomTab from "../components/BottomTab";
 import IconButton from "../components/IconButton";
-
 import Input from "../components/Input";
-import Logo from "../components/Logo";
 import Template from "../components/Template";
-import { LooseObject } from "../utils/Interfaces";
-import { updateGlobalState as updateState, state } from "../utils/Appstate";
-import ModalConfirm from "../components/ModalConfirm";
 import Header from "../components/Header";
 
+import Appstate from "../utils/Appstate";
+import { scoreboardInterface } from "../utils/ScoreboardInterface";
+
 export const Templates = () => {
-	const template: LooseObject = {
-		name: "",
-		parts: 0,
-		duration: 0,
-	};
+	const [inputName, setInputName] = useState("");
+	const [inputHalfs, setInputHalfs] = useState("0");
+	const [inputHalfLength, setInputHalfLength] = useState("0");
 
-	const [newTemplate, setnewTemplate] = useState(template);
+	const templateElements: ReactElement[] = [];
+	const templates = Appstate.getState().templates;
+	console.log(templates);
+	for (const template of templates) {
+		templateElements.push(<Template id={template._id} name={template.name} halfs={template.halfs} halfLength={template.halfLength} />);
+	}
 
-	const [templatesList, setTemplateList] = useState(state.templates);
-
-	const updateNewTemplate = (key: any, value: string) => {
-		newTemplate[key] = value;
-		setnewTemplate(newTemplate);
-	};
-
-	const fetchTemplates = async () => {
-		const res = await fetch(`/template?serial=${state.serial}`, { mode: "no-cors", method: "GET" });
-		const json = await res.json();
-		const templates = [];
-		for (const template of json) {
-			templates.push(
-				<Template sportNaam={template.name} aantalHelften={template.parts} duurHelft={template.duration} handleDeletePopup={handleClickDeletePopup} />,
-			);
-
-			console.log("single template: ", template);
+	const onClickAddTemplate = (e: ReactEventHandler) => {
+		if (!inputName || !inputHalfs || !inputHalfLength) {
+			return;
 		}
 
-		setTemplateList(json);
-
-		console.log("list of templates: ", templates);
-		//updateState("templates", templates);
-		console.log("templates state: ", state.templates);
-	};
-
-	const handleClickNewTemplate = async () => {
-		const res = await fetch(`/template?serial=${state.serial}`, {
-			mode: "cors",
-			method: "POST",
-			cache: "no-cache",
-			credentials: "same-origin",
-			headers: {
-				"content-type": "application/json",
-			},
-			redirect: "follow",
-			referrerPolicy: "no-referrer",
-			body: JSON.stringify(newTemplate),
-		});
-
-		//TODO : refetch instead
-		document.location.href = document.location.href;
-	};
-
-	useEffect(() => {
-		(async () => {
-			await fetchTemplates();
-		})();
-
-		//
-	}, []);
-
-	const handleClickDeletePopup = () => {
-		updateState("deleteTemplatePopup", !state.deleteTemplatePopup);
-	};
-
-	const handleDeleteTemplate = async () => {
-		const toDelete: LooseObject = {
-			name: state.templateToDelete,
+		const newTemplate = {
+			name: inputName,
+			halfs: parseInt(inputHalfs),
+			halfLength: parseInt(inputHalfLength),
 		};
+		Appstate.updateState("templates", [...Appstate.getState().templates, newTemplate]);
+		scoreboardInterface.emit("template", { type: "create", value: newTemplate });
 
-		const res = await fetch(`/template?serial=${state.serial}`, {
-			mode: "cors",
-			method: "DELETE",
-			cache: "no-cache",
-			credentials: "same-origin",
-			headers: {
-				"content-type": "application/json",
-			},
-			redirect: "follow",
-			referrerPolicy: "no-referrer",
-			body: JSON.stringify(toDelete),
-		});
-
-		updateState("deleteTemplatePopup", !state.deleteTemplatePopup);
-
-		//TODO : refetch instead
-		document.location.href = document.location.href;
-	};
-
-	const generateTemplates = (templates: any[]) => {
-		const reactObj = [];
-		for (const template of templates) {
-			reactObj.push(
-				<Template sportNaam={template.name} aantalHelften={template.parts} duurHelft={template.duration} handleDeletePopup={handleClickDeletePopup} />,
-			);
-		}
-		return reactObj;
+		setInputName("");
+		setInputHalfs("0");
+		setInputHalfLength("0");
 	};
 
 	return (
@@ -116,50 +46,44 @@ export const Templates = () => {
 				<h1>Nieuwe template toevoegen</h1>
 				<div className="p-templates__form">
 					<Input
-						id="naamTemplate"
+						id="sport"
 						label="Naam sport"
 						type="text"
+						inputValue={inputName}
 						onChange={(event: React.FormEvent<HTMLInputElement>) => {
-							updateNewTemplate("name", event.currentTarget.value);
-							console.log(template);
+							setInputName(event.currentTarget.value);
 						}}
 					/>
 
 					<div className="p-templates__formgroup">
 						<Input
-							id="aantalHelften"
-							label="Aantal helften"
+							label="Helften"
 							type="number"
+							id="helften-aantal"
+							inputValue={inputHalfs}
 							onChange={(event: React.FormEvent<HTMLInputElement>) => {
-								updateNewTemplate("parts", event.currentTarget.value);
-								console.log(template);
+								setInputHalfs(event.currentTarget.value);
 							}}
 						/>
 
 						<Input
-							id="duurHelft"
 							label="Duur helft"
 							type="number"
+							id="helften-tijd"
+							inputValue={inputHalfLength}
 							onChange={(event: React.FormEvent<HTMLInputElement>) => {
-								updateNewTemplate("duration", event.currentTarget.value);
-								console.log(template);
+								setInputHalfLength(event.currentTarget.value);
 							}}
 						/>
 					</div>
 
-					<IconButton label="Toevoegen" color="white" onClick={handleClickNewTemplate} />
+					<IconButton label="Toevoegen" color="white" onClick={onClickAddTemplate} />
 				</div>
 
 				<h1>Bestaande templates</h1>
-				<div className="p-templates__list scrollbar">{generateTemplates(templatesList)}</div>
+				<div className="p-templates__list scrollbar">{templateElements}</div>
 			</div>
 			<BottomTab />
-			<ModalConfirm
-				active={state.deleteTemplatePopup}
-				tekst="Ben je zeker dat je deze template wilt verwijderen?"
-				handleClickDeletePopup={handleClickDeletePopup}
-				handleDelete={handleDeleteTemplate}
-			/>
 		</>
 	);
 };

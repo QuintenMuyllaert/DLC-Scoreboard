@@ -24,6 +24,7 @@ export const defaultState: LooseObject = {
 		colors: ["green", "lightblue", "darkblue", "purple", "white", "black", "yellow", "red", "orange", "darkred"],
 		hasAdmin: false,
 	},
+	templates: [],
 };
 
 export const attachUseState = (_state: any, _setState: any) => {

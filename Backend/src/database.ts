@@ -1,5 +1,5 @@
 import dotenv from "dotenv";
-import { MongoClient } from "mongodb";
+import { MongoClient, ObjectId } from "mongodb";
 
 dotenv.config();
 
@@ -76,4 +76,5 @@ export default {
 	delete: dbDelete,
 	exists: dbExists,
 	createUpdate: dbCreateUpdate,
+	ObjectId,
 };

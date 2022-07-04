@@ -86,6 +86,11 @@ export const Namespace = class Namespace {
 		console.log("Added user to namespace", this.serial);
 		socket.emit("Appstate", "scoreboard", this.scoreboard);
 
+		(async () => {
+			const templates = await database.read("templates", { serial: this.serial });
+			socket.emit("Appstate", "templates", templates);
+		})();
+
 		socket.on("sponsors", (data: Array<string>) => {
 			if (data && data.length) {
 				if (Array.isArray(data)) {
@@ -102,6 +107,37 @@ export const Namespace = class Namespace {
 
 		socket.on("fullscreen", (value: boolean) => {
 			this.emitDisplays("fullscreen", value ? true : false);
+		});
+
+		socket.on("template", async (data: any) => {
+			console.log("template", data);
+			if (data && data.value && typeof data.value === "object" && !Array.isArray(data.value) && data.value !== null) {
+				data.value.serial = this.serial;
+			} else {
+				return;
+			}
+
+			let _id;
+			if (data.value._id) {
+				_id = new database.ObjectId(data.value._id);
+				delete data.value._id;
+			}
+
+			switch (data.type) {
+				case "create":
+					await database.create("templates", data.value);
+					break;
+				case "read":
+					//REDUNDANT
+					break;
+				case "update":
+					await database.update("templates", { serial: this.serial, _id }, data.value);
+					break;
+				case "delete":
+					await database.delete("templates", { serial: this.serial, _id });
+			}
+			const templates = await database.read("templates", { serial: this.serial });
+			this.emitUsers("Appstate", "templates", templates);
 		});
 
 		socket.on("clockEvent", (data: any) => {
