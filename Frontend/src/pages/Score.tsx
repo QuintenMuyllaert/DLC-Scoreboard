@@ -15,15 +15,14 @@ import { scoreboardInterface } from "../utils/ScoreboardInterface";
 import Appstate from "../utils/Appstate";
 
 export const Score = () => {
-	/*if (!state.isPlaying) {
+	const scoreboard = Appstate.getState().scoreboard;
+	if (!scoreboard.isPlaying) {
 		return <Navigate to={`/matchsetup`} />;
-	}*/
+	}
 	const [displayOverlayClock, setDisplayOverlayClock] = useState(false);
 	const [displayOverlayMessage, setDisplayOverlayMessage] = useState(false);
 	const [displayOverlayColorpickerT, setDisplayOverlayColorpickerT] = useState(false);
 	const [displayOverlayColorpickerU, setDisplayOverlayColorpickerU] = useState(false);
-
-	const scoreboard = Appstate.getState().scoreboard;
 
 	const score = (team: string, amt: number) => {
 		const name = team == "t1" ? "G1" : "G2";
