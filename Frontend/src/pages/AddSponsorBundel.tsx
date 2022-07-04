@@ -2,27 +2,21 @@ import { useState } from "react";
 import BottomTab from "../components/BottomTab";
 import IconButton from "../components/IconButton";
 import Input from "../components/Input";
-import Logo from "../components/Logo";
 import { scoreboardInterface } from "../utils/ScoreboardInterface";
 import { useNavigate } from "react-router-dom";
 import Header from "../components/Header";
 
 export const AddSponsorBundel = () => {
 	const navigate = useNavigate();
+	const [folderName, setFolderName] = useState("");
 
-	const [bundelNaam, setBundelNaam] = useState("");
-	const [validatieNaam, setValidatieNaam] = useState(false);
-
-	const handleClickNewSponsorBundel = () => {
-		if (bundelNaam != "") {
-			scoreboardInterface.uploadProperties(bundelNaam, "");
-			navigate(`/sponsortemplates`);
-		} else {
-			setValidatieNaam(true);
-		}
-	};
-
-	const goToSponsorTemplates = () => {
+	const onClickSaveFolder = () => {
+		scoreboardInterface.emit("sponsors", {
+			type: "create",
+			value: {
+				folder: folderName,
+			},
+		});
 		navigate(`/sponsortemplates`);
 	};
 
@@ -45,7 +39,7 @@ export const AddSponsorBundel = () => {
 							<polyline points="12 19 5 12 12 5"></polyline>
 						</svg>
 					}
-					page={goToSponsorTemplates}
+					page={() => navigate("/sponsortemplates")}
 				/>
 
 				<h1>Nieuwe sponsorbundel</h1>
@@ -56,13 +50,12 @@ export const AddSponsorBundel = () => {
 						label="Naam Nieuwe bundel"
 						type="text"
 						onChange={(event: React.FormEvent<HTMLInputElement>) => {
-							setBundelNaam(event.currentTarget.value);
+							setFolderName(event.currentTarget.value);
 						}}
 					/>
-					<p className={validatieNaam ? "p-addSponsor__validatie" : "p-addSponsor__validatie p-addSponsor__hidden"}>Vul de naam van de bundel in</p>
 				</div>
 				<div className="p-addSponsor__btn">
-					<IconButton label="OPSLAAN" color="white" onClick={handleClickNewSponsorBundel} />
+					<IconButton label="OPSLAAN" color="white" onClick={onClickSaveFolder} />
 				</div>
 			</div>
 

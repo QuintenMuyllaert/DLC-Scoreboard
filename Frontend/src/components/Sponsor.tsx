@@ -1,40 +1,12 @@
-import { useState } from "react";
-import { updateGlobalState as updateState, state } from "../utils/Appstate";
-import { LooseObject } from "../utils/Interfaces";
-
-export const Sponsor = ({ img, map, handleClickDeletePopup }: { img: string; map: string; handleClickDeletePopup: (event?: any) => any }) => {
-	const imgUrl = `${document.location.origin}/data/${state.serial}/${map}/${img}`;
-
-	const toDelete: LooseObject = {
-		bundel: "",
-		sponsor: "",
-	};
-
-	const [sponsorToDelete, setSponsorToDelete] = useState(toDelete);
-
-	const updateSponsorToDelete = (key: any, value: string) => {
-		sponsorToDelete[key] = value;
-		setSponsorToDelete(sponsorToDelete);
-	};
-
-	const handleClickDeleteBtn = (sponsorBundel: string, sponsor: string) => {
-		updateSponsorToDelete("bundel", map);
-		updateSponsorToDelete("sponsor", img);
-		updateState("sponsorToDelete", sponsorToDelete);
-		handleClickDeletePopup();
-	};
-
+export const Sponsor = ({ imgUrl, onClick }: { imgUrl: string; onClick: () => any }) => {
+	const img = imgUrl.split("/").pop()?.split(".")[0];
 	return (
 		<article className="p-sponsors__list-item">
 			<div className="p-sponsors__list-img">
 				<img src={imgUrl} alt={img} />
 			</div>
 			<p>{img}</p>
-			<button
-				className="p-sponsors__list-btn"
-				onClick={() => {
-					handleClickDeleteBtn(map, img);
-				}}>
+			<button className="p-sponsors__list-btn" onClick={onClick}>
 				<svg
 					xmlns="http://www.w3.org/2000/svg"
 					width="30"

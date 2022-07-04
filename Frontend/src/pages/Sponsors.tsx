@@ -1,4 +1,4 @@
-import { updateGlobalState as updateState, state } from "../utils/Appstate";
+import Appstate from "../utils/Appstate";
 import BottomTab from "../components/BottomTab";
 import Logo from "../components/Logo";
 import Sponsor from "../components/Sponsor";
@@ -6,64 +6,41 @@ import { getQuery } from "../utils/Utils";
 import { useNavigate } from "react-router-dom";
 import ModalConfirm from "../components/ModalConfirm";
 import Header from "../components/Header";
+import { scoreboardInterface } from "../utils/ScoreboardInterface";
 
 export const Sponsors = () => {
 	const navigate = useNavigate();
 
-	const fetchSponsors = async () => {
-		if (!state.serial || state.serial === "N/A") {
-			//TODO : get serial
-			console.log("No serial found");
-			return;
-		}
+	const { sponsors, jwt } = Appstate.getState();
 
-		const res = await fetch(`/sponsors?serial=${state.serial}`, { mode: "no-cors", method: "GET" });
+	const { folder } = getQuery();
 
-		if (res.status >= 400) {
-			console.log("Invalid reply from server");
-			return;
-		}
+	const sponsorElements = [];
+	for (const sponsor of sponsors) {
+		if (sponsor.name === folder) {
+			for (const file of sponsor.children) {
+				const imgUrl = `${document.location.origin}/data/${jwt?.serial}/${folder}/${file}`;
 
-		const json = await res.json();
-		updateState("sponsors", json);
-	};
-
-	fetchSponsors();
-
-	const handleClickDeletePopup = () => {
-		updateState("deleteSponsorPopup", !state.deleteSponsorPopup);
-	};
-
-	const handleDeleteSponsor = async () => {
-		handleClickDeletePopup();
-		console.log(state.deleteSponsorPopup);
-		const res = await fetch(`/sponsors?serial=${state.serial}&bundle=${state.sponsorToDelete.bundel}&file=${state.sponsorToDelete.sponsor}`, {
-			mode: "cors",
-			method: "DELETE",
-			cache: "no-cache",
-			credentials: "same-origin",
-			redirect: "follow",
-			referrerPolicy: "no-referrer",
-		});
-
-		//TODO : refetch instead
-		document.location.href = document.location.href;
-	};
-
-	const { bundel } = getQuery();
-
-	let sponsors = [];
-
-	for (const sponsorBundel of state.sponsors) {
-		if (sponsorBundel.name === bundel) {
-			for (const sponsor of sponsorBundel.children) {
-				sponsors.push(<Sponsor img={sponsor} map={sponsorBundel.name} handleClickDeletePopup={handleClickDeletePopup} />);
+				sponsorElements.push(
+					<Sponsor
+						imgUrl={imgUrl}
+						onClick={() => {
+							scoreboardInterface.emit("sponsors", {
+								type: "delete",
+								value: {
+									folder,
+									file,
+								},
+							});
+						}}
+					/>,
+				);
 			}
 		}
 	}
 
 	const handleClickNewSponsor = async () => {
-		navigate(`/addsponsor?bundel=${bundel}`);
+		navigate(`/addsponsor?folder=${folder}`);
 	};
 
 	const goToSponsorTemplates = () => {
@@ -92,9 +69,9 @@ export const Sponsors = () => {
 					page={goToSponsorTemplates}
 				/>
 
-				<h1>{bundel}</h1>
+				<h1>{folder}</h1>
 
-				<div className="p-sponsors__list">{sponsors}</div>
+				<div className="p-sponsors__list">{sponsorElements}</div>
 
 				<button className="p-sponsors__add" onClick={handleClickNewSponsor}>
 					<div className="p-sponsors__add-placeholder">
@@ -116,12 +93,6 @@ export const Sponsors = () => {
 				</button>
 			</div>
 			<BottomTab />
-			<ModalConfirm
-				active={state.deleteSponsorPopup}
-				tekst="Ben je zeker dat je deze sponsor wilt verwijderen?"
-				handleClickDeletePopup={handleClickDeletePopup}
-				handleDelete={handleDeleteSponsor}
-			/>
 		</>
 	);
 };

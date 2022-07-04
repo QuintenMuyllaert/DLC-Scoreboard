@@ -26,8 +26,6 @@ export class InterfaceScoreboard {
 	pauseAt(ms: number) {}
 	setSponsorReel(sponsor: Array<string>) {}
 	setFullScreenSponsors(value: boolean) {}
-	upload = (element: any) => {};
-	uploadProperties = (folder: string, name: string) => {};
 	updateColorArray(colorArray: string[]) {}
 	startMatch(halfs: number, halfLength: number) {}
 	stopMatch() {}
@@ -62,9 +60,6 @@ export class InterfaceSocket {
 
 			this.socket.emit("template", { type: "read" });
 		});
-
-		//@ts-ignore SIFO...
-		this.uploader = new SocketIOFileUpload(this.socket);
 
 		const { serial } = getQuery();
 		if (serial && serial.length) {
@@ -177,17 +172,6 @@ export class InterfaceSocket {
 	detect = async () => {
 		console.log("detect");
 		return this.uri;
-	};
-	upload = (element: any) => {
-		console.log("upload", element);
-		setTimeout(() => {
-			this.uploader.listenOnInput(element.current);
-		}, 1000);
-	};
-	uploadProperties = (folder: string, name: string) => {
-		console.log("uploadProperties", folder, name);
-		Appstate.updateState("fileIsUploaded", false);
-		this.socket.emit("upload", folder, name);
 	};
 	updateColorArray(colorArray: string[]) {
 		console.log("updateColorArray", colorArray);

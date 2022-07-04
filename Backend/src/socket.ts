@@ -4,7 +4,12 @@ import { LooseObject } from "./schema/schema";
 import { Namespace } from "./namespace";
 
 export const attachSocketIO = (server: any) => {
-	const io = new Server(server);
+	const io = new Server(server, {
+		cors: {
+			origin: "*",
+		},
+		maxHttpBufferSize: 1e8,
+	});
 
 	const namespace: LooseObject = {};
 	const getNamespace = (serial: string) => {

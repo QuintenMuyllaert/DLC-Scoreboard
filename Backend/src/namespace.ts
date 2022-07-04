@@ -1,6 +1,11 @@
 import database from "./database";
 import { Timer } from "./timer";
-import { Scoreboard, defaultScoreboard } from "./schema/schema";
+import { Scoreboard, defaultScoreboard, LooseObject } from "./schema/schema";
+import { createWriteStream, existsSync, mkdirSync, readdirSync, rmdirSync, statSync, unlinkSync, writeFileSync } from "fs";
+import path from "path";
+
+const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
+
 export const Namespace = class Namespace {
 	serial: string;
 	io: any;
@@ -8,7 +13,7 @@ export const Namespace = class Namespace {
 	timer = new Timer();
 	sponsors = [];
 	showSponsors = false;
-
+	gotScoreboardFromDB = false;
 	constructor(serial: string, io: any) {
 		console.log("Created namespace", serial);
 		this.serial = serial;
@@ -44,6 +49,7 @@ export const Namespace = class Namespace {
 			this.timer.data = this.scoreboard.clockData;
 			this.emitUsers("Appstate", "scoreboard", this.scoreboard);
 			this.emitDisplays("clockData", this.timer.data);
+			this.gotScoreboardFromDB = true;
 		})();
 	}
 	spIndex = 0;
@@ -65,8 +71,12 @@ export const Namespace = class Namespace {
 		console.log("emitAll", event, args);
 		this.io.in(this.serial).emit(event, ...args);
 	};
-	addDisplay(socket: any) {
+	async addDisplay(socket: any) {
 		socket.join([`DISPLAY-${this.serial}`, this.serial]);
+		while (!this.gotScoreboardFromDB) {
+			console.log("Waiting for scoreboard from DB");
+			await delay(100);
+		}
 
 		console.log("Added display to namespace", this.serial);
 		socket.emit("data", "#hb", "attr", "style", `fill:${this.scoreboard.hb}`);
@@ -80,20 +90,24 @@ export const Namespace = class Namespace {
 		socket.emit("clockData", this.timer.data);
 		socket.emit("sponsor", "");
 	}
-	addUser(socket: any) {
+	async addUser(socket: any) {
 		socket.join([`CLIENT-${this.serial}`, this.serial]);
+		while (!this.gotScoreboardFromDB) {
+			console.log("Waiting for scoreboard from DB");
+			await delay(100);
+		}
 
 		console.log("Added user to namespace", this.serial);
 		socket.emit("Appstate", "scoreboard", this.scoreboard);
-
 		socket.emit("Appstate", "jwt", socket.body);
+		socket.emit("Appstate", "sponsors", this.readSponsorTree());
 
 		(async () => {
 			const templates = await database.read("templates", { serial: this.serial });
 			socket.emit("Appstate", "templates", templates);
 		})();
 
-		socket.on("sponsors", (data: Array<string>) => {
+		/*socket.on("sponsors", (data: Array<string>) => {
 			if (data && data.length) {
 				if (Array.isArray(data)) {
 					//@ts-ignore
@@ -105,7 +119,7 @@ export const Namespace = class Namespace {
 				this.showSponsors = false;
 				this.emitDisplays("sponsor", "");
 			}
-		});
+		});*/
 
 		socket.on("fullscreen", (value: boolean) => {
 			this.emitDisplays("fullscreen", value ? true : false);
@@ -140,6 +154,58 @@ export const Namespace = class Namespace {
 			}
 			const templates = await database.read("templates", { serial: this.serial });
 			this.emitUsers("Appstate", "templates", templates);
+		});
+
+		socket.on("sponsors", async (data: any) => {
+			console.log("sponsors", data);
+			if (data && data.value && typeof data.value === "object" && !Array.isArray(data.value) && data.value !== null) {
+				data.value.serial = this.serial;
+			} else {
+				return;
+			}
+
+			let _id;
+			if (data.value._id) {
+				_id = new database.ObjectId(data.value._id);
+				delete data.value._id;
+			}
+
+			const folder = data?.value?.folder || "";
+			const file = data?.value?.file || "";
+			const uri = data?.value?.uri || "";
+			if (folder.includes("/") || folder.includes("\\") || folder.includes(".")) {
+				return;
+			}
+			if (file.includes("/") || file.includes("\\")) {
+				return;
+			}
+
+			switch (data.type) {
+				case "create":
+					if (!folder) {
+						break;
+					}
+
+					existsSync(`./www/${this.serial}`) || mkdirSync(`./www/${this.serial}`);
+					existsSync(`./www/${this.serial}/${folder}`) || mkdirSync(`./www/${this.serial}/${folder}`);
+
+					if (file) {
+						const ImageDataURI = require("image-data-uri");
+						await ImageDataURI.outputFile(uri, `./www/${this.serial}/${folder}/${file}`);
+					}
+
+					break;
+				case "delete":
+					if (folder && !file) {
+						rmdirSync(`www/${this.serial}/${folder}`, { recursive: true });
+					}
+					if (folder && file) {
+						unlinkSync(`www/${this.serial}/${folder}/${file}`);
+					}
+					break;
+			}
+
+			this.emitUsers("Appstate", "sponsors", this.readSponsorTree());
 		});
 
 		socket.on("clockEvent", (data: any) => {
@@ -257,5 +323,20 @@ export const Namespace = class Namespace {
 			this.emitUsers("Appstate", "scoreboard", this.scoreboard);
 			database.update("scoreboards", { serial: this.serial }, this.scoreboard);
 		});
+	}
+	readSponsorTree() {
+		const tree = [];
+		const folder = `www/${this.serial}/`;
+		const files = readdirSync(folder);
+		for (const file of files) {
+			const stat = statSync(`${folder}/${file}`);
+			if (!stat.isFile()) {
+				tree.push({
+					name: file,
+					children: readdirSync(path.join(folder, file)),
+				});
+			}
+		}
+		return tree;
 	}
 };

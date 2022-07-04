@@ -9,37 +9,30 @@ import Header from "../components/Header";
 import { scoreboardInterface } from "../utils/ScoreboardInterface";
 import { getQuery } from "../utils/Utils";
 import { useNavigate } from "react-router-dom";
-import { updateGlobalState as updateState, state } from "../utils/Appstate";
 
 export const AddSponsor = () => {
 	const navigate = useNavigate();
+	const { folder } = getQuery();
 
-	const [sponsorNaam, setSponsorNaam] = useState("");
-	const [disabled, setDisabled] = useState(true);
-	const [validatieNaam, setValidatieNaam] = useState(false);
+	const [sponsorName, setSponsorName] = useState("");
+	const [sponsorUri, setSponsorUri] = useState("");
+	const [sponsorExtention, setSponsorExtention] = useState("");
 
-	const inputEl = useRef(null);
-	scoreboardInterface.upload(inputEl);
-
-	const enableInput = (str: string) => {
-		if (str != "") {
-			setDisabled(false);
-			setValidatieNaam(false);
+	const onClickSave = () => {
+		if (sponsorName === "" || sponsorUri === "" || sponsorExtention === "") {
+			return;
 		}
-	};
 
-	const { bundel } = getQuery();
+		scoreboardInterface.emit("sponsors", {
+			type: "create",
+			value: {
+				folder,
+				file: `${sponsorName}.${sponsorExtention}`,
+				uri: sponsorUri,
+			},
+		});
 
-	const handleClickNewSponsor = () => {
-		if (sponsorNaam) {
-			navigate(`/sponsor?bundel=${bundel}&serial=${state.serial}`);
-		} else {
-			setValidatieNaam(true);
-		}
-	};
-
-	const goToSponsorTemplates = () => {
-		navigate(`/sponsortemplates`);
+		navigate(`/sponsor?folder=${encodeURIComponent(folder)}`);
 	};
 
 	return (
@@ -61,7 +54,7 @@ export const AddSponsor = () => {
 							<polyline points="12 19 5 12 12 5"></polyline>
 						</svg>
 					}
-					page={goToSponsorTemplates}
+					page={() => navigate("/sponsortemplates")}
 				/>
 
 				<div className="c-addSponsor__tekst">
@@ -75,21 +68,36 @@ export const AddSponsor = () => {
 				</div>
 
 				<div className="p-addSponsor__form">
-					<div className="c-input">
-						<label htmlFor="naamSponsor">Naam sponsor</label>
-						<input
-							id="naamSponsor"
-							type="text"
-							onChange={(event: React.FormEvent<HTMLInputElement>) => {
-								setSponsorNaam(event.currentTarget.value);
-								scoreboardInterface.uploadProperties(bundel, sponsorNaam);
-								enableInput(event.currentTarget.value);
-							}}
-						/>
-					</div>
-					<p className={validatieNaam ? "p-addSponsor__validatie" : "p-addSponsor__validatie p-addSponsor__hidden"}>Vul de naam van de sponsor in</p>
-					<input ref={inputEl} style={{ display: "none" }} type="file" id="siofu_input" disabled={disabled} />
-					<label htmlFor="siofu_input" className="p-addSponsor__logo">
+					<Input
+						label="Naam sponsor"
+						type="text"
+						onChange={(event: React.FormEvent<HTMLInputElement>) => {
+							setSponsorName(event.currentTarget.value);
+						}}
+					/>
+					<input
+						style={{ display: "none" }}
+						type="file"
+						id="file_upload"
+						onChange={(event: React.FormEvent<HTMLInputElement>) => {
+							const file = event?.currentTarget?.files?.[0];
+							const reader = new FileReader();
+
+							reader.addEventListener(
+								"load",
+								function () {
+									setSponsorUri(reader.result as string);
+								},
+								false,
+							);
+
+							if (file) {
+								setSponsorExtention(file?.name?.split(".")?.pop() || "");
+								reader.readAsDataURL(file);
+							}
+						}}
+					/>
+					<label htmlFor="file_upload" className="p-addSponsor__logo">
 						<div className="p-addSponsor__logo-container">
 							<p>Selecteer een logo</p>
 							<div className="p-addSponsor__logo-svg">
@@ -113,9 +121,7 @@ export const AddSponsor = () => {
 				</div>
 
 				<div className="p-addSponsor__btn">
-					{/* <IconButton label="OPSLAAN" color="white" onClick={handleClickNewSponsor} /> */}
-
-					<button className="c-iconbutton white center" onClick={handleClickNewSponsor} disabled={!state.fileIsUploaded}>
+					<button className="c-iconbutton white center" onClick={onClickSave}>
 						Opslaan
 					</button>
 				</div>

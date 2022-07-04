@@ -25,6 +25,7 @@ export const defaultState: LooseObject = {
 		hasAdmin: false,
 	},
 	templates: [],
+	sponsors: [],
 };
 
 export const attachUseState = (_state: any, _setState: any) => {

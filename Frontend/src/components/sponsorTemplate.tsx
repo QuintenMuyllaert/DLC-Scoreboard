@@ -5,7 +5,7 @@ export const SponsorTemplate = ({ name, aantal, handleClickDeletePopup }: { name
 	const navigate = useNavigate();
 
 	const goToSponsor = async (bundelNaam: string) => {
-		navigate(`/sponsor?bundel=${bundelNaam}&serial=${state.serial}`);
+		navigate(`/sponsor?folder=${encodeURIComponent(bundelNaam)}`);
 	};
 
 	const handleClickDeleteBtn = (name: string) => {
