@@ -11,7 +11,7 @@ import Overlay from "../components/Overlay";
 import { scoreboardInterface } from "../utils/ScoreboardInterface";
 
 export const MatchSetup = () => {
-	const scoreboard = Appstate.getState().scoreboard;
+	const { scoreboard, templates } = Appstate.getState();
 	if (scoreboard.isPlaying) {
 		return <Navigate to={`/score`} />;
 	}
@@ -20,21 +20,21 @@ export const MatchSetup = () => {
 	const [displayOverlayColorpickerT, setDisplayOverlayColorpickerT] = useState(false);
 	const [displayOverlayColorpickerU, setDisplayOverlayColorpickerU] = useState(false);
 
-	const [inputName, setInputName] = useState("");
 	const [inputHalfs, setInputHalfs] = useState("0");
 	const [inputHalfLength, setInputHalfLength] = useState("0");
 
-	interface template {
-		name: string;
-		halfs: number;
-		halfLength: number;
-	}
-
-	let templates: any[] = [];
-
+	const options = [];
 	for (const template of templates) {
-		templates.push(<option value={template.name}>{template.name}</option>);
+		options.push(<option value={template.name}>{template.name}</option>);
 	}
+
+	const onChangeTemplate = (event: React.FormEvent<HTMLSelectElement>) => {
+		const template = templates.find((template: any) => template.name === event.currentTarget.value);
+		if (template) {
+			setInputHalfs(template.halfs.toString());
+			setInputHalfLength(template.halfLength.toString());
+		}
+	};
 
 	return (
 		<>
@@ -53,11 +53,11 @@ export const MatchSetup = () => {
 				<div className="matchsettings-container">
 					<div className="c-option">
 						<label htmlFor="selectedTemplate">Template selecteren</label>
-						<select id="selectedTemplate" onChange={(e) => {}}>
+						<select id="selectedTemplate" onChange={onChangeTemplate}>
 							<option value="0" selected>
 								Selecteer een template
 							</option>
-							{templates}
+							{options}
 						</select>
 						<svg
 							xmlns="http://www.w3.org/2000/svg"
@@ -72,16 +72,6 @@ export const MatchSetup = () => {
 							<polyline points="6 9 12 15 18 9"></polyline>
 						</svg>
 					</div>
-
-					<Input
-						id="sport"
-						label="Naam sport"
-						type="text"
-						inputValue={inputName}
-						onChange={(event: React.FormEvent<HTMLInputElement>) => {
-							setInputName(event.currentTarget.value);
-						}}
-					/>
 
 					<div className="match-helft">
 						<div className="helft">
@@ -106,10 +96,6 @@ export const MatchSetup = () => {
 								}}
 							/>
 						</div>
-					</div>
-					<div className="c-checkbox">
-						<input type="checkbox" id="saveTemplate" name="saveTemplate" value="Yes" onClick={() => {}} checked={false} disabled={false} />
-						<label htmlFor="saveTemplate">Deze instellingen opslaan als template</label>
 					</div>
 				</div>
 				<div className="p-matchsetup__button">
