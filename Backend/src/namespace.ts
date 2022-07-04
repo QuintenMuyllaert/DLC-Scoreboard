@@ -11,8 +11,6 @@ export const Namespace = class Namespace {
 	io: any;
 	scoreboard: Scoreboard = defaultScoreboard;
 	timer = new Timer();
-	sponsors = [];
-	showSponsors = false;
 	gotScoreboardFromDB = false;
 	constructor(serial: string, io: any) {
 		console.log("Created namespace", serial);
@@ -28,11 +26,6 @@ export const Namespace = class Namespace {
 			database.update("scoreboards", { serial: this.serial }, this.scoreboard);
 		};
 
-		setInterval(() => {
-			this.attemptShowsponsors();
-			this.spIndex++;
-		}, 5000);
-
 		(async () => {
 			const exists = await database.exists("scoreboards", { serial });
 			if (exists) {
@@ -40,7 +33,7 @@ export const Namespace = class Namespace {
 				const [scoreboardRecord] = await database.read("scoreboards", { serial });
 
 				//@ts-ignore
-				this.scoreboard = scoreboardRecord;
+				this.scoreboard = { ...this.scoreboard, ...scoreboardRecord };
 			} else {
 				console.log("Scoreboard not found, creating new scoreboard", serial);
 				await database.create("scoreboards", { ...this.scoreboard, serial });
@@ -51,13 +44,6 @@ export const Namespace = class Namespace {
 			this.emitDisplays("clockData", this.timer.data);
 			this.gotScoreboardFromDB = true;
 		})();
-	}
-	spIndex = 0;
-	attemptShowsponsors() {
-		if (this.showSponsors) {
-			const sp = this.sponsors[this.spIndex % this.sponsors.length];
-			this.emitDisplays("sponsor", sp);
-		}
 	}
 	emitDisplays = (event: string, ...args: any[]) => {
 		console.log("emitDisplays", event, args);
@@ -88,7 +74,8 @@ export const Namespace = class Namespace {
 		socket.emit("data", "#t2", "text", this.scoreboard.t2);
 
 		socket.emit("clockData", this.timer.data);
-		socket.emit("sponsor", "");
+		socket.emit("sponsors", this.scoreboard.sponsors);
+		socket.emit("fullscreen", this.scoreboard.fullscreen);
 	}
 	async addUser(socket: any) {
 		socket.join([`CLIENT-${this.serial}`, this.serial]);
@@ -106,24 +93,6 @@ export const Namespace = class Namespace {
 			const templates = await database.read("templates", { serial: this.serial });
 			socket.emit("Appstate", "templates", templates);
 		})();
-
-		/*socket.on("sponsors", (data: Array<string>) => {
-			if (data && data.length) {
-				if (Array.isArray(data)) {
-					//@ts-ignore
-					this.sponsors = data;
-				}
-				this.showSponsors = true;
-				this.attemptShowsponsors();
-			} else {
-				this.showSponsors = false;
-				this.emitDisplays("sponsor", "");
-			}
-		});*/
-
-		socket.on("fullscreen", (value: boolean) => {
-			this.emitDisplays("fullscreen", value ? true : false);
-		});
 
 		socket.on("template", async (data: any) => {
 			console.log("template", data);
@@ -284,10 +253,6 @@ export const Namespace = class Namespace {
 					this.emitDisplays("data", "#uo", "attr", "style", `fill:${value}`);
 					break;
 				}
-				case "screen": {
-					this.emitDisplays("sponsor", value);
-					break;
-				}
 				case "message": {
 					this.scoreboard.message = value;
 					this.emitDisplays("data", "#message", "text", value);
@@ -311,8 +276,16 @@ export const Namespace = class Namespace {
 					this.emitDisplays("data", "#t2", "text", this.scoreboard.t2);
 					break;
 				}
+				case "fullscreen": {
+					this.scoreboard.fullscreen = value ? true : false;
+					this.emitDisplays("fullscreen", this.scoreboard.fullscreen);
+				}
 				case "COLORS": {
 					this.scoreboard.colors = value;
+				}
+				case "SPONSORS": {
+					this.scoreboard.sponsors = value;
+					this.emitDisplays("sponsors", value);
 				}
 				default: {
 					console.log("No type");

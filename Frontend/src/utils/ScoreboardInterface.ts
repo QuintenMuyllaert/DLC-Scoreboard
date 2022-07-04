@@ -161,8 +161,7 @@ export class InterfaceSocket {
 	}
 	setSponsorReel(sponsor: Array<string>) {
 		console.log("setSponsorReel", sponsor);
-		console.log("reel", sponsor);
-		this.socket.emit("sponsors", sponsor);
+		this.socket.emit("input", "SPONSORS", sponsor);
 	}
 	setFullScreenSponsors(value: boolean) {
 		console.log("setFullScreenSponsors", value);
