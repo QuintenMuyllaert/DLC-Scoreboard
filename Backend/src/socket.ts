@@ -1,6 +1,6 @@
 import { Server } from "socket.io";
 import { extractToken, jwtVerifyAsync } from "./crypto";
-import { LooseObject } from "./schema/schema";
+import { LooseObject } from "../../Interfaces/Interfaces";
 import { Namespace } from "./namespace";
 
 export const attachSocketIO = (server: any) => {

@@ -1,4 +1,4 @@
-import { clockData } from "./schema/schema";
+import { clockData } from "../../Interfaces/Interfaces";
 
 export const Timer = class Timer {
 	realTime = false;

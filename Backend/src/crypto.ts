@@ -3,7 +3,7 @@ import jwt from "jsonwebtoken";
 import cookie from "cookie";
 
 import database from "./database";
-import { LooseObject } from "./schema/schema";
+import { LooseObject } from "../../Interfaces/Interfaces";
 
 export type Connection = Request | any;
 

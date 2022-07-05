@@ -7,7 +7,7 @@ import cookieParser from "cookie-parser";
 import siofu from "socketio-file-upload";
 import { extractToken, jwtVerifyAsync, validateHash, jwtSignAsync, generateSerial, hash } from "./crypto";
 import database from "./database";
-import { LooseObject, User } from "./schema/schema";
+import { LooseObject, User } from "../../Interfaces/Interfaces";
 
 export const dirname = process.cwd();
 export const app = express();

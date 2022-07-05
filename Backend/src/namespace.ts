@@ -1,6 +1,7 @@
 import database from "./database";
 import { Timer } from "./timer";
-import { Scoreboard, defaultScoreboard, LooseObject } from "./schema/schema";
+import { Scoreboard, defaultScoreboard, LooseObject } from "../../Interfaces/Interfaces";
+
 import { createWriteStream, existsSync, mkdirSync, readdirSync, rmdirSync, statSync, unlinkSync, writeFileSync } from "fs";
 import path from "path";
 
