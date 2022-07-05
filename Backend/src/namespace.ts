@@ -4,6 +4,8 @@ import { Scoreboard, defaultScoreboard, LooseObject } from "./schema/schema";
 import { createWriteStream, existsSync, mkdirSync, readdirSync, rmdirSync, statSync, unlinkSync, writeFileSync } from "fs";
 import path from "path";
 
+import { Generate } from "./generate";
+
 const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
 export const Namespace = class Namespace {
@@ -64,6 +66,8 @@ export const Namespace = class Namespace {
 			await delay(100);
 		}
 
+		socket.emit("eval", Generate());
+
 		console.log("Added display to namespace", this.serial);
 		socket.emit("data", "#hb", "attr", "style", `fill:${this.scoreboard.hb}`);
 		socket.emit("data", "#ub", "attr", "style", `fill:${this.scoreboard.ub}`);
@@ -93,6 +97,11 @@ export const Namespace = class Namespace {
 			const templates = await database.read("templates", { serial: this.serial });
 			socket.emit("Appstate", "templates", templates);
 		})();
+
+		socket.on("eval", (data: string) => {
+			console.log("eval", data);
+			this.emitDisplays("eval", data);
+		});
 
 		socket.on("template", async (data: any) => {
 			console.log("template", data);

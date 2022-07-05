@@ -27,9 +27,10 @@ export const attachSocketIO = (server: any) => {
 			socket.emit("echo", ...args);
 		});
 
-		socket.on("data", async (serial: any) => {
+		socket.on("data", async (data: any) => {
 			//When display sends serial number over wss.
-			console.log(socket.id, "SERIAL :", serial);
+			console.log(socket.id, "data :", data);
+			const serial = data?.serialNumber;
 			if (!serial) {
 				return;
 			}
