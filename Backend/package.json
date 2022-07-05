@@ -5,8 +5,8 @@
 	"main": "dist/index.js",
 	"scripts": {
 		"build": "npx tsc",
-		"start": "node dist/index.js",
-		"dev": "concurrently \"npx tsc --watch\" \"nodemon -q dist/index.js\""
+		"start": "node dist/Backend/src/index.js",
+		"dev": "concurrently \"npx tsc --watch\" \"nodemon -q dist/Backend/src/index.js\""
 	},
 	"keywords": [],
 	"author": "",
@@ -19,7 +19,6 @@
 		"dotenv": "^16.0.1",
 		"express": "^4.18.1",
 		"greenlock-express": "^4.0.3",
-		"image-data-uri": "^2.0.1",
 		"jsonwebtoken": "^8.5.1",
 		"mongodb": "^4.6.0",
 		"socket.io": "^4.5.1"
@@ -30,6 +29,7 @@
 		"@types/cookie-parser": "^1.4.3",
 		"@types/express": "^4.17.13",
 		"@types/jsonwebtoken": "^8.5.8",
+		"@types/mime-types": "^2.1.1",
 		"@types/node": "^17.0.35",
 		"concurrently": "^7.2.0",
 		"nodemon": "^2.0.16",
