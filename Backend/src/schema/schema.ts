@@ -53,7 +53,7 @@ export const defaultScoreboard: Scoreboard = {
 	message: "DLC Sportsystems - Made with 💙 by QMA",
 	nameHome: "THUIS",
 	nameOut: "UIT",
-	clockData: { realTime: true, paused: true, startTime: Date.now(), startPauseTime: Date.now(), pauseTime: 0 },
+	clockData: { realTime: true, paused: true, startTime: Date.now(), startPauseTime: Date.now(), pauseTime: 0, pauseAt: [] },
 	colors: ["green", "lightblue", "darkblue", "purple", "white", "black", "yellow", "red", "orange", "darkred"],
 	hasAdmin: false,
 };
@@ -68,4 +68,5 @@ export interface clockData {
 	startTime: number;
 	startPauseTime: number;
 	pauseTime: number;
+	pauseAt: number[];
 }

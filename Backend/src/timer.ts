@@ -15,14 +15,16 @@ export const Timer = class Timer {
 			startTime: this.startTime,
 			startPauseTime: this.startPauseTime,
 			pauseTime: this.pauseTime,
+			pauseAt: this.pauseAt,
 		};
 	}
 	set data(data: clockData) {
-		this.realTime = data.realTime;
-		this.paused = data.paused;
-		this.startTime = data.startTime;
-		this.startPauseTime = data.startPauseTime;
-		this.pauseTime = data.pauseTime;
+		this.realTime = data.realTime || true;
+		this.paused = data.paused || true;
+		this.startTime = data.startTime || Date.now();
+		this.startPauseTime = data.startPauseTime || Date.now();
+		this.pauseTime = data.pauseTime || 0;
+		this.pauseAt = data.pauseAt || [];
 	}
 	constructor() {
 		setInterval(() => {
@@ -73,9 +75,11 @@ export const Timer = class Timer {
 		this.pauseAt.push(millis);
 		this.pauseAt.sort((a, b) => a - b);
 		console.log("autoPause:", this.pauseAt);
+		this.triggerUpdate();
 	}
 	clearAutoPause() {
 		console.log("clearAutoPause");
 		this.pauseAt = [];
+		this.triggerUpdate();
 	}
 };
