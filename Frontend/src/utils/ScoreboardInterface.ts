@@ -17,6 +17,7 @@ export class InterfaceScoreboard {
 	setTimer(time: number) {}
 	pauseTimer() {}
 	resumeTimer() {}
+	setRealTime(toggle: boolean) {}
 	sendMessage(message: string) {}
 	getMessage() {}
 	setScreen(screen: `P${number}`) {}
@@ -166,7 +167,7 @@ export class InterfaceSocket {
 	setFullScreenSponsors(value: boolean) {
 		console.log("setFullScreenSponsors", value);
 		console.log("fullscreen", value);
-		this.socket.emit("fullscreen", value);
+		this.socket.emit("input", "fullscreen", value);
 	}
 	detect = async () => {
 		console.log("detect");
@@ -187,6 +188,7 @@ export class InterfaceSocket {
 		scoreboardInterface.resetScore();
 		scoreboardInterface.pauseTimer();
 		scoreboardInterface.resetTimer();
+		scoreboardInterface.setRealTime(false);
 
 		if (halfs && halfLength) {
 			for (let i = 1; i <= halfs; i++) {
@@ -201,14 +203,12 @@ export class InterfaceSocket {
 		scoreboardInterface.changeColor("2O", scoreboard.uo);
 
 		scoreboardInterface.setFullScreenSponsors(false);
-		scoreboardInterface.setSponsorReel([]);
 	}
 	async stopMatch() {
 		console.log("stopMatch");
-		//Screen to scoreboard
 		this.socket.emit("input", "match", false);
-		//scoreboardInterface.setFullScreenSponsors(true);
-		//scoreboardInterface.setSponsorReel(["QMA"]);
+		scoreboardInterface.setRealTime(true);
+		scoreboardInterface.setFullScreenSponsors(true);
 	}
 }
 
