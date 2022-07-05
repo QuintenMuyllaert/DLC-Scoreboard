@@ -3,8 +3,6 @@ import path from "path";
 import express, { Request, Response } from "express";
 import bodyParser from "body-parser";
 import cookieParser from "cookie-parser";
-//@ts-ignore
-import siofu from "socketio-file-upload";
 import { extractToken, jwtVerifyAsync, validateHash, jwtSignAsync, generateSerial, hash } from "./crypto";
 import database from "./database";
 import { LooseObject, User } from "../../Interfaces/Interfaces";
@@ -25,8 +23,6 @@ app.use((req: Request, res: Response, next: any) => {
 	}
 	next();
 });
-
-app.use(siofu.router);
 
 //DEFINE API ROUTES BELOW !!!
 
