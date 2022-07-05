@@ -14,11 +14,8 @@ let dastuff = `<rect fill="black" height="336" id="background" stroke="none" wid
 <image id="sponsorimg" x="0" y="0" width="588" height="336" xlink:href=""  />`;
 
 let daScript = `
-//Quinten Muyllaert 30-05-2022
-		//$("#background").attr("style","fill: #444444");
 		var len = 16;
 
-		
 		socket.on("data",function (element,thing,type,value){
 			//$("#wauw").attr('style',dat[0]+": "+dat[1]); // update data
 			if(value){
@@ -63,18 +60,15 @@ let daScript = `
 		var sponsorIndex = 0;
 		socket.on("sponsors",function(data){
 			sponsors = data;
-			cycleSponsor();
 		});
 
-		function cycleSponsor(){
+		setInterval(function(){
 			sponsorIndex++;
 			var data = sponsors[sponsorIndex % sponsors.length];
-
+			
 			$("#sponsorimg").attr("xlink:href",data);
 			$("#sponsorimgsmall").attr("xlink:href",data);
-		}
-
-		setInterval(cycleSponsor,5000);
+		},5000);
 
 		socket.on("fullscreen",function(data){
 			if(data){
@@ -110,14 +104,6 @@ let daScript = `
 			$("#timer").text(display);
 		},50);
 
-		socket.on("sponsor",function (uri) { 
-			$("#img").attr("xlink:href",uri);
-		})
-
-		socket.on("invokeuri",function (uri){
-			$.get(uri);
-		});
-
 		var pos = 588;
 		setInterval(function(){
 			$("#message").attr("x",pos);
@@ -134,8 +120,9 @@ export const Generate = () => {
 	let txt = `$("#root").empty();`;
 	txt += `$("#root").append('<rect fill="black" height="${height}" id="background" stroke="none" width="${width}"/>');`;
 	txt += `$("#root").append('${dastuff.replace(/\n/g, "")}');`;
-	txt += `setTimeout(function(){
+	txt += `(function(){
         ${daScript}
-    });`;
+    })();`;
+	txt += `socket.emit("DOMContentLoaded");`;
 	return txt;
 };

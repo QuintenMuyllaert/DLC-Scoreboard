@@ -69,17 +69,25 @@ export const Namespace = class Namespace {
 		socket.emit("eval", Generate());
 
 		console.log("Added display to namespace", this.serial);
-		socket.emit("data", "#hb", "attr", "style", `fill:${this.scoreboard.hb}`);
-		socket.emit("data", "#ub", "attr", "style", `fill:${this.scoreboard.ub}`);
-		socket.emit("data", "#ho", "attr", "style", `fill:${this.scoreboard.ho}`);
-		socket.emit("data", "#uo", "attr", "style", `fill:${this.scoreboard.uo}`);
-		socket.emit("data", "#message", "text", this.scoreboard.message);
-		socket.emit("data", "#t1", "text", this.scoreboard.t1);
-		socket.emit("data", "#t2", "text", this.scoreboard.t2);
 
-		socket.emit("clockData", this.timer.data);
-		socket.emit("sponsors", this.scoreboard.sponsors);
-		socket.emit("fullscreen", this.scoreboard.fullscreen);
+		const sendData = () => {
+			socket.emit("data", "#hb", "attr", "style", `fill:${this.scoreboard.hb}`);
+			socket.emit("data", "#ub", "attr", "style", `fill:${this.scoreboard.ub}`);
+			socket.emit("data", "#ho", "attr", "style", `fill:${this.scoreboard.ho}`);
+			socket.emit("data", "#uo", "attr", "style", `fill:${this.scoreboard.uo}`);
+			socket.emit("data", "#message", "text", this.scoreboard.message);
+			socket.emit("data", "#t1", "text", this.scoreboard.t1);
+			socket.emit("data", "#t2", "text", this.scoreboard.t2);
+
+			socket.emit("clockData", this.timer.data);
+			socket.emit("sponsors", this.scoreboard.sponsors);
+			socket.emit("fullscreen", this.scoreboard.fullscreen);
+		};
+
+		sendData();
+		socket.on("DOMContentLoaded", () => {
+			sendData();
+		});
 	}
 	async addUser(socket: any) {
 		socket.join([`CLIENT-${this.serial}`, this.serial]);
