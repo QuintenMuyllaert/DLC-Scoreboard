@@ -1,17 +1,43 @@
-let dastuff = `<rect fill="black" height="336" id="background" stroke="none" width="588"/>
-<rect fill="white" x="80" y="8" width="88" height="48" stroke="none"/>
-<rect fill="white" x="419" y="8" width="88" height="48" stroke="none"/>
-<rect fill="white" x="82" y="10" width="84" height="22" id="hb" stroke="none" />
-<rect fill="white" x="82" y="32" width="84" height="22" id="ho" stroke="none"/>
-<rect fill="white" x="421" y="10" width="84" height="22" id="ub" stroke="none"/>
-<rect fill="white" x="421" y="32" width="84" height="22" id="uo" stroke="none"/>
-<text id="timer" x="294" y="55" font-family="DSEG7 Classic" font-size="40" text-anchor="middle" fill="white">00:00</text>
-<text id="t1" x="72" y="55" font-family="DSEG7 Classic" font-size="40" text-anchor="end" fill="white">0</text>
-<text id="t2" x="515" y="55" font-family="DSEG7 Classic" font-size="40" text-anchor="start" fill="white">0</text>
-<text id="message" x="294" y="327" font-family="Raleway" font-size="51" text-anchor="left" fill="white">DLC Sportsystems</text>
-<image id="sponsorimgsmall" x="0" y="64" width="588" height="208" xlink:href=""  />
-<rect fill="black" width="588" height="336" id="sponsorbackground" stroke="none"/>
-<image id="sponsorimg" x="0" y="0" width="588" height="336" xlink:href=""  />`;
+const width = 1920; //588
+const height = 1080; //336
+
+const thickness = 0.005 * width;
+const fontSize = 0.06875 * width; //132;
+const fontSizeMessage = 0.0864 * width; //166;
+
+let dastuff = `<rect fill="black" height="${height}" id="background" stroke="none" width="${width}"/>
+
+<g transform="translate(${0.145 * width} ${0.023 * height})">
+	<rect x="0" y="0" width="${0.15 * width}" height="${0.5 * 0.15 * height}" id="hb" stroke="none" />
+	<rect x="0" y="${0.5 * 0.15 * height}" width="${0.15 * width}" height="${0.5 * 0.15 * height}" id="ho" stroke="none"/>	
+	<rect x="0" y="0" width="${0.15 * width}" height="${0.15 * height}" fill="none" stroke="white" stroke-width="${thickness}"/>
+</g>
+
+<g transform="translate(${width - 0.15 * width - 0.145 * width} ${0.023 * height})">
+	<rect x="0" y="0" width="${0.15 * width}" height="${0.5 * 0.15 * height}" id="ub" stroke="none" />
+	<rect x="0" y="${0.5 * 0.15 * height}" width="${0.15 * width}" height="${0.5 * 0.15 * height}" id="uo" stroke="none"/>	
+	<rect x="0" y="0" width="${0.15 * width}" height="${0.15 * height}" fill="none" stroke="white" stroke-width="${thickness}"/>
+</g>
+
+<text id="timer" x="${width / 2}" y="${
+	0.023 * height + fontSize * 1.1
+}" font-family="DSEG7 Classic" font-size="${fontSize}" text-anchor="middle" fill="white">00:00</text>
+
+<text id="t1" x="${0.135 * width}" y="${
+	0.023 * height + fontSize * 1.1
+}" font-family="DSEG7 Classic" font-size="${fontSize}" text-anchor="end" fill="white">0</text>
+
+<text id="t2" x="${width - 0.135 * width}" y="${
+	0.023 * height + fontSize * 1.1
+}" font-family="DSEG7 Classic" font-size="${fontSize}" text-anchor="start" fill="white">0</text>
+
+<text id="message" x="${width}" y="${
+	height - 0.3 * fontSizeMessage
+}" font-family="Raleway" font-size="${fontSizeMessage}" text-anchor="left" fill="white">DLC Sportsystems</text>
+
+<image id="sponsorimgsmall" x="0" y="${0.2 * height}" width="${width}" height="${0.63 * height}" xlink:href=""  />
+<rect fill="black" width="${width}" height="${height}" id="sponsorbackground" stroke="none"/>
+<image id="sponsorimg" x="0" y="0" width="${width}" height="${height}" xlink:href=""  />`;
 
 let daScript = `
 		var len = 16;
@@ -59,13 +85,19 @@ let daScript = `
 		var sponsors = [];
 		var sponsorIndex = 0;
 		socket.on("sponsors",function(data){
+			if(!data){
+				socket.emit("echo",data,"no data");
+				return;
+			}
 			sponsors = data;
 		});
 
 		setInterval(function(){
 			sponsorIndex++;
 			var data = sponsors[sponsorIndex % sponsors.length];
-			
+			socket.emit("echo",sponsorIndex);
+			socket.emit("echo",data);
+
 			$("#sponsorimg").attr("xlink:href",data);
 			$("#sponsorimgsmall").attr("xlink:href",data);
 		},5000);
@@ -104,19 +136,22 @@ let daScript = `
 			$("#timer").text(display);
 		},50);
 
-		var pos = 588;
+		var pos = ${width};
 		setInterval(function(){
 			$("#message").attr("x",pos);
-			pos = pos - 2;//0.2;
-			if(pos < -len * 16 * 2){
-				pos = 588;
+			pos = pos - 0.0034 * ${width};
+			if(pos < -len * ${fontSizeMessage}){
+				pos = ${width};
 			}
 		},16);
-`;
+
+		$("svg").attr("viewBox","0 0 ${width} ${height}");
+		socket.emit("echo",$("svg").attr("viewBox"));
+		`;
 
 export const Generate = () => {
-	const width = 558; //1920;
-	const height = 336; //1080;
+	//const width = 558; //1920;
+	//const height = 336 //1080;
 	let txt = `$("#root").empty();`;
 	txt += `$("#root").append('<rect fill="black" height="${height}" id="background" stroke="none" width="${width}"/>');`;
 	txt += `$("#root").append('${dastuff.replace(/\n/g, "")}');`;
