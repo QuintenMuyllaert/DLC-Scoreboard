@@ -2,6 +2,8 @@ import database from "./database";
 import { Timer } from "./timer";
 import { Scoreboard, defaultScoreboard, LooseObject } from "../../Interfaces/Interfaces";
 
+import { outputFile } from "./modules/image-data-uri.js";
+
 import { createWriteStream, existsSync, mkdirSync, readdirSync, rmdirSync, statSync, unlinkSync, writeFileSync } from "fs";
 import path from "path";
 
@@ -177,8 +179,7 @@ export const Namespace = class Namespace {
 					existsSync(`./www/${this.serial}/${folder}`) || mkdirSync(`./www/${this.serial}/${folder}`);
 
 					if (file) {
-						const ImageDataURI = require("image-data-uri");
-						await ImageDataURI.outputFile(uri, `./www/${this.serial}/${folder}/${file}`);
+						outputFile(uri, `./www/${this.serial}/${folder}/${file}`);
 					}
 
 					break;
