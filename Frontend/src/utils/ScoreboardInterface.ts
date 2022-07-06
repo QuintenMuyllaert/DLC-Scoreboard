@@ -198,9 +198,6 @@ export class InterfaceSocket {
 		//Screen to scoreboard
 		this.socket.emit("input", "match", true);
 
-		const { scoreboard } = Appstate.getState();
-		//scoreboardInterface.setScreen("P0");
-
 		scoreboardInterface.resetScore();
 		scoreboardInterface.pauseTimer();
 		scoreboardInterface.resetTimer();
@@ -212,11 +209,6 @@ export class InterfaceSocket {
 				scoreboardInterface.pauseAt(halfLength * i * 1000 * 60);
 			}
 		}
-
-		scoreboardInterface.changeColor("1B", scoreboard.hb);
-		scoreboardInterface.changeColor("1O", scoreboard.ho);
-		scoreboardInterface.changeColor("2B", scoreboard.ub);
-		scoreboardInterface.changeColor("2O", scoreboard.uo);
 
 		scoreboardInterface.setFullScreenSponsors(false);
 	}
