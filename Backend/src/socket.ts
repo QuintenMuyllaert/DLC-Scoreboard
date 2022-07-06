@@ -2,6 +2,7 @@ import { Server } from "socket.io";
 import { extractToken, jwtVerifyAsync } from "./crypto";
 import { LooseObject } from "../../Interfaces/Interfaces";
 import { Namespace } from "./namespace";
+import database from "./database";
 
 export const attachSocketIO = (server: any) => {
 	const io = new Server(server, {
@@ -34,10 +35,15 @@ export const attachSocketIO = (server: any) => {
 			if (!serial) {
 				return;
 			}
+
+			const [hmp] = (await database.exists("HMP", { serialNumber: serial }))
+				? await database.read("HMP", { serialNumber: serial })
+				: await database.create("HMP", data);
+
 			socket.serial = serial;
-			console.log("Display joined", serial, socket.id);
 			const ns = getNamespace(serial);
-			ns.addDisplay(socket);
+			ns.addDisplay(socket, hmp);
+			console.log("Display joined", serial, socket.id);
 		});
 
 		const token = extractToken(socket);

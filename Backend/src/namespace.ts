@@ -1,6 +1,6 @@
 import database from "./database";
 import { Timer } from "./timer";
-import { Scoreboard, defaultScoreboard, LooseObject } from "../../Interfaces/Interfaces";
+import { Scoreboard, defaultScoreboard, LooseObject, HMP } from "../../Interfaces/Interfaces";
 
 import { outputFile } from "./modules/image-data-uri.js";
 
@@ -64,14 +64,14 @@ export const Namespace = class Namespace {
 		console.log("emitAll", event, args);
 		this.io.in(this.serial).emit(event, ...args);
 	};
-	async addDisplay(socket: any) {
+	async addDisplay(socket: any, hmp: HMP) {
 		socket.join([`DISPLAY-${this.serial}`, this.serial]);
 		while (!this.gotScoreboardFromDB) {
 			console.log("Waiting for scoreboard from DB");
 			await delay(100);
 		}
 
-		socket.emit("eval", Generate());
+		socket.emit("eval", Generate(hmp));
 
 		console.log("Added display to namespace", this.serial);
 
