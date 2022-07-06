@@ -1,9 +1,11 @@
 import Clock from "../components/Clock";
 import Flag from "../components/Flag";
 import Scrolltext from "../components/Scrolltext";
-import { state } from "../utils/Appstate";
+import Appstate from "../utils/Appstate";
 
 export const Scoreboard = () => {
+	const state = Appstate.getState().scoreboard;
+	console.log("#scoreboard", state);
 	return (
 		<div className="p-scoreboard">
 			<div className="scoreboardtop">

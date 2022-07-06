@@ -1,4 +1,5 @@
 import { io } from "socket.io-client";
+import { clockData, HMP } from "../../../Interfaces/interfaces";
 
 import { getQuery } from "../utils/Utils";
 import Appstate from "./Appstate";
@@ -66,27 +67,41 @@ export class InterfaceSocket {
 		if (serial && serial.length) {
 			//this is only for /scoreboard?serial=xxx
 			console.log(serial);
-			this.socket.emit("data", serial); // send serial number to server TODO: get serial number from device
+			const data: HMP = {
+				deviceName: serial,
+				deviceType: "inanis",
+				firmwareVersion: "N/A",
+				hostName: "N/A",
+				multiScreenId: "N/A",
+				serialNumber: serial,
+			};
+
+			this.socket.emit("data", data); // send serial number to server TODO: get serial number from device
 
 			this.socket.on("data", function (element: string, thing: string, type: string, value: string) {
 				//$("#wauw").attr('style',dat[0]+": "+dat[1]); // update data
 				console.log(element, thing, type, value);
+				const { scoreboard } = Appstate.getState();
 
 				if (["#hb", "#ub", "#ho", "#uo"].includes(element)) {
-					Appstate.updateState(element.replace("#", ""), value.replace("fill:", ""));
-				}
-				if (element == "#timer" && thing == "text") {
-					Appstate.updateState("timer", type);
+					scoreboard[element.replace("#", "")] = value.replace("fill:", "");
 				}
 				if (element == "#t1" && thing == "text") {
-					Appstate.updateState("t1", type);
+					scoreboard.t1 = type;
 				}
 				if (element == "#t2" && thing == "text") {
-					Appstate.updateState("t2", type);
+					scoreboard.t2 = type;
 				}
 				if (element == "#message" && thing == "text") {
-					Appstate.updateState("message", type);
+					scoreboard.message = type;
 				}
+				Appstate.updateState("scoreboard", scoreboard);
+			});
+
+			this.socket.on("clockData", (data: clockData) => {
+				const { scoreboard } = Appstate.getState();
+				scoreboard.clockData = data;
+				Appstate.updateState("scoreboard", scoreboard);
 			});
 		}
 

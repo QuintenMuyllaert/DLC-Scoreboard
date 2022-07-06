@@ -20,10 +20,6 @@ export const getGlobalState = () => {
 
 export const updateGlobalState = (key: AppStateKeys, value: AppStateValues) => {
 	console.log("updateGlobalState", key, value);
-	if (state[key] === value) {
-		//is same
-		return;
-	}
 	state[key] = value;
 	setGlobalState({ ...state }); // React voodoo magic
 };
@@ -31,10 +27,6 @@ export const updateGlobalState = (key: AppStateKeys, value: AppStateValues) => {
 export const mergeGlobalState = (state: any) => {
 	console.log("mergeGlobalState", state);
 	const newState = { ...state, ...state };
-	if (JSON.stringify(state) === JSON.stringify(newState)) {
-		//is same
-		return;
-	}
 	state = newState;
 	setGlobalState({ ...state }); // React voodoo magic
 };
