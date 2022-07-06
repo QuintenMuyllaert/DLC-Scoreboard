@@ -72,6 +72,8 @@ export interface AppState {
 export type AppStateKeys = keyof AppState;
 export type AppStateValues = AppState[AppStateKeys];
 
+export type FlagPlace = `${"h" | "u"}${"b" | "o"}`;
+
 // Defaults
 export const defaultTemplate: Template = {
   serial: "N/A",

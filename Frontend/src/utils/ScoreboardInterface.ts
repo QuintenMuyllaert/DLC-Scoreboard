@@ -1,5 +1,5 @@
 import { io } from "socket.io-client";
-import { clockData, HMP } from "../../../Interfaces/interfaces";
+import { AppStateKeys, clockData, FlagPlace, HMP } from "../../../Interfaces/interfaces";
 
 import { getQuery } from "../utils/Utils";
 import Appstate from "./Appstate";
@@ -84,13 +84,14 @@ export class InterfaceSocket {
 				const { scoreboard } = Appstate.getState();
 
 				if (["#hb", "#ub", "#ho", "#uo"].includes(element)) {
-					scoreboard[element.replace("#", "")] = value.replace("fill:", "");
+					const colorPlace = element.replace("#", "") as FlagPlace;
+					scoreboard[colorPlace] = value.replace("fill:", "");
 				}
 				if (element == "#t1" && thing == "text") {
-					scoreboard.t1 = type;
+					scoreboard.t1 = parseInt(type);
 				}
 				if (element == "#t2" && thing == "text") {
-					scoreboard.t2 = type;
+					scoreboard.t2 = parseInt(type);
 				}
 				if (element == "#message" && thing == "text") {
 					scoreboard.message = type;
@@ -110,7 +111,7 @@ export class InterfaceSocket {
 			//this.socket.socket.reconnect();
 		});
 
-		this.socket.on("Appstate", (key: string, value: any) => {
+		this.socket.on("Appstate", (key: AppStateKeys, value: any) => {
 			console.log("Appstate", key, value);
 			Appstate.updateState(key, value);
 		});
