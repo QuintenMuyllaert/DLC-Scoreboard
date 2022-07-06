@@ -299,13 +299,16 @@ export const Namespace = class Namespace {
 				case "fullscreen": {
 					this.scoreboard.fullscreen = value ? true : false;
 					this.emitDisplays("fullscreen", this.scoreboard.fullscreen);
+					break;
 				}
 				case "COLORS": {
 					this.scoreboard.colors = value;
+					break;
 				}
 				case "SPONSORS": {
 					this.scoreboard.sponsors = value;
 					this.emitDisplays("sponsors", value);
+					break;
 				}
 				default: {
 					console.log("No type");
