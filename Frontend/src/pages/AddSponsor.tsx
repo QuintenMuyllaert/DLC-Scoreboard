@@ -1,5 +1,5 @@
 import { useState, useRef } from "react";
-import { LooseObject } from "../utils/Interfaces";
+import { LooseObject } from "../../../Interfaces/interfaces";
 import BottomTab from "../components/BottomTab";
 import UserSetting from "../components/UserSetting";
 import IconButton from "../components/IconButton";

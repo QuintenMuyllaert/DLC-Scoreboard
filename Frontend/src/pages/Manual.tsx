@@ -3,7 +3,7 @@ import { Input } from "../components/Input";
 import { Logo } from "../components/Logo";
 import Header from "../components/Header";
 import { IconButton } from "../components/IconButton";
-import { LooseObject } from "../utils/Interfaces";
+import { LooseObject } from "../../../Interfaces/interfaces";
 
 export const Manual = () => {
 	const defaultState: LooseObject = {

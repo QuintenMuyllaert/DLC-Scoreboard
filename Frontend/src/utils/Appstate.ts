@@ -1,4 +1,4 @@
-import { LooseObject } from "./Interfaces";
+import { LooseObject } from "../../../Interfaces/interfaces";
 
 export let state: any;
 export let setState: any;

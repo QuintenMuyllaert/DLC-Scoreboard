@@ -1,4 +1,4 @@
-import { LooseObject } from "../utils/Interfaces";
+import { LooseObject } from "../../../Interfaces/interfaces";
 import { state, updateGlobalState as updateState } from "../utils/Appstate";
 
 export const User = ({ username }: { username: string }) => {

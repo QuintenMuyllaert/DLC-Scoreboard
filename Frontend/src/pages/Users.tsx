@@ -6,7 +6,7 @@ import { updateGlobalState as updateState, state } from "../utils/Appstate";
 import Input from "../components/Input";
 import Logo from "../components/Logo";
 import User from "../components/User";
-import { LooseObject } from "../utils/Interfaces";
+import { LooseObject } from "../../../Interfaces/interfaces";
 import Header from "../components/Header";
 
 export const Users = () => {
