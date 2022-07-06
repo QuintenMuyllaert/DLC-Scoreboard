@@ -22,7 +22,7 @@ export const Colorpicker = ({ team, setVisible = () => {} }: { team: 1 | 2; setV
 	};
 
 	const onAddColor = (event: any) => {
-		const color = event.target.value;
+		const color = event.target.value as string;
 		scoreboardInterface.updateColorArray([...scoreboard.colors, color]);
 	};
 
