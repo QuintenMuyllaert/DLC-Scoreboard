@@ -1,8 +1,8 @@
-import { LooseObject } from "../../../Interfaces/interfaces";
-import { state, updateGlobalState as updateState } from "../utils/Appstate";
+import Appstate from "../utils/Appstate";
 
 export const User = ({ username }: { username: string }) => {
-	const requestBody: LooseObject = {
+	const state = Appstate.getState().scoreboard;
+	const requestBody = {
 		username: username,
 		serial: state.serial,
 	};
@@ -32,7 +32,7 @@ export const User = ({ username }: { username: string }) => {
 				}
 			}
 
-			updateState("users", userList);
+			Appstate.updateState("users", userList);
 		};
 
 		fetchUsers();

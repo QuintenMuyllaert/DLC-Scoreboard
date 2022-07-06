@@ -1,32 +1,7 @@
-import { LooseObject } from "../../../Interfaces/interfaces";
+import { defaultAppState, AppState, AppStateKeys, AppStateValues } from "../../../Interfaces/interfaces";
 
-export let state: any;
+export let state: AppState;
 export let setState: any;
-
-export const defaultState: LooseObject = {
-	color: "dark",
-	bottomtab: "",
-	scoreboard: {
-		serial: "N/A",
-		isPlaying: false,
-		fullscreen: false,
-		sponsors: [],
-		hb: "black",
-		ho: "black",
-		ub: "black",
-		uo: "black",
-		t1: 0,
-		t2: 0,
-		message: "DLC Sportsystems - Made with 💙 by QMA",
-		nameHome: "THUIS",
-		nameOut: "UIT",
-		clockData: { realTime: true, paused: true, startTime: Date.now(), startPauseTime: Date.now(), pauseTime: 0 },
-		colors: ["green", "lightblue", "darkblue", "purple", "white", "black", "yellow", "red", "orange", "darkred"],
-		hasAdmin: false,
-	},
-	templates: [],
-	sponsors: [],
-};
 
 export const attachUseState = (_state: any, _setState: any) => {
 	state = _state;
@@ -43,7 +18,7 @@ export const getGlobalState = () => {
 	return state;
 };
 
-export const updateGlobalState = (key: string, value: any) => {
+export const updateGlobalState = (key: AppStateKeys, value: AppStateValues) => {
 	console.log("updateGlobalState", key, value);
 	if (state[key] === value) {
 		//is same
@@ -70,7 +45,5 @@ export default {
 	getState: getGlobalState,
 	updateState: updateGlobalState,
 	mergeState: mergeGlobalState,
-	defaultState,
-	state,
-	setState,
+	defaultState: defaultAppState,
 };

@@ -3,6 +3,8 @@ export interface LooseObject {
   [key: string]: any;
 }
 
+export type CollectionName = "accounts" | "scoreboards" | "templates" | "colors" | "jwt";
+
 export interface User {
   username: string;
   password: string;
@@ -46,6 +48,21 @@ export interface clockData {
   pauseAt: number[];
 }
 
+export type bottomTab = "" | "withbottom-tab";
+
+export type themeColors = "light" | "dark" | "png";
+
+export interface AppState {
+  color: themeColors;
+  bottomtab: bottomTab;
+  scoreboard: Scoreboard;
+  templates: [];
+  sponsors: [];
+}
+
+export type AppStateKeys = keyof AppState;
+export type AppStateValues = AppState[AppStateKeys];
+
 // Defaults
 export const defaultTemplate: Template = {
   serial: "N/A",
@@ -71,4 +88,12 @@ export const defaultScoreboard: Scoreboard = {
   clockData: { realTime: true, paused: true, startTime: Date.now(), startPauseTime: Date.now(), pauseTime: 0, pauseAt: [] },
   colors: ["green", "lightblue", "darkblue", "purple", "white", "black", "yellow", "red", "orange", "darkred"],
   hasAdmin: false,
+};
+
+export const defaultAppState = {
+  color: "dark",
+  bottomtab: "",
+  scoreboard: defaultScoreboard,
+  templates: [],
+  sponsors: [],
 };
