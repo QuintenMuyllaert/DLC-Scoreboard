@@ -16,13 +16,14 @@ export const dbConnect = async () => {
 export const dbCreate = async (collectionName: CollectionName, data: any, unique: boolean = true) => {
 	if (unique && (await dbExists(collectionName, data))) {
 		console.log("Already exists");
-		return;
+		return await dbRead(collectionName, data);
 	}
 
 	await dbConnect();
 	const db = database.db(dbName);
 	const collection = db.collection(collectionName);
 	await collection.insertOne(data);
+	return [data];
 };
 
 export const dbRead = async (collectionName: CollectionName, query: any) => {
