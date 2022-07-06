@@ -31,6 +31,8 @@ export const Namespace = class Namespace {
 			database.update("scoreboards", { serial: this.serial }, this.scoreboard);
 		};
 
+		existsSync(`./www/${this.serial}`) || mkdirSync(`./www/${this.serial}`);
+
 		(async () => {
 			const exists = await database.exists("scoreboards", { serial });
 			if (exists) {
@@ -175,7 +177,6 @@ export const Namespace = class Namespace {
 						break;
 					}
 
-					existsSync(`./www/${this.serial}`) || mkdirSync(`./www/${this.serial}`);
 					existsSync(`./www/${this.serial}/${folder}`) || mkdirSync(`./www/${this.serial}/${folder}`);
 
 					if (file) {
