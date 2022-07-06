@@ -3,7 +3,16 @@ export interface LooseObject {
   [key: string]: any;
 }
 
-export type CollectionName = "accounts" | "scoreboards" | "templates" | "colors" | "jwt";
+export type CollectionName = "accounts" | "scoreboards" | "templates" | "colors" | "jwt" | "HMP";
+
+export interface HMP {
+  deviceName: string;
+  deviceType: string;
+  firmwareVersion: string;
+  hostName: string;
+  multiScreenId: string;
+  serialNumber: string;
+}
 
 export interface User {
   username: string;
