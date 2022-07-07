@@ -52,15 +52,15 @@ export const Namespace = class Namespace {
 		})();
 	}
 	emitDisplays = (event: string, ...args: any[]) => {
-		console.log("emitDisplays", event, args);
+		console.log("emitDisplays", event /*, args*/);
 		this.io.in(`DISPLAY-${this.serial}`).emit(event, ...args);
 	};
 	emitUsers = (event: string, ...args: any[]) => {
-		console.log("emitUsers", event, args);
+		console.log("emitUsers", event /*, args*/);
 		this.io.in(`CLIENT-${this.serial}`).emit(event, ...args);
 	};
 	emitAll = (event: string, ...args: any[]) => {
-		console.log("emitAll", event, args);
+		console.log("emitAll", event /*, args*/);
 		this.io.in(this.serial).emit(event, ...args);
 	};
 	async addDisplay(socket: any, hmp: HMP) {
