@@ -38,14 +38,16 @@ export const Score = () => {
 		<>
 			<div className="p-page p-score">
 				<Clock onClick={() => setDisplayOverlayClock(true)}></Clock>
-				<div className="scorevalue-container">
-					<Flag top={scoreboard.hb} bottom={scoreboard.ho} onClick={() => setDisplayOverlayColorpickerT(true)} />
+				<div className="container">
+					<div className="teamname">
+						<Flag top={scoreboard.hb} bottom={scoreboard.ho} onClick={() => setDisplayOverlayColorpickerT(true)} />
+						<h2>{scoreboard.nameHome}</h2>
+					</div>
 					<div className="empty"></div>
-					<Flag top={scoreboard.ub} bottom={scoreboard.uo} onClick={() => setDisplayOverlayColorpickerU(true)} />
-
-					<h2 className="teamname">{scoreboard.nameHome}</h2>
-					<div className="empty"></div>
-					<h2 className="teamname">{scoreboard.nameOut}</h2>
+					<div className="teamname">
+						<Flag top={scoreboard.ub} bottom={scoreboard.uo} onClick={() => setDisplayOverlayColorpickerU(true)} />
+						<h2>{scoreboard.nameOut}</h2>
+					</div>
 
 					<Digit
 						value={scoreboard.t1}
