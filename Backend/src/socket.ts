@@ -36,9 +36,14 @@ export const attachSocketIO = (server: any) => {
 				return;
 			}
 
-			const [hmp] = (await database.exists("HMP", { serialNumber: serial }))
+			let [hmp] = (await database.exists("HMP", { serialNumber: serial }))
 				? await database.read("HMP", { serialNumber: serial })
 				: await database.create("HMP", data);
+
+			// 🤔 Need to figure out how to handle this properly.
+			// A HMP400+ makes 2 socket connections.
+			// 1 from the SVG layer (fukiran) and 1 from the HTML layer (inanis).
+			hmp.deviceType = data.deviceType;
 
 			socket.serial = serial;
 			const ns = getNamespace(serial);

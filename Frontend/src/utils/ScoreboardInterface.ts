@@ -54,19 +54,17 @@ export class InterfaceSocket {
 
 		this.socket.on("connect", async () => {
 			console.log("Connected to wss");
-			const { serial } = getQuery();
-			if (serial && serial.length) {
-				console.log(serial);
-				this.socket.emit("data", serial); // send serial number to server TODO: get serial number from device
-			}
-
 			this.socket.emit("template", { type: "read" });
 		});
 
+		this.socket.on("disconnect", () => {
+			console.log("disconnected");
+		});
+
+		const pagesHMP = ["/scoreboard", "/livestream", "/spectate"];
+		const isHMPPage = pagesHMP.includes(document.location.pathname.toLowerCase());
 		const { serial } = getQuery();
-		if (serial && serial.length) {
-			//this is only for /scoreboard?serial=xxx
-			console.log(serial);
+		if (isHMPPage && serial && serial.length) {
 			const data: HMP = {
 				deviceName: serial,
 				deviceType: "inanis",
@@ -75,41 +73,8 @@ export class InterfaceSocket {
 				multiScreenId: "N/A",
 				serialNumber: serial,
 			};
-
-			this.socket.emit("data", data); // send serial number to server TODO: get serial number from device
-
-			this.socket.on("data", function (element: string, thing: string, type: string, value: string) {
-				//$("#wauw").attr('style',dat[0]+": "+dat[1]); // update data
-				console.log(element, thing, type, value);
-				const { scoreboard } = Appstate.getState();
-
-				if (["#hb", "#ub", "#ho", "#uo"].includes(element)) {
-					const colorPlace = element.replace("#", "") as FlagPlace;
-					scoreboard[colorPlace] = value.replace("fill:", "");
-				}
-				if (element == "#t1" && thing == "text") {
-					scoreboard.t1 = parseInt(type);
-				}
-				if (element == "#t2" && thing == "text") {
-					scoreboard.t2 = parseInt(type);
-				}
-				if (element == "#message" && thing == "text") {
-					scoreboard.message = type;
-				}
-				Appstate.updateState("scoreboard", scoreboard);
-			});
-
-			this.socket.on("clockData", (data: clockData) => {
-				const { scoreboard } = Appstate.getState();
-				scoreboard.clockData = data;
-				Appstate.updateState("scoreboard", scoreboard);
-			});
+			this.socket.emit("data", data);
 		}
-
-		this.socket.on("disconnect", () => {
-			console.log("disconnected");
-			//this.socket.socket.reconnect();
-		});
 
 		this.socket.on("Appstate", (key: AppStateKeys, value: any) => {
 			console.log("Appstate", key, value);

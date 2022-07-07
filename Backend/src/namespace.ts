@@ -26,9 +26,8 @@ export const Namespace = class Namespace {
 		this.timer.set(0);
 		this.timer.triggerUpdate = () => {
 			this.scoreboard.clockData = this.timer.data;
-			this.emitUsers("Appstate", "scoreboard", this.scoreboard);
+			this.updateScoreboard(this.scoreboard);
 			this.emitDisplays("clockData", this.timer.data);
-			database.update("scoreboards", { serial: this.serial }, this.scoreboard);
 		};
 
 		existsSync(`./www/${this.serial}`) || mkdirSync(`./www/${this.serial}`);
@@ -47,8 +46,8 @@ export const Namespace = class Namespace {
 			}
 
 			this.timer.data = this.scoreboard.clockData;
-			this.emitUsers("Appstate", "scoreboard", this.scoreboard);
-			this.emitDisplays("clockData", this.timer.data);
+			//this.emitUsers("Appstate", "scoreboard", this.scoreboard);
+			//this.emitDisplays("clockData", this.timer.data);
 			this.gotScoreboardFromDB = true;
 		})();
 	}
@@ -75,24 +74,39 @@ export const Namespace = class Namespace {
 
 		console.log("Added display to namespace", this.serial);
 
-		const sendData = () => {
-			socket.emit("data", "#hb", "attr", "style", `fill:${this.scoreboard.hb}`);
-			socket.emit("data", "#ub", "attr", "style", `fill:${this.scoreboard.ub}`);
-			socket.emit("data", "#ho", "attr", "style", `fill:${this.scoreboard.ho}`);
-			socket.emit("data", "#uo", "attr", "style", `fill:${this.scoreboard.uo}`);
-			socket.emit("data", "#message", "text", this.scoreboard.message);
-			socket.emit("data", "#t1", "text", this.scoreboard.t1);
-			socket.emit("data", "#t2", "text", this.scoreboard.t2);
+		console.log("Sending scoreboard to display", hmp.deviceType);
 
-			socket.emit("clockData", this.timer.data);
-			socket.emit("sponsors", this.scoreboard.sponsors);
-			socket.emit("fullscreen", this.scoreboard.fullscreen);
-		};
+		const noHTMLSupport = ["bonsai", "sakura", "ikebana"];
+		if (noHTMLSupport.includes(hmp.deviceType.toLowerCase())) {
+			const sendData = () => {
+				socket.emit("data", "#hb", "attr", "style", `fill:${this.scoreboard.hb}`);
+				socket.emit("data", "#ub", "attr", "style", `fill:${this.scoreboard.ub}`);
+				socket.emit("data", "#ho", "attr", "style", `fill:${this.scoreboard.ho}`);
+				socket.emit("data", "#uo", "attr", "style", `fill:${this.scoreboard.uo}`);
+				socket.emit("data", "#message", "text", this.scoreboard.message);
+				socket.emit("data", "#t1", "text", this.scoreboard.t1);
+				socket.emit("data", "#t2", "text", this.scoreboard.t2);
 
-		sendData();
-		socket.on("DOMContentLoaded", () => {
+				socket.emit("clockData", this.timer.data);
+				socket.emit("sponsors", this.scoreboard.sponsors);
+				socket.emit("fullscreen", this.scoreboard.fullscreen);
+			};
+
 			sendData();
-		});
+			socket.on("DOMContentLoaded", () => {
+				sendData();
+			});
+			return;
+		}
+
+		if (hmp.deviceType == "inanis") {
+			socket.join(`INANIS-${this.serial}`);
+			socket.emit("Appstate", "scoreboard", this.scoreboard);
+			return;
+		}
+
+		// "windows" & "fukiran" do not need any aditional data
+		// since they summon an inanis instance
 	}
 	async addUser(socket: any) {
 		socket.join([`CLIENT-${this.serial}`, this.serial]);
@@ -225,8 +239,7 @@ export const Namespace = class Namespace {
 
 			this.scoreboard.clockData = this.timer.data;
 			this.emitDisplays("clockData", this.timer.data);
-			this.emitUsers("Appstate", "scoreboard", this.scoreboard);
-			database.update("scoreboards", { serial: this.serial }, this.scoreboard);
+			this.updateScoreboard(this.scoreboard);
 		});
 
 		socket.on("input", (type: any, value: any) => {
@@ -316,9 +329,14 @@ export const Namespace = class Namespace {
 				}
 			}
 
-			this.emitUsers("Appstate", "scoreboard", this.scoreboard);
-			database.update("scoreboards", { serial: this.serial }, this.scoreboard);
+			this.updateScoreboard(this.scoreboard);
 		});
+	}
+	updateScoreboard(scoreboard: Scoreboard) {
+		this.scoreboard = scoreboard;
+		this.emitUsers("Appstate", "scoreboard", this.scoreboard);
+		this.io.in(`INANIS-${this.serial}`).emit("Appstate", "scoreboard", this.scoreboard);
+		database.update("scoreboards", { serial: this.serial }, this.scoreboard);
 	}
 	readSponsorTree() {
 		const tree = [];
