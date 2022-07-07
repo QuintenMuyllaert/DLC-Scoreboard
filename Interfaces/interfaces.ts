@@ -61,12 +61,26 @@ export type bottomTab = "" | "withbottom-tab";
 
 export type themeColors = "light" | "dark" | "png";
 
+export interface JWT {
+  iat: number;
+  isAdmin: boolean;
+  serial: string;
+  snowflake: string;
+  username: string;
+}
+
+export interface sponsorFolder {
+  name: string;
+  children: string[];
+}
+
 export interface AppState {
   color: themeColors;
   bottomtab: bottomTab;
   scoreboard: Scoreboard;
-  templates: [];
-  sponsors: [];
+  templates: Template[];
+  sponsors: sponsorFolder[];
+  jwt: JWT;
 }
 
 export type AppStateKeys = keyof AppState;

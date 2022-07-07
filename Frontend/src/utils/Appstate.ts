@@ -13,7 +13,7 @@ export const setGlobalState = (val: any) => {
 	setState(val);
 };
 
-export const getGlobalState = () => {
+export const getGlobalState = (): AppState => {
 	//console.log("getGlobalState", state);
 	return state;
 };
