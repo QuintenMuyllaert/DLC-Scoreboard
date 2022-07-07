@@ -24,10 +24,10 @@ export const Score = () => {
 	const [displayOverlayColorpickerT, setDisplayOverlayColorpickerT] = useState(false);
 	const [displayOverlayColorpickerU, setDisplayOverlayColorpickerU] = useState(false);
 
-	const score = (team: string, amt: number) => {
+	const score = (team: "t1" | "t2", amt: number) => {
 		const name = team == "t1" ? "G1" : "G2";
 
-		if (scoreboard[team] == 0 && amt <= 0) {
+		if (scoreboard[team] + amt < 0 || scoreboard[team] + amt > 99) {
 			return;
 		}
 
@@ -36,7 +36,7 @@ export const Score = () => {
 
 	return (
 		<>
-			<div className="p-score">
+			<div className="p-page p-score">
 				<Clock onClick={() => setDisplayOverlayClock(true)}></Clock>
 				<div className="scorevalue-container">
 					<Flag top={scoreboard.hb} bottom={scoreboard.ho} onClick={() => setDisplayOverlayColorpickerT(true)} />
