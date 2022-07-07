@@ -3,18 +3,16 @@ import { LooseObject, clockData } from "../../../Interfaces/interfaces";
 export const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
 export const getCookies = () => {
-	const arrayb = document.cookie.split(";");
 	const cookies: LooseObject = {};
-	for (const item of arrayb) {
-		const key = item.split("=")[0];
+	document.cookie.split(";").forEach((cookie) => {
+		const [key, value] = cookie.split("=");
 		try {
-			const value = JSON.parse(item.replace(`${key}=`, ""));
-			cookies[key] = value;
-		} catch (err) {
-			const value = item.replace(`${key}=`, "");
-			cookies[key] = value;
+			cookies[key.trim()] = JSON.parse(value);
+		} catch (e) {
+			cookies[key.trim()] = value;
 		}
-	}
+	});
+
 	return cookies;
 };
 
