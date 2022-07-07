@@ -1,6 +1,6 @@
 import { defaultAppState, AppState, AppStateKeys, AppStateValues } from "../../../Interfaces/interfaces";
 
-export let state: AppState;
+export let state: AppState = defaultAppState;
 export let setState: any;
 
 export const attachUseState = (_state: any, _setState: any) => {
@@ -20,6 +20,7 @@ export const getGlobalState = () => {
 
 export const updateGlobalState = (key: AppStateKeys, value: AppStateValues) => {
 	console.log("updateGlobalState", key, value);
+	//@ts-ignore this works perfectly fine but typescript complains
 	state[key] = value;
 	setGlobalState({ ...state }); // React voodoo magic
 };

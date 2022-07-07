@@ -101,7 +101,7 @@ export const defaultScoreboard: Scoreboard = {
   hasAdmin: false,
 };
 
-export const defaultAppState = {
+export const defaultAppState: AppState = {
   color: "dark",
   bottomtab: "",
   scoreboard: defaultScoreboard,
