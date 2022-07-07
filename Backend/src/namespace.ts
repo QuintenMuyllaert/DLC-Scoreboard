@@ -78,23 +78,10 @@ export const Namespace = class Namespace {
 
 		const noHTMLSupport = ["bonsai", "sakura", "ikebana"];
 		if (noHTMLSupport.includes(hmp.deviceType.toLowerCase())) {
-			const sendData = () => {
-				socket.emit("data", "#hb", "attr", "style", `fill:${this.scoreboard.hb}`);
-				socket.emit("data", "#ub", "attr", "style", `fill:${this.scoreboard.ub}`);
-				socket.emit("data", "#ho", "attr", "style", `fill:${this.scoreboard.ho}`);
-				socket.emit("data", "#uo", "attr", "style", `fill:${this.scoreboard.uo}`);
-				socket.emit("data", "#message", "text", this.scoreboard.message);
-				socket.emit("data", "#t1", "text", this.scoreboard.t1);
-				socket.emit("data", "#t2", "text", this.scoreboard.t2);
-
-				socket.emit("clockData", this.timer.data);
-				socket.emit("sponsors", this.scoreboard.sponsors);
-				socket.emit("fullscreen", this.scoreboard.fullscreen);
-			};
-
-			sendData();
+			socket.join(`SVG-${this.serial}`);
+			this.sendLegacyScoreboard();
 			socket.on("DOMContentLoaded", () => {
-				sendData();
+				this.sendLegacyScoreboard();
 			});
 			return;
 		}
@@ -268,27 +255,22 @@ export const Namespace = class Namespace {
 				}
 				case "1B": {
 					this.scoreboard.hb = value;
-					this.emitDisplays("data", "#hb", "attr", "style", `fill:${value}`);
 					break;
 				}
 				case "2B": {
 					this.scoreboard.ub = value;
-					this.emitDisplays("data", "#ub", "attr", "style", `fill:${value}`);
 					break;
 				}
 				case "1O": {
 					this.scoreboard.ho = value;
-					this.emitDisplays("data", "#ho", "attr", "style", `fill:${value}`);
 					break;
 				}
 				case "2O": {
 					this.scoreboard.uo = value;
-					this.emitDisplays("data", "#uo", "attr", "style", `fill:${value}`);
 					break;
 				}
 				case "message": {
 					this.scoreboard.message = value;
-					this.emitDisplays("data", "#message", "text", value);
 					break;
 				}
 				case "G1": {
@@ -297,7 +279,6 @@ export const Namespace = class Namespace {
 					} else {
 						this.scoreboard.t1 += value;
 					}
-					this.emitDisplays("data", "#t1", "text", this.scoreboard.t1);
 					break;
 				}
 				case "G2": {
@@ -306,12 +287,10 @@ export const Namespace = class Namespace {
 					} else {
 						this.scoreboard.t2 += value;
 					}
-					this.emitDisplays("data", "#t2", "text", this.scoreboard.t2);
 					break;
 				}
 				case "fullscreen": {
 					this.scoreboard.fullscreen = value ? true : false;
-					this.emitDisplays("fullscreen", this.scoreboard.fullscreen);
 					break;
 				}
 				case "COLORS": {
@@ -320,7 +299,6 @@ export const Namespace = class Namespace {
 				}
 				case "SPONSORS": {
 					this.scoreboard.sponsors = value;
-					this.emitDisplays("sponsors", value);
 					break;
 				}
 				default: {
@@ -335,8 +313,23 @@ export const Namespace = class Namespace {
 	updateScoreboard(scoreboard: Scoreboard) {
 		this.scoreboard = scoreboard;
 		this.emitUsers("Appstate", "scoreboard", this.scoreboard);
+		this.sendLegacyScoreboard();
 		this.io.in(`INANIS-${this.serial}`).emit("Appstate", "scoreboard", this.scoreboard);
 		database.update("scoreboards", { serial: this.serial }, this.scoreboard);
+	}
+	sendLegacyScoreboard() {
+		const socket = this.io.in(`SVG-${this.serial}`);
+		socket.emit("data", "#hb", "attr", "style", `fill:${this.scoreboard.hb}`);
+		socket.emit("data", "#ub", "attr", "style", `fill:${this.scoreboard.ub}`);
+		socket.emit("data", "#ho", "attr", "style", `fill:${this.scoreboard.ho}`);
+		socket.emit("data", "#uo", "attr", "style", `fill:${this.scoreboard.uo}`);
+		socket.emit("data", "#message", "text", this.scoreboard.message);
+		socket.emit("data", "#t1", "text", this.scoreboard.t1);
+		socket.emit("data", "#t2", "text", this.scoreboard.t2);
+
+		socket.emit("clockData", this.timer.data);
+		socket.emit("sponsors", this.scoreboard.sponsors);
+		socket.emit("fullscreen", this.scoreboard.fullscreen);
 	}
 	readSponsorTree() {
 		const tree = [];
