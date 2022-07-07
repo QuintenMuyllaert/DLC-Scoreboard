@@ -1,4 +1,4 @@
-import { LooseObject, clockData } from "./Interfaces";
+import { LooseObject, clockData } from "../../../Interfaces/interfaces";
 
 export const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
@@ -63,8 +63,12 @@ export const calculateClockData = (clockData: clockData) => {
 export const calculateClock = (clockData: clockData) => {
 	let display = "00:00";
 	const now = Date.now();
-
-	if (clockData.paused) {
+	if (clockData.realTime) {
+		const realTime = new Date(now);
+		const hours = realTime.getHours();
+		const minutes = realTime.getMinutes();
+		display = clockify((hours * 60 + minutes) * 1000);
+	} else if (clockData.paused) {
 		const delta = clockData.startPauseTime - clockData.startTime - clockData.pauseTime;
 		display = clockify(delta);
 	} else {
