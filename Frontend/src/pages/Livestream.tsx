@@ -1,18 +1,19 @@
-import { useEffect } from "react";
-import { updateGlobalState, state } from "../utils/Appstate";
-
+import { useState } from "react";
+import { useRafLoop } from "react-use";
+import Appstate from "../utils/Appstate";
+import { calculateClock } from "../utils/Utils";
 export const Livestream = () => {
-	updateGlobalState("color", "png");
+	Appstate.updateState("color", "png");
+	const state = Appstate.getState().scoreboard;
 
-	useEffect(() => {
-		const interval = setInterval(() => {
-			updateGlobalState("timer", state.getClock());
-		});
+	const [value, setValue] = useState("00:00");
 
-		return () => {
-			clearInterval(interval);
-		};
-	}, []);
+	useRafLoop(() => {
+		const time = calculateClock(Appstate.getState().scoreboard.clockData);
+		if (time != value) {
+			setValue(time);
+		}
+	});
 
 	return (
 		<main
@@ -30,7 +31,7 @@ export const Livestream = () => {
 						<p className="score">{state.t1}</p>
 					</div>
 					<div className="time-container">
-						<p className="time">{state.getClock()}</p>
+						<p className="time">{value}</p>
 					</div>
 					<div className="score-container">
 						<p className="score">{state.t2}</p>
