@@ -33,7 +33,9 @@ export const Scoreboard = () => {
 						<h2 className="teamscore">{state.t1}</h2>
 						<Flag top={state.hb} bottom={state.ho} />
 					</div>
-					<Clock />
+					<div className="center">
+						<Clock />
+					</div>
 					<div className="team right">
 						<Flag top={state.ub} bottom={state.uo} />
 						<h2 className="teamscore">{state.t2}</h2>
