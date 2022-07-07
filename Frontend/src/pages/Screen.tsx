@@ -3,6 +3,7 @@ import BottomTab from "../components/BottomTab";
 
 import { scoreboardInterface } from "../utils/ScoreboardInterface";
 import Appstate from "../utils/Appstate";
+import Switch from "../components/Switch";
 
 export const Screen = () => {
 	const { sponsors, jwt } = Appstate.getState();
@@ -28,7 +29,7 @@ export const Screen = () => {
 
 	return (
 		<>
-			<div className="p-screen">
+			<div className="p-page p-screen">
 				<div className="c-option">
 					<label htmlFor="selectedTemplate">Sponsor selecteren</label>
 					<select id="selectedTemplate" onChange={onChangeTemplate}>
@@ -50,6 +51,7 @@ export const Screen = () => {
 						<polyline points="6 9 12 15 18 9"></polyline>
 					</svg>
 				</div>
+				<Switch />
 			</div>
 			<BottomTab />
 		</>

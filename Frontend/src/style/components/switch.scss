@@ -1,0 +1,62 @@
+.c-switch {
+	position: relative;
+	display: grid;
+	grid-template-rows: auto 1fr;
+	width: 100%;
+	height: fit-content;
+	--ballsize: 1.5rem;
+	--padding: 0.25rem;
+	input[type="checkbox"] {
+		width: 0;
+		height: 0;
+		opacity: 0;
+		position: absolute;
+	}
+
+	input[type="checkbox"]:checked + label {
+		.ball {
+			transform: translateX(calc(100% + var(--padding)));
+			background-color: var(--global-color-accent);
+		}
+		.left,
+		.right {
+			background-color: var(--global-color-detail);
+		}
+	}
+
+	.rail {
+		position: relative;
+		width: fit-content;
+		height: fit-content;
+		display: grid;
+		grid-template-columns: 1fr 1fr;
+
+		.left,
+		.right {
+			width: calc(var(--ballsize) + var(--padding));
+			height: calc(var(--ballsize) + var(--padding));
+			background-color: #323232;
+			transition: background-color 0.2s ease-in-out;
+		}
+
+		.left {
+			border-radius: 50% 0 0 50%;
+		}
+
+		.right {
+			border-radius: 0 50% 50% 0;
+		}
+	}
+
+	.ball {
+		position: absolute;
+		top: calc(var(--padding) / 2);
+		left: calc(var(--padding) / 2);
+		width: var(--ballsize);
+		height: var(--ballsize);
+		transform: translateX(0);
+		transition: transform 0.2s ease-in-out, background-color 0.2s ease-in-out;
+		background-color: var(--global-color-background);
+		border-radius: 50%;
+	}
+}
