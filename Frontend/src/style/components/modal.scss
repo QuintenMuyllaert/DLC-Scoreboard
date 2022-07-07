@@ -71,12 +71,12 @@
 
 		&-prim {
 			background-color: #353535;
-			color: var(--color--alpha);
+			color: var(--global-color-detail);
 		}
 
 		&-sec {
-			border: 2px solid var(--color--alpha);
-			color: var(--color--alpha);
+			border: 2px solid var(--global-color-detail);
+			color: var(--global-color-detail);
 		}
 	}
 }

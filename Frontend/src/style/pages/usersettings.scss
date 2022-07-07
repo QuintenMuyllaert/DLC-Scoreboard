@@ -95,11 +95,11 @@
 		}
 
 		input:checked + .slider {
-			background-color: var(--color--alpha);
+			background-color: var(--global-color-detail);
 		}
 
 		input:focus + .slider {
-			box-shadow: 0 0 1px var(--color--alpha);
+			box-shadow: 0 0 1px var(--global-color-detail);
 		}
 
 		input:checked + .slider:before {

@@ -41,11 +41,11 @@
 			background-color: var(--global-color-background-bottomtab-selected);
 
 			& .c-bottomtab__page-icon {
-				stroke: var(--color--alpha);
+				stroke: var(--global-color-detail);
 			}
 
 			& .c-bottomtab__page-name {
-				color: var(--color--alpha);
+				color: var(--global-color-detail);
 				display: block;
 				padding-left: 0.25rem;
 			}
