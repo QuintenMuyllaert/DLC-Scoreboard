@@ -4,7 +4,7 @@
 	height: fit-content;
 	position: relative;
 	width: 100%;
-	overflow-x: scroll;
+	//overflow-x: scroll;
 	.scrollcontainer {
 		white-space: nowrap;
 		position: absolute;
@@ -19,6 +19,7 @@
 	}
 
 	h1 {
+		font-family: Raleway, Twemoji;
 		font-size: 4em;
 		width: max-content;
 		font-weight: 600;
