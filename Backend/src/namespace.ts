@@ -70,7 +70,7 @@ export const Namespace = class Namespace {
 			await delay(100);
 		}
 
-		socket.emit("eval", Generate(hmp));
+		socket.emit("eval", Generate(hmp, socket.id));
 
 		console.log("Added display to namespace", this.serial);
 
@@ -89,11 +89,18 @@ export const Namespace = class Namespace {
 		if (hmp.deviceType == "inanis") {
 			socket.join(`INANIS-${this.serial}`);
 			socket.emit("Appstate", "scoreboard", this.scoreboard);
+			socket.on("eval", (data: any) => {
+				this.io.in(`HTML-${this.serial}`).emit("eval", `(function(){${data};})();`);
+			});
 			return;
 		}
 
 		// "windows" & "fukiran" do not need any aditional data
 		// since they summon an inanis instance
+		if (hmp.deviceType == "windows" || hmp.deviceType == "fukiran") {
+			socket.join(`HTML-${this.serial}`);
+			return;
+		}
 	}
 	async addUser(socket: any) {
 		socket.join([`CLIENT-${this.serial}`, this.serial]);
