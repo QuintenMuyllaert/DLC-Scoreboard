@@ -4,7 +4,6 @@ import BottomTab from "../components/BottomTab";
 import IconButton from "../components/IconButton";
 import Input from "../components/Input";
 import Template from "../components/Template";
-import Header from "../components/Header";
 
 import Appstate from "../utils/Appstate";
 import { scoreboardInterface } from "../utils/ScoreboardInterface";
@@ -42,7 +41,6 @@ export const Templates = () => {
 	return (
 		<>
 			<div className="p-templates element">
-				<Header />
 				<h1>Nieuwe template toevoegen</h1>
 				<div className="p-templates__form">
 					<Input

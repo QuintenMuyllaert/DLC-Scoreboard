@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { Input } from "../components/Input";
 import { Logo } from "../components/Logo";
-import Header from "../components/Header";
 import { IconButton } from "../components/IconButton";
 import { LooseObject } from "../../../Interfaces/interfaces";
 
@@ -130,7 +129,6 @@ export const Manual = () => {
 
 	return (
 		<div className="p-manual">
-			<Header />
 			<div className="content">
 				<div className="u-grid-vertical-gap">
 					<p className={validationState.display ? "validatie" : "hidden"}>{validationState.message}</p>

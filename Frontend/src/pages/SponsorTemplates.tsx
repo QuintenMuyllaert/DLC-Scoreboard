@@ -3,7 +3,6 @@ import BottomTab from "../components/BottomTab";
 import IconButton from "../components/IconButton";
 import SponsorTemplate from "../components/sponsorTemplate";
 import { useNavigate } from "react-router-dom";
-import Header from "../components/Header";
 import { scoreboardInterface } from "../utils/ScoreboardInterface";
 
 export const SponsorTemplates = () => {
@@ -33,7 +32,6 @@ export const SponsorTemplates = () => {
 	return (
 		<>
 			<div className="p-sponsorTemplates element">
-				<Header />
 				<h1>Sponsor reels</h1>
 				<div className="p-sponsorTemplates__list">{sponsorBundleElements}</div>
 				<div className="p-sponsorTemplates__btn">

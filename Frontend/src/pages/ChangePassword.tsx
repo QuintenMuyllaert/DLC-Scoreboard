@@ -4,7 +4,6 @@ import { Input } from "../components/Input";
 import { Logo } from "../components/Logo";
 import { IconButton } from "../components/IconButton";
 import { LooseObject } from "../../../Interfaces/interfaces";
-import Header from "../components/Header";
 
 export const ChangePassword = () => {
 	const localState: LooseObject = {
