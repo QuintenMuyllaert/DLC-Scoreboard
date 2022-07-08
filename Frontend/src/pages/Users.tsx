@@ -102,7 +102,7 @@ export const Users = () => {
 
 	return (
 		<>
-			<div className="p-users element">
+			<div className="p-page p-users element">
 				<h1>Mensen toevoegen</h1>
 				<div className="grid">
 					<Input

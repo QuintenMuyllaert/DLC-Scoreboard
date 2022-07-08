@@ -40,7 +40,7 @@ export const Templates = () => {
 
 	return (
 		<>
-			<div className="p-templates element">
+			<div className="p-page p-templates element">
 				<h1>Nieuwe template toevoegen</h1>
 				<div className="p-templates__form">
 					<Input

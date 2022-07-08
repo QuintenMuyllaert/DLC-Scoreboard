@@ -31,7 +31,7 @@ export const UserSettings = () => {
 
 	return (
 		<>
-			<div className="p-usersettings element">
+			<div className="p-page p-usersettings element">
 				<h1>Hallo {jwt?.username}</h1>
 
 				<div className="content">

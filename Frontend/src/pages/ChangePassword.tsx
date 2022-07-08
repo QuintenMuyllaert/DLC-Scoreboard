@@ -75,8 +75,7 @@ export const ChangePassword = () => {
 	};
 
 	return (
-		<div className="p-manual element">
-			<Header />
+		<div className="p-page p-manual element">
 			<div className="content">
 				<div className="u-grid-vertical-gap">
 					<div className="text">

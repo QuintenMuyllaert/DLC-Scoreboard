@@ -128,7 +128,7 @@ export const Manual = () => {
 	};
 
 	return (
-		<div className="p-manual">
+		<div className="p-page p-manual">
 			<div className="content">
 				<div className="u-grid-vertical-gap">
 					<p className={validationState.display ? "validatie" : "hidden"}>{validationState.message}</p>

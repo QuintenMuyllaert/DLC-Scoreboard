@@ -54,7 +54,7 @@ export const Login = () => {
 	};
 
 	return (
-		<div className="p-login">
+		<div className="p-page p-login">
 			<header>
 				<div className="p-login-topbar"></div>
 				<div className="p-login-logocontainer">

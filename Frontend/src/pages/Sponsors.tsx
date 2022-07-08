@@ -48,7 +48,7 @@ export const Sponsors = () => {
 
 	return (
 		<>
-			<div className="p-sponsors element">
+			<div className="p-page p-sponsors element">
 				<h1>{folder}</h1>
 
 				<div className="p-sponsors__list">{sponsorElements}</div>

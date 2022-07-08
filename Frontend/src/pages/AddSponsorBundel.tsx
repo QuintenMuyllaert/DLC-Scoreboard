@@ -21,7 +21,7 @@ export const AddSponsorBundel = () => {
 
 	return (
 		<>
-			<div className="p-addSponsor element">
+			<div className="p-page p-addSponsor element">
 				<h1>Nieuwe sponsorbundel</h1>
 
 				<div className="p-addSponsor__form">

@@ -30,7 +30,7 @@ export const TemplateSettings = () => {
 
 	return (
 		<>
-			<div className="p-templatesettings element">
+			<div className="p-page p-templatesettings element">
 				<h1 className="pagetitle">{template.name}</h1>
 
 				<div className="content">

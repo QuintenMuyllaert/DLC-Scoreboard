@@ -5,7 +5,7 @@ import { state } from "../utils/Appstate";
 export const Spectate = () => {
 	return (
 		<>
-			<div className="p-spectate">
+			<div className="p-page p-spectate">
 				<Clock />
 				<div className="team">
 					<div className="flag">

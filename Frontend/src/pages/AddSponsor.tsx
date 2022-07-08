@@ -36,7 +36,7 @@ export const AddSponsor = () => {
 
 	return (
 		<>
-			<div className="p-addSponsor element withbottom-tab">
+			<div className="p-page p-addSponsor element withbottom-tab">
 				<div className="c-addSponsor__tekst">
 					<h1>Nieuwe sponsor</h1>
 					<p>

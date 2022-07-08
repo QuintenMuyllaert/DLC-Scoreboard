@@ -38,7 +38,7 @@ export const MatchSetup = () => {
 
 	return (
 		<>
-			<div className="p-matchsetup maxwidth">
+			<div className="p-page p-matchsetup maxwidth">
 				<h1>Match instellen</h1>
 				<div className="teamsettings-container u-grid-vertical-gap">
 					<div className="flagcontainer">

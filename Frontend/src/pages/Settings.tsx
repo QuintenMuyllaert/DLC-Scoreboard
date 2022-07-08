@@ -10,7 +10,7 @@ export const Settings = () => {
 	const navigate = useNavigate();
 	return (
 		<>
-			<div className="p-settings">
+			<div className="p-page p-settings">
 				<main>
 					<IconButton
 						color="white"
