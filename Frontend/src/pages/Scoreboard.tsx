@@ -16,6 +16,33 @@ export const Scoreboard = () => {
 			sponsorIndex++;
 			const state = Appstate.getState().scoreboard;
 			const sponsor = state.sponsors[sponsorIndex % state.sponsors.length];
+
+			let script = `$('#layers').empty();`;
+			if (sponsor.match(/[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}/)) {
+				script += `
+					var layers = [
+						{
+							args: {
+								height: 620,
+								id: "eZJKezijai",
+								left: 0,
+								repeatDur: "indefinite",
+								src: "${sponsor}",
+								top: 230,
+								width: 1920,
+							},
+							changeNumber: "1.67",
+							ctor: "iframe",
+						}
+					];	
+					
+					$('#layers').add( $.uncan( layers ) );	
+				`;
+			}
+
+			//@ts-ignore
+			document.socket.emit("eval", `(function(){${script}})();`);
+
 			setSponsor(sponsor);
 		}, 5000);
 
