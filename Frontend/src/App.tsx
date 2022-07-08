@@ -25,36 +25,58 @@ import AddSponsorBundel from "./pages/AddSponsorBundel";
 import Settings from "./pages/Settings";
 import Screen from "./pages/Screen";
 
+import { ThemeProvider, createTheme } from "@mui/material/styles";
+
+const theme = createTheme({
+	palette: {
+		primary: {
+			main: "#117d6d",
+		},
+		secondary: {
+			main: "#117d6d",
+		},
+		background: {
+			default: "#232323",
+			paper: "#323232",
+		},
+		text: {
+			primary: "#ffffff",
+		},
+	},
+});
+
 export const App = () => {
 	Appstate.attachUseState(...useState(Appstate.defaultState));
 	const state = Appstate.getState();
 
 	return (
-		<Router>
-			<div className={`App ${state.color} ${state.bottomtab}`}>
-				<Routes>
-					<Route path="/" element={<Root />} />
-					<Route path="/login" element={<Login />} />
-					<Route path="/livestream" element={<Livestream />} />
-					<Route path="/scoreboard" element={<Scoreboard />} />
-					<Route path="/score" element={<Protect element={<Score />} />} />
-					<Route path="/templates" element={<Protect element={<Templates />} />} />
-					<Route path="/templatesettings" element={<Protect element={<TemplateSettings />} />} />
-					<Route path="/matchsetup" element={<Protect element={<MatchSetup />} />} />
-					<Route path="/manual" element={<Manual />} />
-					<Route path="/spectate" element={<Spectate />} />
-					<Route path="/users" element={<Protect element={<Users />} />} />
-					<Route path="/usersettings" element={<Protect element={<UserSettings />} />} />
-					<Route path="/sponsortemplates" element={<Protect element={<SponsorTemplates />} />} />
-					<Route path="/sponsor" element={<Protect element={<Sponsors />} />} />
-					<Route path="/addsponsor" element={<Protect element={<AddSponsor />} />} />
-					<Route path="/addsponsorbundel" element={<Protect element={<AddSponsorBundel />} />} />
-					<Route path="/changepassword" element={<Protect element={<ChangePassword />} />} />
-					<Route path="/settings" element={<Protect element={<Settings />} />} />
-					<Route path="/screen" element={<Protect element={<Screen />} />} />
-				</Routes>
-			</div>
-		</Router>
+		<ThemeProvider theme={theme}>
+			<Router>
+				<div className={`App ${state.color} ${state.bottomtab}`}>
+					<Routes>
+						<Route path="/" element={<Root />} />
+						<Route path="/login" element={<Login />} />
+						<Route path="/livestream" element={<Livestream />} />
+						<Route path="/scoreboard" element={<Scoreboard />} />
+						<Route path="/score" element={<Protect element={<Score />} />} />
+						<Route path="/templates" element={<Protect element={<Templates />} />} />
+						<Route path="/templatesettings" element={<Protect element={<TemplateSettings />} />} />
+						<Route path="/matchsetup" element={<Protect element={<MatchSetup />} />} />
+						<Route path="/manual" element={<Manual />} />
+						<Route path="/spectate" element={<Spectate />} />
+						<Route path="/users" element={<Protect element={<Users />} />} />
+						<Route path="/usersettings" element={<Protect element={<UserSettings />} />} />
+						<Route path="/sponsortemplates" element={<Protect element={<SponsorTemplates />} />} />
+						<Route path="/sponsor" element={<Protect element={<Sponsors />} />} />
+						<Route path="/addsponsor" element={<Protect element={<AddSponsor />} />} />
+						<Route path="/addsponsorbundel" element={<Protect element={<AddSponsorBundel />} />} />
+						<Route path="/changepassword" element={<Protect element={<ChangePassword />} />} />
+						<Route path="/settings" element={<Protect element={<Settings />} />} />
+						<Route path="/screen" element={<Protect element={<Screen />} />} />
+					</Routes>
+				</div>
+			</Router>
+		</ThemeProvider>
 	);
 };
 
