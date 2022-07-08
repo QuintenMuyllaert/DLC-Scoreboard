@@ -1,17 +1,3 @@
-.c-iconbutton.black {
-	/*Black button*/
-	--global-color-button-background: #121212;
-	--global-color-button-icon: #eee;
-	--global-color-button-text: #eee;
-}
-
-.c-iconbutton.white {
-	/*White button*/
-	--global-color-button-background: #eee;
-	--global-color-button-icon: #121212;
-	--global-color-button-text: #121212;
-}
-
 .c-iconbutton.center {
 	grid-template-columns: 1fr;
 	text-align: center;
@@ -22,7 +8,6 @@
 	grid-template-columns: 1fr;
 	grid-template-rows: 1fr;
 	place-items: center;
-	background-color: var(--global-color-button-background);
 }
 
 .c-iconbutton {
@@ -37,9 +22,10 @@
 	align-items: center;
 	cursor: pointer;
 
-	color: var(--global-color-button-text);
-	border: var(--global-border-size) solid var(--global-color-button-border);
-	background-color: var(--global-color-button-background);
+	color: var(--iconbutton-color-text);
+	border: var(--global-border-size) solid var(--iconbutton-color-border);
+	box-shadow: 0 0.125rem 0.125rem 0 rgba(0, 0, 0, 0.3);
+	background-color: var(--iconbutton-color-background);
 	font-family: Rajdhani;
 	font-weight: 700;
 	font-size: 2rem;
@@ -51,8 +37,8 @@
 	object {
 		width: 1.5rem;
 		height: 1.5rem;
-		color: var(--global-color-button-icon);
-		stroke: var(--global-color-button-icon);
+		color: var(--iconbutton-color-icon);
+		stroke: var(--iconbutton-color-icon);
 		align-self: center;
 	}
 }

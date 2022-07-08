@@ -18,15 +18,6 @@
 		justify-content: center;
 		gap: 1.5rem;
 	}
-
-	button {
-		width: 3rem;
-		height: 3rem;
-		background-color: var(--global-color-text);
-		color: var(--global-color-background);
-		font-weight: 900;
-		font-size: 2rem;
-	}
 }
 
 .c-digit.t-rocker {
@@ -42,10 +33,8 @@
 		display: flex;
 		align-items: center;
 		justify-content: center;
-		background-color: transparent;
 
 		& svg {
-			stroke: var(--global-color-detail);
 			width: 4.5rem;
 			height: 4.5rem;
 		}
