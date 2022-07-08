@@ -1,5 +1,7 @@
 import { HMP } from "../../Interfaces/Interfaces";
 
+const version = Date.now().toString();
+
 const width = 1920; //588
 const height = 1080; //336
 
@@ -174,8 +176,13 @@ const scriptHTML = `
 const HTMLSupport = ["inanis", "windows", "fukiran"];
 const noHTMLSupport = ["bonsai", "sakura", "ikebana"];
 
-export const Generate = (hmp: HMP) => {
-	let txt = `$("#root").empty();$("#layers").empty();`;
+export const Generate = (hmp: HMP, id: string) => {
+	let txt = `
+		if(store.version == "${version}"){
+			return;
+		}
+		store.version = "${version}";
+		$("#root").empty();$("#layers").empty();`;
 
 	if (noHTMLSupport.includes(hmp.deviceType)) {
 		txt += `$("#root").append('<rect fill="black" height="${height}" id="background" stroke="none" width="${width}"/>');`;
@@ -191,5 +198,5 @@ export const Generate = (hmp: HMP) => {
 		})();`;
 	}
 
-	return txt;
+	return `(function(){${txt};})();`;
 };
