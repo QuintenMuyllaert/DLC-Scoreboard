@@ -1,14 +1,10 @@
-# DLC-Industry_Project
+# DLC-Scoreboard
 
 This is a Progressive web app (PWA) to control a scoreboard.
 
-## Team QMA
+It is a continuation of Industry_Project.
 
-We are team QMA :
-
-- Quinten
-- Milan
-- Anton
+https://github.com/QuintenMuyllaert/DLC-Industry_Project
 
 ### Usage
 
