@@ -1,25 +1,13 @@
-// WIP
-
-.dark .c-bottomtab,
-.light .c-bottomtab {
-	--global-color-background-bottomtab: #353535;
-	--global-color-background-bottomtab-selected: #2a2a2a;
-}
-
-.dlc .c-bottomtab {
-	--global-color-background-bottomtab: #000000;
-	--global-color-background-bottomtab-selected: #121212;
-	border-top: var(--global-border-size) solid var(--global-color-text);
-}
-
 .c-bottomtab {
 	width: 100%;
-	background-color: var(--global-color-background-bottomtab);
+	background-color: var(--bottomtab-color-background);
 	padding: 0.5rem;
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
 	gap: 0;
+	//add topshadow
+	box-shadow: 0 0 0.125rem 0 var(--bottomtab-color-background);
 
 	&__hidden {
 		display: none !important;
@@ -32,28 +20,33 @@
 		border-radius: 1rem;
 		cursor: pointer;
 
+		svg {
+			height: 1.2rem;
+			stroke: var(--bottomtab-color-icon);
+		}
+
 		&-name {
 			display: none;
 			width: 0%;
 		}
 
 		&-active {
-			background-color: var(--global-color-background-bottomtab-selected);
+			background-color: var(--bottomtab-color-background-selected);
+			box-shadow: 0 0.125rem 0.125rem 0 rgba(0, 0, 0, 0.3);
 
 			& .c-bottomtab__page-icon {
-				stroke: var(--global-color-detail);
+				stroke: var(--bottomtab-color-selected-text);
 			}
 
 			& .c-bottomtab__page-name {
-				color: var(--global-color-detail);
+				color: var(--bottomtab-color-selected-text);
 				display: block;
 				padding-left: 0.25rem;
 			}
-		}
 
-		& svg {
-			height: 1.2rem;
-			color: var(--color-white);
+			svg {
+				stroke: var(--bottomtab-color-selected-text);
+			}
 		}
 	}
 }
