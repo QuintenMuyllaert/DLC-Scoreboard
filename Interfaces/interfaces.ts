@@ -121,4 +121,11 @@ export const defaultAppState: AppState = {
   scoreboard: defaultScoreboard,
   templates: [],
   sponsors: [],
+  jwt: {
+    iat: 0,
+    isAdmin: false,
+    serial: "",
+    snowflake: "",
+    username: "",
+  },
 };
