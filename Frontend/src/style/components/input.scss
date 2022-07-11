@@ -12,10 +12,8 @@
 		background-color: var(--global-color-background);
 		color: var(--global-color-text);
 		font-size: 1rem;
-
-		&:focus {
-			color: var(--global-border-size) solid var(--global-color-detail);
-		}
+		color: var(--global-border-size) solid var(--global-color-accent-primary);
+		transition: color 0.2s ease-in-out;
 	}
 
 	input {
@@ -27,13 +25,15 @@
 		height: 3.25rem;
 		padding-inline: 1rem;
 		border-radius: var(--global-border-radius);
+		box-shadow: 0 0.125rem 0.125rem 0 rgba(0, 0, 0, 0.3);
+		transition: border 0.2s ease-in-out;
 
 		&:focus {
-			border: var(--global-border-size) solid var(--global-color-detail);
+			border: var(--global-border-size) solid var(--global-color-accent-primary);
 		}
 
 		&:focus + label {
-			color: var(--global-border-size) solid var(--global-color-detail);
+			color: var(--global-color-accent-primary);
 		}
 	}
 

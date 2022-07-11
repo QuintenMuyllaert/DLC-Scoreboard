@@ -1,3 +1,5 @@
+import { useId } from "react";
+
 export const Input = ({
 	label,
 	type,
@@ -13,10 +15,14 @@ export const Input = ({
 	onChange?: (event?: any) => any;
 	inputValue?: any;
 }) => {
+	if (!id) {
+		id = useId();
+	}
+
 	return (
 		<div className="c-input">
-			<label htmlFor={id}>{label}</label>
 			<input disabled={disabled} id={id} type={type} onChange={onChange} value={inputValue} />
+			<label htmlFor={id}>{label}</label>
 		</div>
 	);
 };
