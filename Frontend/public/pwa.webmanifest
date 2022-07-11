@@ -5,13 +5,13 @@
 	"orientation": "portrait",
 	"icons": [
 		{
-			"src": "/img/favicon.png",
+			"src": "/img/pwaicon.png",
 			"sizes": "512x512",
 			"type": "image/png",
 			"purpose": "any maskable"
 		},
 		{
-			"src": "/img/favicon.png",
+			"src": "/img/pwaicon.png",
 			"sizes": "512x512",
 			"type": "image/png"
 		}
