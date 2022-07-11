@@ -1,5 +1,6 @@
 .c-clock {
-	border: calc(2 * var(--global-border-size)) solid var(--global-color-button-border);
+	border: var(--global-border-size) solid var(--global-color-accent-primary);
+	box-shadow: 0 0.125rem 0.125rem 0 rgba(0, 0, 0, 0.3);
 	border-radius: var(--global-border-radius);
 	text-align: center;
 	font-family: DSEG7-Classic;
