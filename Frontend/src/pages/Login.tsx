@@ -62,7 +62,7 @@ export const Login = () => {
 				</div>
 			</header>
 
-			<div className="u-grid-vertical-gap p-login-maxwidth">
+			<div className="p-login-maxwidth">
 				<Input
 					id="username"
 					label="username"
@@ -80,7 +80,7 @@ export const Login = () => {
 					}}
 				/>
 			</div>
-			<div className="u-grid-vertical-gap p-login-maxwidth">
+			<div className="p-login-maxwidth">
 				<IconButton
 					icon={
 						<svg
