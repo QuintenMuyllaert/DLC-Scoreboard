@@ -76,7 +76,7 @@ export const Scoreboard = () => {
 						<h2 className="teamscore">{state.t2}</h2>
 					</div>
 				</header>
-				<main>
+				<main className={state.fullscreen ? "fullscreen" : ""}>
 					<picture>
 						<img src={sponsor} alt="" />
 					</picture>
