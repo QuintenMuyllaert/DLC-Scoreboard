@@ -6,6 +6,12 @@
 	height: fit-content;
 	--ballsize: 1.5rem;
 	--padding: 0.25rem;
+
+	--color-ball-active: var(--global-color-accent-dark);
+	--color-ball-inactive: var(--global-color-accent-dark);
+	--color-background-active: var(--global-color-accent-light);
+	--color-background-inactive: var(--global-color-accent-light);
+
 	input[type="checkbox"] {
 		width: 0;
 		height: 0;
@@ -16,11 +22,11 @@
 	input[type="checkbox"]:checked + label {
 		.ball {
 			transform: translateX(calc(100% + var(--padding)));
-			background-color: var(--global-color-accent);
+			background-color: var(--color-ball-active);
 		}
 		.left,
 		.right {
-			background-color: var(--global-color-detail);
+			background-color: var(--color-background-active);
 		}
 	}
 
@@ -35,7 +41,7 @@
 		.right {
 			width: calc(var(--ballsize) + var(--padding));
 			height: calc(var(--ballsize) + var(--padding));
-			background-color: #323232;
+			background-color: var(--color-background-inactive);
 			transition: background-color 0.2s ease-in-out;
 		}
 
@@ -56,7 +62,7 @@
 		height: var(--ballsize);
 		transform: translateX(0);
 		transition: transform 0.2s ease-in-out, background-color 0.2s ease-in-out;
-		background-color: var(--global-color-background);
+		background-color: var(--color-ball-inactive);
 		border-radius: 50%;
 	}
 }

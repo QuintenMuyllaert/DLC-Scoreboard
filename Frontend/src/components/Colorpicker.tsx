@@ -1,7 +1,7 @@
 import { useState } from "react";
-import Color from "./Color";
 import Flag from "./Flag";
 import IconButton from "./IconButton";
+import Switch from "./Switch";
 
 import Appstate from "../utils/Appstate";
 import { scoreboardInterface } from "../utils/ScoreboardInterface";
@@ -10,6 +10,7 @@ export const Colorpicker = ({ team, setVisible = () => {} }: { team: 1 | 2; setV
 	const scoreboard = Appstate.getState().scoreboard;
 
 	const [removing, setRemoving] = useState(false);
+	const [changing, setChanging] = useState("B" as "B" | "O");
 
 	const onClickColor = (color: string, position: "B" | "O") => {
 		if (removing) {
@@ -26,17 +27,32 @@ export const Colorpicker = ({ team, setVisible = () => {} }: { team: 1 | 2; setV
 		scoreboardInterface.updateColorArray([...scoreboard.colors, color]);
 	};
 
-	const colorsB = [];
-	const colorsO = [];
+	const colors = [];
 	for (const color of scoreboard.colors) {
-		colorsB.push(<Color color={color} removing={removing} onClick={() => onClickColor(color, "B")} />);
-		colorsO.push(<Color color={color} removing={removing} onClick={() => onClickColor(color, "O")} />);
+		colors.push(
+			<button className="color" style={{ backgroundColor: color }} onClick={() => onClickColor(color, changing)}>
+				<svg
+					className={removing ? "delete-icon" : ""}
+					xmlns="http://www.w3.org/2000/svg"
+					width="24"
+					height="24"
+					viewBox="0 0 24 24"
+					fill="none"
+					stroke="currentColor"
+					stroke-width="2"
+					stroke-linecap="round"
+					stroke-linejoin="round">
+					<line x1="18" y1="6" x2="6" y2="18"></line>
+					<line x1="6" y1="6" x2="18" y2="18"></line>
+				</svg>
+			</button>,
+		);
 	}
 
 	return (
-		<div className="c-colorpicker__container scrollbar">
-			<div className="buttons">
-				<button className="close" onClick={() => setVisible(false)}>
+		<div className="c-colorpicker c-card">
+			<div className="top">
+				<button onClick={() => setVisible(false)}>
 					<svg
 						xmlns="http://www.w3.org/2000/svg"
 						width="24"
@@ -51,13 +67,15 @@ export const Colorpicker = ({ team, setVisible = () => {} }: { team: 1 | 2; setV
 						<line x1="6" y1="6" x2="18" y2="18"></line>
 					</svg>
 				</button>
-				<button className="garbage" onClick={() => setRemoving(!removing)}>
+				<Flag top={team == 1 ? scoreboard.hb : scoreboard.ub} bottom={team == 1 ? scoreboard.ho : scoreboard.uo} />
+				<button onClick={() => setRemoving(!removing)}>
 					<svg
 						xmlns="http://www.w3.org/2000/svg"
 						width="24"
 						height="24"
 						viewBox="0 0 24 24"
 						fill="none"
+						stroke="currentColor"
 						stroke-width="2"
 						stroke-linecap="round"
 						stroke-linejoin="round">
@@ -68,36 +86,21 @@ export const Colorpicker = ({ team, setVisible = () => {} }: { team: 1 | 2; setV
 					</svg>
 				</button>
 			</div>
-			<Flag top={team == 1 ? scoreboard.hb : scoreboard.ub} bottom={team == 1 ? scoreboard.ho : scoreboard.uo} />
-			<p>Kies een kleur voor de bovenkant</p>
-			<div className="c-colorpicker__colors">
-				<>{colorsB}</>
-				<div className="c-colorpicker__colors-colorAdd">
-					<input onBlur={onAddColor} className="c-colorpicker__colors-colorAdd-input" type="color" id="newColorTop" name="newColorTopName" />
-					<label className="c-colorpicker__colors-colorAdd-label" htmlFor="newColorTop">
-						<svg
-							className="icon"
-							xmlns="http://www.w3.org/2000/svg"
-							width="24"
-							height="24"
-							viewBox="0 0 24 24"
-							fill="none"
-							stroke="currentColor"
-							strokeWidth="2"
-							strokeLinecap="round"
-							strokeLinejoin="round">
-							<line x1="12" y1="5" x2="12" y2="19"></line>
-							<line x1="5" y1="12" x2="19" y2="12"></line>
-						</svg>
-					</label>
-				</div>
+			<div className="side">
+				<p>Onder</p>
+				<Switch
+					onChange={(event) => {
+						const value = event.target.checked;
+						setChanging(value ? "B" : "O");
+					}}
+				/>
+				<p>Boven</p>
 			</div>
-			<p>Kies een kleur voor de onderkant</p>
-			<div className="c-colorpicker__colors">
-				<>{colorsO}</>
-				<div className="c-colorpicker__colors-colorAdd">
-					<input onBlur={onAddColor} className="c-colorpicker__colors-colorAdd-input" type="color" id="newColorBottom" name="newColorBottomName" />
-					<label className="c-colorpicker__colors-colorAdd-label" htmlFor="newColorBottom">
+			<div className="colors">
+				<>{colors}</>
+				<div className="color add">
+					<input onBlur={onAddColor} className="o-hide" type="color" id="newColorTop" name="newColorTopName" />
+					<label htmlFor="newColorTop">
 						<svg
 							className="icon"
 							xmlns="http://www.w3.org/2000/svg"

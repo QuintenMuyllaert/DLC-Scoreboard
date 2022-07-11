@@ -12,6 +12,8 @@
 	overflow: hidden;
 
 	.c-overlay-content {
+		display: grid;
+		place-items: center;
 		width: max(90%);
 		height: fit-content;
 		z-index: 1;
