@@ -41,7 +41,8 @@ const svgElement = `<rect fill="black" height="${height}" id="background" stroke
 
 <image id="sponsorimgsmall" x="0" y="${0.2 * height}" width="${width}" height="${0.63 * height}" xlink:href=""  />
 <rect fill="black" width="${width}" height="${height}" id="sponsorbackground" stroke="none"/>
-<image id="sponsorimg" x="0" y="0" width="${width}" height="${height}" xlink:href=""  />`;
+<image id="sponsorimg" x="0" y="0" width="${width}" height="${height}" xlink:href=""  />
+<rect fill="black" width="${width}" height="${height}" id="displaybackground" stroke="none"/>`;
 
 const scriptSVG = `
 	var len = 16;
@@ -111,6 +112,14 @@ const scriptSVG = `
 			$("#sponsorbackground").attr("style","opacity: 0");
 			$("#sponsorimg").attr("style","opacity: 0");
 			$("#sponsorimgsmall").attr("style","opacity: 1");
+		}
+	});
+
+	socket.on("display",function(data){
+		if(data){
+			$("#displaybackground").attr("style","opacity: 0");
+		}else{
+			$("#displaybackground").attr("style","opacity: 1");
 		}
 	});
 

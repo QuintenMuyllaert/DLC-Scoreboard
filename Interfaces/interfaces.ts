@@ -23,6 +23,8 @@ export interface User {
 }
 
 export interface Scoreboard {
+  name: string;
+  display: boolean;
   isPlaying: boolean;
   fullscreen: boolean;
   sponsors: string[];
@@ -97,6 +99,8 @@ export const defaultTemplate: Template = {
 };
 
 export const defaultScoreboard: Scoreboard = {
+  name: "N/A",
+  display: true,
   serial: "N/A",
   isPlaying: false,
   fullscreen: false,

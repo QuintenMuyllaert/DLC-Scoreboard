@@ -22,6 +22,7 @@ export class InterfaceScoreboard {
 	sendMessage(message: string) {}
 	getMessage() {}
 	setScreen(screen: `P${number}`) {}
+	enableDisplay(enable: boolean) {}
 	detect = async () => {
 		return loopback;
 	};
@@ -157,6 +158,9 @@ export class InterfaceSocket {
 	updateColorArray(colorArray: string[]) {
 		console.log("updateColorArray", colorArray);
 		this.socket.emit("input", "COLORS", colorArray);
+	}
+	enableDisplay(enable: boolean) {
+		this.socket.emit("input", "enableDisplay", enable);
 	}
 	async startMatch(halfs: number = 0, halfLength: number = 0) {
 		console.log("startMatch");

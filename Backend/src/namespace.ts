@@ -300,6 +300,10 @@ export const Namespace = class Namespace {
 					this.scoreboard.fullscreen = value ? true : false;
 					break;
 				}
+				case "enableDisplay": {
+					this.scoreboard.display = value ? true : false;
+					break;
+				}
 				case "COLORS": {
 					this.scoreboard.colors = value;
 					break;
@@ -337,6 +341,7 @@ export const Namespace = class Namespace {
 		socket.emit("clockData", this.timer.data);
 		socket.emit("sponsors", this.scoreboard.sponsors);
 		socket.emit("fullscreen", this.scoreboard.fullscreen);
+		socket.emit("display", this.scoreboard.display);
 	}
 	readSponsorTree() {
 		const tree = [];

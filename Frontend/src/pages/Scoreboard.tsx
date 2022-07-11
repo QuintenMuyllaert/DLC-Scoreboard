@@ -18,18 +18,22 @@ export const Scoreboard = () => {
 			const sponsor = state.sponsors[sponsorIndex % state.sponsors.length];
 
 			let script = `$('#layers').empty();`;
+			if (!state.display) {
+				return;
+			}
+
 			if (sponsor.match(/[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}/)) {
 				script += `
 					var layers = [
 						{
 							args: {
-								height: 620,
+								height: ${document.querySelector("main")?.offsetHeight || 0},
 								id: "eZJKezijai",
-								left: 0,
+								left: ${document.querySelector("main")?.offsetLeft || 0},
 								repeatDur: "indefinite",
 								src: "${sponsor}",
-								top: 230,
-								width: 1920,
+								top: ${document.querySelector("main")?.offsetTop || 0},
+								width: ${document.querySelector("main")?.offsetWidth || 0},
 							},
 							changeNumber: "1.67",
 							ctor: "iframe",
@@ -50,6 +54,10 @@ export const Scoreboard = () => {
 			clearInterval(interval);
 		};
 	}, []);
+
+	if (!state.display) {
+		return <div className="p-scoreboard"></div>;
+	}
 
 	let layout = "ads";
 	return layout === "ads" ? (
