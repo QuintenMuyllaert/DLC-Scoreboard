@@ -37,7 +37,7 @@ export const Settings = () => {
 					/>
 					<IconButton
 						color="white"
-						label="Beheer Templates"
+						label="Templates"
 						onClick={() => navigate("/templates")}
 						icon={
 							<svg
@@ -59,7 +59,7 @@ export const Settings = () => {
 					/>
 					<IconButton
 						color="white"
-						label="Beheer Sponsors"
+						label="Sponsors"
 						onClick={() => navigate("/sponsortemplates")}
 						icon={
 							<svg
@@ -80,7 +80,7 @@ export const Settings = () => {
 					/>
 					<IconButton
 						color="white"
-						label="Beheer Gebruikers"
+						label="Gebruikers"
 						onClick={() => navigate("/users")}
 						icon={
 							<svg
