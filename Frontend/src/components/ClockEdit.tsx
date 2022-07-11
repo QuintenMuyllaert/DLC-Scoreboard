@@ -51,7 +51,7 @@ export const ClockEdit = ({ setVisible = () => {} }: { setVisible?: (event?: any
 	};
 
 	return (
-		<div className="c-clockedit__container">
+		<div className="c-card c-clockedit">
 			<button className="close" onClick={onClickClose}>
 				<svg
 					xmlns="http://www.w3.org/2000/svg"
@@ -75,7 +75,7 @@ export const ClockEdit = ({ setVisible = () => {} }: { setVisible?: (event?: any
 			</div>
 			<IconButton color="black" label="INSTELLEN" onClick={onClickConfirm} />
 			<h1 className="title">start of stop de timer</h1>
-			<div className="c-clockedit__btns">
+			<div className="buttons">
 				<IconButton
 					color="black"
 					onClick={onClickPause}
