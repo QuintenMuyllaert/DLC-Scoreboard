@@ -10,7 +10,7 @@ export const Colorpicker = ({ team, setVisible = () => {} }: { team: 1 | 2; setV
 	const scoreboard = Appstate.getState().scoreboard;
 
 	const [removing, setRemoving] = useState(false);
-	const [changing, setChanging] = useState("B" as "B" | "O");
+	const [changing, setChanging] = useState("O" as "B" | "O");
 
 	const onClickColor = (color: string, position: "B" | "O") => {
 		if (removing) {
