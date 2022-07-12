@@ -1,6 +1,6 @@
 import Appstate from "../utils/Appstate";
 
-export const User = ({ username }: { username: string }) => {
+export default ({ username }: { username: string }) => {
 	const state = Appstate.getState().scoreboard;
 	const requestBody = {
 		username: username,
@@ -64,5 +64,3 @@ export const User = ({ username }: { username: string }) => {
 		</article>
 	);
 };
-
-export default User;
