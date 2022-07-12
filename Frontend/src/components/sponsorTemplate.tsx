@@ -1,35 +1,22 @@
 import { useNavigate } from "react-router-dom";
-import { updateGlobalState as updateState, state } from "../utils/Appstate";
 
 export const SponsorTemplate = ({ name, aantal, handleClickDeletePopup }: { name: string; aantal: number; handleClickDeletePopup: (event?: any) => any }) => {
 	const navigate = useNavigate();
 
-	const goToSponsor = async (bundelNaam: string) => {
-		navigate(`/sponsor?folder=${encodeURIComponent(bundelNaam)}`);
-	};
-
-	const handleClickDeleteBtn = (name: string) => {
-		updateState("sponsorbundelToDelete", name);
-		handleClickDeletePopup();
+	const goToSponsor = () => {
+		navigate(`/sponsor?folder=${encodeURIComponent(name)}`);
 	};
 
 	return (
-		<div className="p-sponsorTemplates__list-item">
-			<button
-				onClick={() => {
-					goToSponsor(name);
-				}}>
-				<div className="p-sponsorTemplates__list-tekst">
-					<p className="p-sponsorTemplates__list-title">{name}</p>
-					<p>{aantal} sponsors</p>
-				</div>
+		<div className="c-template">
+			<button onClick={goToSponsor}>
+				<p>{name}</p>
+				<p>
+					{aantal} sponsor{aantal == 1 ? "" : "s"}
+				</p>
 			</button>
-
-			<div className="p-sponsorTemplates__list-btn">
-				<button
-					onClick={() => {
-						goToSponsor(name);
-					}}>
+			<div className="buttons">
+				<button onClick={goToSponsor}>
 					<svg
 						xmlns="http://www.w3.org/2000/svg"
 						width="24"
@@ -44,11 +31,7 @@ export const SponsorTemplate = ({ name, aantal, handleClickDeletePopup }: { name
 						<path d="M7.5 20.5 19 9l-4-4L3.5 16.5 2 22z"></path>
 					</svg>
 				</button>
-
-				<button
-					onClick={() => {
-						handleClickDeleteBtn(name);
-					}}>
+				<button onClick={handleClickDeletePopup}>
 					<svg
 						xmlns="http://www.w3.org/2000/svg"
 						width="24"

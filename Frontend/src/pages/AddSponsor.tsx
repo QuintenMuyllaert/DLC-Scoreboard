@@ -15,10 +15,11 @@ export const AddSponsor = () => {
 
 	const [sponsorName, setSponsorName] = useState("");
 	const [sponsorUri, setSponsorUri] = useState("");
+	const [sponsorLink, setSponsorLink] = useState("");
 	const [sponsorExtention, setSponsorExtention] = useState("");
 
 	const onClickSave = () => {
-		if (sponsorName === "" || sponsorUri === "" || sponsorExtention === "") {
+		if (sponsorName === "" || (sponsorUri === "" && sponsorLink === "") || sponsorExtention === "") {
 			return;
 		}
 
@@ -27,7 +28,7 @@ export const AddSponsor = () => {
 			value: {
 				folder,
 				file: `${sponsorName}.${sponsorExtention}`,
-				uri: sponsorUri,
+				uri: sponsorLink || sponsorUri,
 			},
 		});
 
@@ -36,7 +37,7 @@ export const AddSponsor = () => {
 
 	return (
 		<>
-			<div className="p-page p-addSponsor element withbottom-tab">
+			<div className="p-page p-addSponsor">
 				<div className="c-addSponsor__tekst">
 					<h1>Nieuwe sponsor</h1>
 					<p>
@@ -53,6 +54,13 @@ export const AddSponsor = () => {
 						type="text"
 						onChange={(event: React.FormEvent<HTMLInputElement>) => {
 							setSponsorName(event.currentTarget.value);
+						}}
+					/>
+					<Input
+						label="Link"
+						type="text"
+						onChange={(event: React.FormEvent<HTMLInputElement>) => {
+							setSponsorLink(event.currentTarget.value);
 						}}
 					/>
 					<input
