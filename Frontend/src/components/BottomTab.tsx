@@ -1,4 +1,3 @@
-import { BottomNavigation, BottomNavigationAction } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Appstate from "../utils/Appstate";
@@ -77,34 +76,24 @@ export default () => {
 
 	const navigate = useNavigate();
 
-	//get index of route with matching pathname
-	const index = routes.findIndex((route) => route.path === window.location.pathname);
-
-	const [value, setValue] = useState(index);
-
-	const components = routes.map((route, index) => {
+	const components = routes.map((route) => {
 		return (
-			<BottomNavigationAction
-				key={index}
-				label={route.label}
-				icon={route.icon}
+			<button
+				className={document.location.pathname === route.path ? "active" : ""}
 				onClick={() => {
 					navigate(route.path);
-				}}
-			/>
+				}}>
+				{route.icon}
+				<p>{route.label}</p>
+			</button>
 		);
 	});
 
 	return (
-		<BottomNavigation
-			className="c-bottomtab"
-			showLabels
-			value={value}
-			onChange={(event, newValue) => {
-				setValue(newValue);
-				console.log(newValue);
-			}}>
+		<nav className="c-bottomtab">
+			<div className="empty"></div>
 			{components}
-		</BottomNavigation>
+			<div className="empty"></div>
+		</nav>
 	);
 };
