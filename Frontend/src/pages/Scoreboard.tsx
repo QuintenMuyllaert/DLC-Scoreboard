@@ -11,18 +11,22 @@ export default () => {
 
 	useEffect(() => {
 		let sponsorIndex = 0;
+		let lastSponsor = "";
 
-		const interval = setInterval(() => {
+		const showNextSponsor = () => {
 			sponsorIndex++;
 			const state = Appstate.getState().scoreboard;
 			const sponsor = state.sponsors[sponsorIndex % state.sponsors.length];
+			if (lastSponsor == sponsor) {
+				return;
+			}
 
 			let script = `$('#layers').empty();`;
 			if (!state.display) {
 				return;
 			}
 
-			if (sponsor.match(/[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}/)) {
+			if (!sponsor.includes(document.location.origin) || sponsor.match(/[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}/)) {
 				script += `
 					var layers = [
 						{
@@ -48,7 +52,11 @@ export default () => {
 			document.socket.emit("eval", `(function(){${script}})();`);
 
 			setSponsor(sponsor);
-		}, 5000);
+			lastSponsor = sponsor;
+		};
+
+		showNextSponsor();
+		const interval = setInterval(showNextSponsor, 5000);
 
 		return () => {
 			clearInterval(interval);
@@ -64,14 +72,14 @@ export default () => {
 		<div className="p-scoreboard ads">
 			<div className="scoreboardtop">
 				<header>
-					<div className="team left">
+					<div className={`team left ${state.isPlaying ? "" : "hide"}`}>
 						<h2 className="teamscore">{state.t1}</h2>
 						<Flag top={state.hb} bottom={state.ho} />
 					</div>
 					<div className="center">
 						<Clock />
 					</div>
-					<div className="team right">
+					<div className={`team right ${state.isPlaying ? "" : "hide"}`}>
 						<Flag top={state.ub} bottom={state.uo} />
 						<h2 className="teamscore">{state.t2}</h2>
 					</div>

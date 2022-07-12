@@ -172,6 +172,7 @@ export const Namespace = class Namespace {
 			const folder = data?.value?.folder || "";
 			const file = data?.value?.file || "";
 			const uri = data?.value?.uri || "";
+			const type = data?.value?.type || "";
 			if (folder.includes("/") || folder.includes("\\") || folder.includes(".")) {
 				return;
 			}
@@ -187,7 +188,9 @@ export const Namespace = class Namespace {
 
 					existsSync(`./www/${this.serial}/${folder}`) || mkdirSync(`./www/${this.serial}/${folder}`);
 
-					if (file) {
+					if (type == "link") {
+						writeFileSync(`./www/${this.serial}/${folder}/${file}`, JSON.stringify({ uri }, null, 2));
+					} else if (file) {
 						outputFile(uri, `./www/${this.serial}/${folder}/${file}`);
 					}
 

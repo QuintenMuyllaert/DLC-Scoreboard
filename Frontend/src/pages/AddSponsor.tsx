@@ -20,7 +20,12 @@ export default () => {
 	const [sponsorExtention, setSponsorExtention] = useState("");
 
 	const onClickSave = () => {
-		if (sponsorName === "" || (sponsorUri === "" && sponsorLink === "") || sponsorExtention === "") {
+		if (sponsorName === "") {
+			return;
+		}
+		if (sponsorLink === "") {
+			return;
+		} else if (sponsorUri !== "" && sponsorExtention !== "") {
 			return;
 		}
 
@@ -28,8 +33,9 @@ export default () => {
 			type: "create",
 			value: {
 				folder,
-				file: `${sponsorName}.${sponsorExtention}`,
+				file: `${sponsorName}.${sponsorLink ? "json" : sponsorExtention}`,
 				uri: sponsorLink || sponsorUri,
+				type: sponsorLink ? "link" : "uri",
 			},
 		});
 

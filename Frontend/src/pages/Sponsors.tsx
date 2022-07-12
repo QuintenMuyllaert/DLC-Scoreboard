@@ -4,7 +4,6 @@ import Logo from "../components/Logo";
 import Sponsor from "../components/Sponsor";
 import { getQuery } from "../utils/Utils";
 import { useNavigate } from "react-router-dom";
-import ModalConfirm from "../components/ModalConfirm";
 import { scoreboardInterface } from "../utils/ScoreboardInterface";
 
 export default () => {

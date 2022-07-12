@@ -12,7 +12,7 @@ export default () => {
 		options.push(<option value={sponsor.name}>{sponsor.name}</option>);
 	}
 
-	const onChangeTemplate = (event: React.FormEvent<HTMLSelectElement>) => {
+	const onChangeTemplate = async (event: React.FormEvent<HTMLSelectElement>) => {
 		const name = event.currentTarget.value;
 		const selected = sponsors.find((sponsor: any) => sponsor.name === name);
 		if (!selected) {
@@ -21,7 +21,14 @@ export default () => {
 
 		let uriList = [];
 		for (const sponsor of selected.children) {
-			uriList.push(`${document.location.origin}/data/${jwt.serial}/${encodeURIComponent(name)}/${encodeURIComponent(sponsor)}`);
+			const uri = `${document.location.origin}/data/${jwt.serial}/${encodeURIComponent(name)}/${encodeURIComponent(sponsor)}`;
+			if (sponsor.endsWith(".json")) {
+				const res = await fetch(uri);
+				const json = await res.json();
+				uriList.push(json.uri);
+			} else {
+				uriList.push(uri);
+			}
 		}
 
 		scoreboardInterface.setSponsorReel(uriList);
