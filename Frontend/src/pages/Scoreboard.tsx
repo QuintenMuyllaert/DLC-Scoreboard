@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { ReactEventHandler, useEffect, useState } from "react";
 
 import Clock from "../components/Clock";
 import Flag from "../components/Flag";
@@ -8,6 +8,9 @@ import Appstate from "../utils/Appstate";
 export default () => {
 	const state = Appstate.getState().scoreboard;
 	const [sponsor, setSponsor] = useState("");
+
+	const [width, setWidth] = useState("auto");
+	const [height, setHeight] = useState("100%");
 
 	useEffect(() => {
 		let sponsorIndex = 0;
@@ -52,6 +55,7 @@ export default () => {
 			document.socket.emit("eval", `(function(){${script}})();`);
 
 			setSponsor(sponsor);
+
 			lastSponsor = sponsor;
 		};
 
@@ -85,9 +89,24 @@ export default () => {
 					</div>
 				</header>
 				<main className={state.fullscreen ? "fullscreen" : ""}>
-					<picture>
-						<img src={sponsor} alt="" />
-					</picture>
+					<img
+						style={{ width, height }}
+						onLoad={(event: React.SyntheticEvent<HTMLImageElement, Event>) => {
+							const aspectRatio = event.currentTarget.naturalWidth / event.currentTarget.naturalHeight;
+							const containerWidth = document.querySelector("main")?.offsetWidth || 0;
+							const containerHeight = document.querySelector("main")?.offsetHeight || 0;
+							//set the width and height to as much as possible within the container
+							if (aspectRatio > containerWidth / containerHeight) {
+								setWidth(containerWidth.toString() + "px");
+								setHeight((containerWidth / aspectRatio).toString() + "px");
+							} else {
+								setHeight(containerHeight.toString() + "px");
+								setWidth((containerHeight * aspectRatio).toString() + "px");
+							}
+						}}
+						src={sponsor}
+						alt=""
+					/>
 				</main>
 			</div>
 			<footer>
