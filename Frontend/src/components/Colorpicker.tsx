@@ -11,6 +11,7 @@ export const Colorpicker = ({ team, setVisible = () => {} }: { team: 1 | 2; setV
 
 	const [removing, setRemoving] = useState(false);
 	const [changing, setChanging] = useState("O" as "B" | "O");
+	const [color, setColor] = useState("#ff0000");
 
 	const onClickColor = (color: string, position: "B" | "O") => {
 		if (removing) {
@@ -22,8 +23,15 @@ export const Colorpicker = ({ team, setVisible = () => {} }: { team: 1 | 2; setV
 		scoreboardInterface.changeColor(`${team}${position}`, color);
 	};
 
+	const onChangeColor = (event: React.ChangeEvent<HTMLInputElement>) => {
+		setColor(event.currentTarget.value);
+	};
+
 	const onAddColor = (event: any) => {
 		const color = event.target.value as string;
+		if (scoreboard.colors.includes(color)) {
+			return;
+		}
 		scoreboardInterface.updateColorArray([...scoreboard.colors, color]);
 	};
 
@@ -99,7 +107,7 @@ export const Colorpicker = ({ team, setVisible = () => {} }: { team: 1 | 2; setV
 			<div className="colors">
 				<>{colors}</>
 				<div className="color add">
-					<input onBlur={onAddColor} className="o-hide" type="color" id="newColorTop" name="newColorTopName" />
+					<input onBlur={onAddColor} onChange={onChangeColor} className="o-hide" type="color" value={color} id="newColorTop" name="newColorTopName" />
 					<label htmlFor="newColorTop">
 						<svg
 							className="icon"
