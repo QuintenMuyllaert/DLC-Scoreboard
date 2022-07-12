@@ -5,11 +5,13 @@ import BottomTab from "../components/BottomTab";
 
 import { scoreboardInterface } from "../utils/ScoreboardInterface";
 import Appstate from "../utils/Appstate";
+import Header from "../components/Header";
 
 export default () => {
 	const navigate = useNavigate();
 	return (
 		<>
+			<Header title="Settings" />
 			<div className="p-page p-settings">
 				<main>
 					<IconButton
