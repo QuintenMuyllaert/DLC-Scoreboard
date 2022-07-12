@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 
-export const SponsorTemplate = ({ name, aantal, handleClickDeletePopup }: { name: string; aantal: number; handleClickDeletePopup: (event?: any) => any }) => {
+export default ({ name, aantal, handleClickDeletePopup }: { name: string; aantal: number; handleClickDeletePopup: (event?: any) => any }) => {
 	const navigate = useNavigate();
 
 	const goToSponsor = () => {
@@ -52,5 +52,3 @@ export const SponsorTemplate = ({ name, aantal, handleClickDeletePopup }: { name
 		</div>
 	);
 };
-
-export default SponsorTemplate;

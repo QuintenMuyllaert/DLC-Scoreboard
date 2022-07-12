@@ -1,9 +1,9 @@
 import { useState } from "react";
-import { IconButton } from "./IconButton";
+import IconButton from "./IconButton";
 import { scoreboardInterface } from "../utils/ScoreboardInterface";
 import Appstate from "../utils/Appstate";
 
-export const TextEdit = ({ setVisible = () => {} }: { setVisible?: (event?: any) => any }) => {
+export default ({ setVisible = () => {} }: { setVisible?: (event?: any) => any }) => {
 	const [message, setMessage] = useState(Appstate.getState().scoreboard.message);
 
 	const onTextUpdate = (event: any) => {
@@ -44,5 +44,3 @@ export const TextEdit = ({ setVisible = () => {} }: { setVisible?: (event?: any)
 		</div>
 	);
 };
-
-export default TextEdit;

@@ -5,7 +5,7 @@ import { calculateClockData, to2digits } from "../utils/Utils";
 
 import { useState, useRef, useEffect } from "react";
 
-export const ClockEdit = ({ setVisible = () => {} }: { setVisible?: (event?: any) => any }) => {
+export default ({ setVisible = () => {} }: { setVisible?: (event?: any) => any }) => {
 	const scoreboard = Appstate.getState().scoreboard;
 	const clockData = calculateClockData(scoreboard.clockData);
 	const [minutes, setMinutes] = useState(clockData.minutes || 0);
@@ -136,5 +136,3 @@ export const ClockEdit = ({ setVisible = () => {} }: { setVisible?: (event?: any
 		</div>
 	);
 };
-
-export default ClockEdit;

@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom";
 import ModalConfirm from "../components/ModalConfirm";
 import { scoreboardInterface } from "../utils/ScoreboardInterface";
 
-export const Sponsors = () => {
+export default () => {
 	const navigate = useNavigate();
 
 	const { sponsors, jwt } = Appstate.getState();
@@ -76,5 +76,3 @@ export const Sponsors = () => {
 		</>
 	);
 };
-
-export default Sponsors;

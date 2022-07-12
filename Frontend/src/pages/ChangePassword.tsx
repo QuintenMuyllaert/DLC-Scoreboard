@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Input } from "../components/Input";
-import { Logo } from "../components/Logo";
-import { IconButton } from "../components/IconButton";
+import Input from "../components/Input";
+import Logo from "../components/Logo";
+import IconButton from "../components/IconButton";
 import { LooseObject } from "../../../Interfaces/interfaces";
 
-export const ChangePassword = () => {
+export default () => {
 	const localState: LooseObject = {
 		currentUsername: "",
 		oldPassword: "",
@@ -127,5 +127,3 @@ export const ChangePassword = () => {
 		</div>
 	);
 };
-
-export default ChangePassword;

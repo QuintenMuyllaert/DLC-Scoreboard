@@ -8,7 +8,7 @@ import Template from "../components/Template";
 import Appstate from "../utils/Appstate";
 import { scoreboardInterface } from "../utils/ScoreboardInterface";
 
-export const Templates = () => {
+export default () => {
 	const [inputName, setInputName] = useState("");
 	const [inputHalfs, setInputHalfs] = useState("0");
 	const [inputHalfLength, setInputHalfLength] = useState("0");
@@ -84,5 +84,3 @@ export const Templates = () => {
 		</>
 	);
 };
-
-export default Templates;

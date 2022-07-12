@@ -1,10 +1,10 @@
 import { useState } from "react";
-import { Input } from "../components/Input";
-import { Logo } from "../components/Logo";
-import { IconButton } from "../components/IconButton";
+import Input from "../components/Input";
+import Logo from "../components/Logo";
+import IconButton from "../components/IconButton";
 import { LooseObject } from "../../../Interfaces/interfaces";
 
-export const Manual = () => {
+export default () => {
 	const defaultState: LooseObject = {
 		serial: "",
 		username: "",
@@ -197,5 +197,3 @@ export const Manual = () => {
 		</div>
 	);
 };
-
-export default Manual;

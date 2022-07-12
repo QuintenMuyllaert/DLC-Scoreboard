@@ -1,6 +1,6 @@
 import { useId } from "react";
 
-export const Input = ({
+export default ({
 	label,
 	type,
 	id,
@@ -26,5 +26,3 @@ export const Input = ({
 		</div>
 	);
 };
-
-export default Input;

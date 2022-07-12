@@ -1,4 +1,4 @@
-export const Logo = ({ width, height }: { width: number | string; height: number | string }) => {
+export default ({ width, height }: { width: number | string; height: number | string }) => {
 	return (
 		<svg xmlns="http://www.w3.org/2000/svg" style={{ fill: "#FFFFFF" }} width={width} height={height} viewBox="0 0 147.45 147.45">
 			<rect x="56.51" y="137.29" width="5.3" height="7.48" rx="0.13" />
@@ -22,5 +22,3 @@ export const Logo = ({ width, height }: { width: number | string; height: number
 		</svg>
 	);
 };
-
-export default Logo;

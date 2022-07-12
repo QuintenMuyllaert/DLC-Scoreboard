@@ -9,7 +9,7 @@ import { scoreboardInterface } from "../utils/ScoreboardInterface";
 import { getQuery } from "../utils/Utils";
 import { useNavigate } from "react-router-dom";
 
-export const AddSponsor = () => {
+export default () => {
 	const navigate = useNavigate();
 	const { folder } = getQuery();
 
@@ -118,5 +118,3 @@ export const AddSponsor = () => {
 		</>
 	);
 };
-
-export default AddSponsor;

@@ -8,7 +8,7 @@ import Logo from "../components/Logo";
 import User from "../components/User";
 import { LooseObject } from "../../../Interfaces/interfaces";
 
-export const Users = () => {
+export default () => {
 	const generatePassword = () => {
 		const a = Math.random();
 		const b = a.toString(36).split(".").pop();
@@ -128,5 +128,3 @@ export const Users = () => {
 		</>
 	);
 };
-
-export default Users;

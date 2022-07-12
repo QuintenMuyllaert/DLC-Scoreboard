@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { scoreboardInterface } from "../utils/ScoreboardInterface";
 
-export const Template = ({ id, name, halfs, halfLength }: { id: string; name: string; halfs: number; halfLength: number }) => {
+export default ({ id, name, halfs, halfLength }: { id: string; name: string; halfs: number; halfLength: number }) => {
 	const navigate = useNavigate();
 
 	const onClickUpdate = () => {
@@ -86,5 +86,3 @@ export const Template = ({ id, name, halfs, halfLength }: { id: string; name: st
 		</div>
 	);
 };
-
-export default Template;

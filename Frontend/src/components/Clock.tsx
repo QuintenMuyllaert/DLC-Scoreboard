@@ -4,7 +4,7 @@ import { useRafLoop } from "react-use";
 import Appstate from "../utils/Appstate";
 import { calculateClock } from "../utils/Utils";
 
-export const Clock = ({ onClick }: { onClick?: (event?: any) => any }) => {
+export default ({ onClick }: { onClick?: (event?: any) => any }) => {
 	const [value, setValue] = useState("00:00");
 
 	useRafLoop(() => {
@@ -20,5 +20,3 @@ export const Clock = ({ onClick }: { onClick?: (event?: any) => any }) => {
 		</div>
 	);
 };
-
-export default Clock;

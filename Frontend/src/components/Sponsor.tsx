@@ -1,4 +1,4 @@
-export const Sponsor = ({ imgUrl, onClick }: { imgUrl: string; onClick: () => any }) => {
+export default ({ imgUrl, onClick }: { imgUrl: string; onClick: () => any }) => {
 	const img = imgUrl.split("/").pop()?.split(".")[0];
 	return (
 		<article className="p-sponsors__list-item">
@@ -26,5 +26,3 @@ export const Sponsor = ({ imgUrl, onClick }: { imgUrl: string; onClick: () => an
 		</article>
 	);
 };
-
-export default Sponsor;

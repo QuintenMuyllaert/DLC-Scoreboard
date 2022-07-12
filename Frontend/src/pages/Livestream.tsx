@@ -2,7 +2,8 @@ import { useState } from "react";
 import { useRafLoop } from "react-use";
 import Appstate from "../utils/Appstate";
 import { calculateClock } from "../utils/Utils";
-export const Livestream = () => {
+
+export default () => {
 	Appstate.updateState("color", "png");
 	const state = Appstate.getState().scoreboard;
 
@@ -45,5 +46,3 @@ export const Livestream = () => {
 		</main>
 	);
 };
-
-export default Livestream;

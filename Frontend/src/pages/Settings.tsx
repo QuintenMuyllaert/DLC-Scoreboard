@@ -6,7 +6,7 @@ import BottomTab from "../components/BottomTab";
 import { scoreboardInterface } from "../utils/ScoreboardInterface";
 import Appstate from "../utils/Appstate";
 
-export const Settings = () => {
+export default () => {
 	const navigate = useNavigate();
 	return (
 		<>
@@ -108,5 +108,3 @@ export const Settings = () => {
 		</>
 	);
 };
-
-export default Settings;

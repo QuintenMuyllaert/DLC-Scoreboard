@@ -1,4 +1,4 @@
-export const UserSetting = ({ content, id, password, onChange }: { content?: string; id: string; password: boolean; onChange?: (event?: any) => any }) => {
+export default ({ content, id, password, onChange }: { content?: string; id: string; password: boolean; onChange?: (event?: any) => any }) => {
 	return (
 		<article className="c-usersetting">
 			<div className="card">
@@ -23,5 +23,3 @@ export const UserSetting = ({ content, id, password, onChange }: { content?: str
 		</article>
 	);
 };
-
-export default UserSetting;

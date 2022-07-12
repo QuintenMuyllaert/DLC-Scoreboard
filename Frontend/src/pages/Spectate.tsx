@@ -2,7 +2,7 @@ import Clock from "../components/Clock";
 import Flag from "../components/Flag";
 import { state } from "../utils/Appstate";
 
-export const Spectate = () => {
+export default () => {
 	return (
 		<>
 			<div className="p-page p-spectate">
@@ -25,5 +25,3 @@ export const Spectate = () => {
 		</>
 	);
 };
-
-export default Spectate;

@@ -6,7 +6,7 @@ import Switch from "./Switch";
 import Appstate from "../utils/Appstate";
 import { scoreboardInterface } from "../utils/ScoreboardInterface";
 
-export const Colorpicker = ({ team, setVisible = () => {} }: { team: 1 | 2; setVisible?: (event?: any) => any }) => {
+export default ({ team, setVisible = () => {} }: { team: 1 | 2; setVisible?: (event?: any) => any }) => {
 	const scoreboard = Appstate.getState().scoreboard;
 
 	const [removing, setRemoving] = useState(false);
@@ -130,5 +130,3 @@ export const Colorpicker = ({ team, setVisible = () => {} }: { team: 1 | 2; setV
 		</div>
 	);
 };
-
-export default Colorpicker;

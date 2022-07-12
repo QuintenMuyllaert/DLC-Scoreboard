@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom";
 import Input from "../components/Input";
 import { scoreboardInterface } from "../utils/ScoreboardInterface";
 
-export const TemplateSettings = () => {
+export default () => {
 	const { id } = getQuery();
 	const template = Appstate.getState().templates.find((template: any) => template._id === id);
 
@@ -72,5 +72,3 @@ export const TemplateSettings = () => {
 		</>
 	);
 };
-
-export default TemplateSettings;

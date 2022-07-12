@@ -1,4 +1,4 @@
-export const Scrolltext = ({ text }: { text: string }) => {
+export default ({ text }: { text: string }) => {
 	return (
 		<div className="c-scroll">
 			<div style={{ animationDuration: `${Math.max(0.25 * text.length, 4)}s` }} className="scrollcontainer">
@@ -8,5 +8,3 @@ export const Scrolltext = ({ text }: { text: string }) => {
 		</div>
 	);
 };
-
-export default Scrolltext;

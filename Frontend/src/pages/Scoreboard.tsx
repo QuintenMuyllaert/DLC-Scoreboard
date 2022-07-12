@@ -5,7 +5,7 @@ import Flag from "../components/Flag";
 import Scrolltext from "../components/Scrolltext";
 import Appstate from "../utils/Appstate";
 
-export const Scoreboard = () => {
+export default () => {
 	const state = Appstate.getState().scoreboard;
 	const [sponsor, setSponsor] = useState("");
 
@@ -118,5 +118,3 @@ export const Scoreboard = () => {
 		</div>
 	);
 };
-
-export default Scoreboard;

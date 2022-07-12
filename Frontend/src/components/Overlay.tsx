@@ -1,4 +1,4 @@
-export const Overlay = ({ visible, setVisible = () => {}, children }: { visible: boolean; setVisible?: (event?: any) => any; children?: any }) => {
+export default ({ visible, setVisible = () => {}, children }: { visible: boolean; setVisible?: (event?: any) => any; children?: any }) => {
 	if (visible) {
 		return (
 			<div className="c-overlay">
@@ -10,5 +10,3 @@ export const Overlay = ({ visible, setVisible = () => {}, children }: { visible:
 		return <></>;
 	}
 };
-
-export default Overlay;

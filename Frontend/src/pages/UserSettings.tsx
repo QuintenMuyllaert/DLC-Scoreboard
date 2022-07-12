@@ -4,7 +4,7 @@ import BottomTab from "../components/BottomTab";
 import IconButton from "../components/IconButton";
 import Input from "../components/Input";
 
-export const UserSettings = () => {
+export default () => {
 	const { jwt } = Appstate.getState();
 
 	const onClickSave = () => {};
@@ -27,5 +27,3 @@ export const UserSettings = () => {
 		</>
 	);
 };
-
-export default UserSettings;

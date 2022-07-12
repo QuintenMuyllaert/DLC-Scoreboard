@@ -1,4 +1,4 @@
-import { IconButton } from "./IconButton";
+import IconButton from "./IconButton";
 
 interface params {
 	value: number;
@@ -7,7 +7,7 @@ interface params {
 	onClickDown?: (event?: any) => any;
 }
 
-export const Digit = ({ value, style, onClickUp, onClickDown }: params) => {
+export default ({ value, style, onClickUp, onClickDown }: params) => {
 	style = style || "^v";
 
 	return style == "^v" ? (
@@ -58,5 +58,3 @@ export const Digit = ({ value, style, onClickUp, onClickDown }: params) => {
 		</div>
 	);
 };
-
-export default Digit;

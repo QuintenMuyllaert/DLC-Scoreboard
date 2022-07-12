@@ -1,6 +1,6 @@
 import { ReactElement } from "React";
 
-export const IconButton = ({ label, color, icon, onClick }: { label?: string; color: string; icon?: ReactElement; onClick?: (event?: any) => any }) => {
+export default ({ label, color, icon, onClick }: { label?: string; color: string; icon?: ReactElement; onClick?: (event?: any) => any }) => {
 	if (!label) {
 		label = "";
 	}
@@ -12,5 +12,3 @@ export const IconButton = ({ label, color, icon, onClick }: { label?: string; co
 		</button>
 	);
 };
-
-export default IconButton;

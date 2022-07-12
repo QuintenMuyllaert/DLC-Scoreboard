@@ -1,12 +1,12 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Input } from "../components/Input";
-import { Logo } from "../components/Logo";
-import { IconButton } from "../components/IconButton";
+import Input from "../components/Input";
+import Logo from "../components/Logo";
+import IconButton from "../components/IconButton";
 import { LooseObject } from "../../../Interfaces/interfaces";
 import { getCookies } from "../utils/Utils";
 
-export const Login = () => {
+export default () => {
 	const navigate = useNavigate();
 	const cookie = getCookies();
 	if (cookie.auth && cookie.auth === true) {
@@ -148,5 +148,3 @@ export const Login = () => {
 		</div>
 	);
 };
-
-export default Login;

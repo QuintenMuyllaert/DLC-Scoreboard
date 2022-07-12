@@ -1,6 +1,6 @@
 import { useId } from "react";
 
-export const Switch = ({ id, disabled, checked, onChange }: { id?: string; disabled?: boolean; onChange?: (event?: any) => any; checked?: boolean }) => {
+export default ({ id, disabled, checked, onChange }: { id?: string; disabled?: boolean; onChange?: (event?: any) => any; checked?: boolean }) => {
 	if (!id) {
 		id = useId();
 	}
@@ -16,5 +16,3 @@ export const Switch = ({ id, disabled, checked, onChange }: { id?: string; disab
 		</div>
 	);
 };
-
-export default Switch;

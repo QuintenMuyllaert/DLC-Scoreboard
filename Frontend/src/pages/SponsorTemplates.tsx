@@ -5,7 +5,7 @@ import SponsorTemplate from "../components/sponsorTemplate";
 import { useNavigate } from "react-router-dom";
 import { scoreboardInterface } from "../utils/ScoreboardInterface";
 
-export const SponsorTemplates = () => {
+export default () => {
 	const { sponsors } = Appstate.getState();
 	const navigate = useNavigate();
 
@@ -61,5 +61,3 @@ export const SponsorTemplates = () => {
 		</>
 	);
 };
-
-export default SponsorTemplates;

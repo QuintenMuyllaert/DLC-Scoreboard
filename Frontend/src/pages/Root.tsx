@@ -1,7 +1,5 @@
 import { Navigate } from "react-router-dom";
 
-export const Root = () => {
+export default () => {
 	return <Navigate replace to="/login" />;
 };
-
-export default Root;

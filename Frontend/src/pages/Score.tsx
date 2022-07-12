@@ -14,7 +14,7 @@ import Overlay from "../components/Overlay";
 import { scoreboardInterface } from "../utils/ScoreboardInterface";
 import Appstate from "../utils/Appstate";
 
-export const Score = () => {
+export default () => {
 	const scoreboard = Appstate.getState().scoreboard;
 	if (!scoreboard.isPlaying) {
 		return <Navigate to={`/matchsetup`} />;
@@ -107,5 +107,3 @@ export const Score = () => {
 		</>
 	);
 };
-
-export default Score;

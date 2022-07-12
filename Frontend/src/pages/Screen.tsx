@@ -5,7 +5,7 @@ import { scoreboardInterface } from "../utils/ScoreboardInterface";
 import Appstate from "../utils/Appstate";
 import Switch from "../components/Switch";
 
-export const Screen = () => {
+export default () => {
 	const { sponsors, jwt } = Appstate.getState();
 	const options = [];
 	for (const sponsor of sponsors) {
@@ -57,5 +57,3 @@ export const Screen = () => {
 		</>
 	);
 };
-
-export default Screen;

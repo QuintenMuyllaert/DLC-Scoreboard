@@ -5,7 +5,7 @@ import Input from "../components/Input";
 import { scoreboardInterface } from "../utils/ScoreboardInterface";
 import { useNavigate } from "react-router-dom";
 
-export const AddSponsorBundel = () => {
+export default () => {
 	const navigate = useNavigate();
 	const [folderName, setFolderName] = useState("");
 
@@ -43,5 +43,3 @@ export const AddSponsorBundel = () => {
 		</>
 	);
 };
-
-export default AddSponsorBundel;

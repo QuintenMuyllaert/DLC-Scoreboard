@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Appstate from "../utils/Appstate";
 
-export const BottomTab = () => {
+export default () => {
 	const routes = [
 		{
 			path: "/screen",
@@ -108,5 +108,3 @@ export const BottomTab = () => {
 		</BottomNavigation>
 	);
 };
-
-export default BottomTab;

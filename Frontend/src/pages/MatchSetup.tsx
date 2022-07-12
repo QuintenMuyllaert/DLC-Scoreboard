@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate, Navigate } from "react-router-dom";
-import { Input } from "../components/Input";
-import { IconButton } from "../components/IconButton";
+import Input from "../components/Input";
+import IconButton from "../components/IconButton";
 import Flag from "../components/Flag";
 import BottomTab from "../components/BottomTab";
 import Colorpicker from "../components/Colorpicker";
@@ -10,7 +10,7 @@ import Overlay from "../components/Overlay";
 
 import { scoreboardInterface } from "../utils/ScoreboardInterface";
 
-export const MatchSetup = () => {
+export default () => {
 	const { scoreboard, templates } = Appstate.getState();
 	if (scoreboard.isPlaying) {
 		return <Navigate to={`/score`} />;
@@ -118,5 +118,3 @@ export const MatchSetup = () => {
 		</>
 	);
 };
-
-export default MatchSetup;
