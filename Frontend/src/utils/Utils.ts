@@ -41,6 +41,8 @@ export const processTime = (ms: number) => {
 };
 
 export const clockify = (ms: number) => {
+	//ms must be >= 0
+	ms = Math.max(0, ms);
 	const { minutes, seconds } = processTime(ms);
 	return `${to2digits(minutes)}:${to2digits(seconds)}`;
 };
