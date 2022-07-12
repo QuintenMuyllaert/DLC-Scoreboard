@@ -31,7 +31,7 @@ export const SponsorTemplates = () => {
 
 	return (
 		<>
-			<div className="p-page p-sponsorTemplates element">
+			<div className="p-page p-sponsorTemplates">
 				<h1>Sponsor reels</h1>
 				<div className="p-sponsorTemplates__list">{sponsorBundleElements}</div>
 				<div className="p-sponsorTemplates__btn">

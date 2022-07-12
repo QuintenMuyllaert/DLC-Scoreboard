@@ -1,20 +1,12 @@
 .p-sponsorTemplates {
-	padding: 0 0 1rem 0;
 	height: 100%;
 	display: grid;
 	gap: 1rem;
-	grid-template-rows: auto;
-	overflow: hidden;
-	width: 100%;
-	max-width: 450px;
-
-	h1 {
-		padding: 1.5625rem 1rem;
-	}
+	grid-template-rows: auto 1fr auto;
 
 	&__list {
 		overflow-y: auto;
-		height: 85%;
+		height: 100%;
 		display: flex;
 		flex-direction: column;
 		gap: 1.25rem;
