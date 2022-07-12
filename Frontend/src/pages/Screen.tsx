@@ -6,7 +6,7 @@ import Appstate from "../utils/Appstate";
 import Switch from "../components/Switch";
 
 export default () => {
-	const { sponsors, jwt } = Appstate.getState();
+	const { sponsors, jwt, scoreboard } = Appstate.getState();
 	const options = [];
 	for (const sponsor of sponsors) {
 		options.push(<option value={sponsor.name}>{sponsor.name}</option>);
@@ -51,7 +51,33 @@ export default () => {
 						<polyline points="6 9 12 15 18 9"></polyline>
 					</svg>
 				</div>
-				<Switch />
+				<div>
+					<p>OFF/ON</p>
+					<Switch
+						checked={scoreboard.display}
+						onChange={() => {
+							scoreboardInterface.enableDisplay(!scoreboard.display);
+						}}
+					/>
+				</div>
+				<div>
+					<p>Fullscreen</p>
+					<Switch
+						checked={scoreboard.fullscreen}
+						onChange={() => {
+							scoreboardInterface.setFullScreenSponsors(!scoreboard.fullscreen);
+						}}
+					/>
+				</div>
+				<div>
+					<p>Realtime</p>
+					<Switch
+						checked={scoreboard.clockData.realTime}
+						onChange={() => {
+							scoreboardInterface.setRealTime(!scoreboard.clockData.realTime);
+						}}
+					/>
+				</div>
 			</div>
 			<BottomTab />
 		</>
