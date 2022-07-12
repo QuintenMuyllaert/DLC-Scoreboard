@@ -3,6 +3,7 @@ import Appstate from "../utils/Appstate";
 import BottomTab from "../components/BottomTab";
 import IconButton from "../components/IconButton";
 import Input from "../components/Input";
+import Header from "../components/Header";
 
 export default () => {
 	const { jwt } = Appstate.getState();
@@ -11,6 +12,7 @@ export default () => {
 
 	return (
 		<>
+			<Header title="Usersettings" />
 			<div className="p-page p-usersettings">
 				<h1>Hallo {jwt?.username}</h1>
 				<div className="content">

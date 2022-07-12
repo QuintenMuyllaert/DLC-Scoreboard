@@ -7,6 +7,7 @@ import Input from "../components/Input";
 import Logo from "../components/Logo";
 import User from "../components/User";
 import { LooseObject } from "../../../Interfaces/interfaces";
+import Header from "../components/Header";
 
 export default () => {
 	const { scoreboard, users } = Appstate.getState();
@@ -105,8 +106,8 @@ export default () => {
 
 	return (
 		<>
+			<Header title="User management" />
 			<div className="p-page p-users element">
-				<h1>Mensen toevoegen</h1>
 				<div className="grid">
 					<Input
 						id="newUsername"

@@ -37,9 +37,9 @@ export default () => {
 
 	return (
 		<>
+			<Header title="Add sponsor" />
 			<div className="p-page p-addSponsor">
 				<div className="c-addSponsor__tekst">
-					<h1>Nieuwe sponsor</h1>
 					<p>
 						Aanbevolen aspect ratio: <strong>16:9</strong>
 					</p>
