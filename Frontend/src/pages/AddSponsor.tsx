@@ -5,6 +5,7 @@ import UserSetting from "../components/UserSetting";
 import IconButton from "../components/IconButton";
 import Logo from "../components/Logo";
 import Input from "../components/Input";
+import Header from "../components/Header";
 import { scoreboardInterface } from "../utils/ScoreboardInterface";
 import { getQuery } from "../utils/Utils";
 import { useNavigate } from "react-router-dom";
