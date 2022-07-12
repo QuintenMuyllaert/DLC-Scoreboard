@@ -82,6 +82,7 @@ export interface AppState {
   scoreboard: Scoreboard;
   templates: Template[];
   sponsors: sponsorFolder[];
+  users: any[];
   jwt: JWT;
 }
 
@@ -125,6 +126,7 @@ export const defaultAppState: AppState = {
   scoreboard: defaultScoreboard,
   templates: [],
   sponsors: [],
+  users: [],
   jwt: {
     iat: 0,
     isAdmin: false,

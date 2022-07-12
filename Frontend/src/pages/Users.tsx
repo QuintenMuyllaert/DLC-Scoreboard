@@ -1,7 +1,7 @@
 import { ReactElement, useEffect, useState } from "react";
 import BottomTab from "../components/BottomTab";
 import IconButton from "../components/IconButton";
-import { updateGlobalState as updateState, state } from "../utils/Appstate";
+import Appstate from "../utils/Appstate";
 
 import Input from "../components/Input";
 import Logo from "../components/Logo";
@@ -9,6 +9,9 @@ import User from "../components/User";
 import { LooseObject } from "../../../Interfaces/interfaces";
 
 export default () => {
+	const { scoreboard, users } = Appstate.getState();
+	const state = scoreboard;
+
 	const generatePassword = () => {
 		const a = Math.random();
 		const b = a.toString(36).split(".").pop();
@@ -55,7 +58,7 @@ export default () => {
 			}
 		}
 
-		updateState("users", userList);
+		Appstate.updateState("users", userList);
 	};
 
 	const handleClickNewUser = async () => {
@@ -121,7 +124,7 @@ export default () => {
 
 				{/* <div className="userlist"> */}
 				<h1 className="subtitle">Deze mensen hebben toegang</h1>
-				<div className="list scrollbar">{state.users || []}</div>
+				<div className="list scrollbar">{users || []}</div>
 				{/* </div> */}
 			</div>
 			<BottomTab />
