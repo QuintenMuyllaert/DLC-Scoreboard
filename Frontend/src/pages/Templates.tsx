@@ -40,9 +40,9 @@ export const Templates = () => {
 
 	return (
 		<>
-			<div className="p-page p-templates element">
-				<h1>Nieuwe template toevoegen</h1>
-				<div className="p-templates__form">
+			<div className="p-page p-templates">
+				<h1>Templates</h1>
+				<div className="form">
 					<Input
 						id="sport"
 						label="Naam sport"
@@ -53,7 +53,7 @@ export const Templates = () => {
 						}}
 					/>
 
-					<div className="p-templates__formgroup">
+					<div className="group">
 						<Input
 							label="Helften"
 							type="number"
@@ -78,8 +78,7 @@ export const Templates = () => {
 					<IconButton label="Toevoegen" color="white" onClick={onClickAddTemplate} />
 				</div>
 
-				<h1>Bestaande templates</h1>
-				<div className="p-templates__list scrollbar">{templateElements}</div>
+				<div className="list">{templateElements}</div>
 			</div>
 			<BottomTab />
 		</>
