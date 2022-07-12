@@ -2,16 +2,22 @@
 	background-color: var(--global-color-card);
 	width: 100%;
 	height: 3.5rem;
-	display: flex;
+	display: grid;
 	align-items: center;
-	justify-content: space-between;
+	justify-items: end;
+	grid-template-columns: 1fr 3fr 1fr;
 	padding: 0.5rem;
 	box-shadow: 0 0 0.125rem 0 rgba(0, 0, 0, 0.3);
 
 	h1 {
+		justify-self: center;
 		font-size: 1.5rem;
 		font-weight: bold;
 		font-family: Rajdhani, Twemoji;
 		color: var(--global-color-text);
+	}
+
+	div {
+		justify-self: start;
 	}
 }
