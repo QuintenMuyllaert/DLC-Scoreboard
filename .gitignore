@@ -28,9 +28,9 @@ dist-ssr
 Stash/
 Backend/www/*/
 .use-https
-Backend/greenlock.d/accounts
-Backend/greenlock.d/live
-Backend/greenlock.d/config.json.bak
-Backend/greenlock.d/config.json
+*/greenlock.d/accounts
+*/greenlock.d/live
+*/greenlock.d/config.json.bak
+*/greenlock.d/config.json
 
 Scoreboard/.preview.*
