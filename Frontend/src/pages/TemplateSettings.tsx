@@ -7,14 +7,21 @@ import { useNavigate } from "react-router-dom";
 import Input from "../components/Input";
 import Header from "../components/Header";
 import { scoreboardInterface } from "../utils/ScoreboardInterface";
+import { LooseObject } from "../../../Interfaces/interfaces";
 
 export default () => {
 	const { id } = getQuery();
-	const template = Appstate.getState().templates.find((template: any) => template._id === id);
+	let template: LooseObject = {
+		name: "",
+		_id: "",
+		halfs: 0,
+		halfLength: 0,
+	};
+	template = Appstate.getState().templates.find((template: any) => template._id === id) as any;
 
-	const [inputName, setInputName] = useState(template.name);
-	const [inputHalfs, setInputHalfs] = useState(template.halfs);
-	const [inputHalfLength, setInputHalfLength] = useState(template.halfLength);
+	const [inputName, setInputName] = useState(template?.name || "");
+	const [inputHalfs, setInputHalfs] = useState(template?.halfs || 0);
+	const [inputHalfLength, setInputHalfLength] = useState(template?.halfLength || 0);
 	const navigate = useNavigate();
 
 	const onClickSave = () => {
@@ -31,7 +38,7 @@ export default () => {
 
 	return (
 		<>
-			<Header title={`Edit "${template.name}"`} />
+			<Header title={`Edit "${template?.name || ""}"`} />
 			<div className="p-page p-templatesettings">
 				<div className="content">
 					<Input

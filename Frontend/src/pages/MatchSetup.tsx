@@ -10,9 +10,13 @@ import Overlay from "../components/Overlay";
 import Header from "../components/Header";
 
 import { scoreboardInterface } from "../utils/ScoreboardInterface";
+import { LooseObject } from "../../../Interfaces/interfaces";
 
 export default () => {
-	const { scoreboard, templates } = Appstate.getState();
+	const state = Appstate.getState();
+	const scoreboard = state.scoreboard;
+	const templates: LooseObject[] = state.templates;
+
 	if (scoreboard.isPlaying) {
 		return <Navigate to={`/score`} />;
 	}

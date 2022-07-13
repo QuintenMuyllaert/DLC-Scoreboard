@@ -8,6 +8,7 @@ import Header from "../components/Header";
 
 import Appstate from "../utils/Appstate";
 import { scoreboardInterface } from "../utils/ScoreboardInterface";
+import { LooseObject } from "../../../Interfaces/interfaces";
 
 export default () => {
 	const [inputName, setInputName] = useState("");
@@ -15,7 +16,7 @@ export default () => {
 	const [inputHalfLength, setInputHalfLength] = useState("0");
 
 	const templateElements: ReactElement[] = [];
-	const templates = Appstate.getState().templates;
+	const templates: LooseObject[] = Appstate.getState().templates;
 	console.log(templates);
 	for (const template of templates) {
 		templateElements.push(<Template id={template._id} name={template.name} halfs={template.halfs} halfLength={template.halfLength} />);
