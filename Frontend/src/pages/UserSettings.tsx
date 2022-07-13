@@ -21,9 +21,7 @@ export default () => {
 					<Input label="Nieuw wachtwoord" type="password" />
 					<Input label="Herhaal nieuw wachtwoord" type="password" />
 				</div>
-				<div className="buttons">
-					<IconButton label="OPSLAAN" color="white" onClick={onClickSave} />
-				</div>
+				<IconButton label="OPSLAAN" color="white" onClick={onClickSave} />
 			</div>
 			<BottomTab />
 		</>

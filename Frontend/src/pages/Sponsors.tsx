@@ -3,6 +3,7 @@ import BottomTab from "../components/BottomTab";
 import Logo from "../components/Logo";
 import Sponsor from "../components/Sponsor";
 import Header from "../components/Header";
+import IconButton from "../components/IconButton";
 import { getQuery } from "../utils/Utils";
 import { useNavigate } from "react-router-dom";
 import { scoreboardInterface } from "../utils/ScoreboardInterface";
@@ -50,26 +51,27 @@ export default () => {
 		<>
 			<Header title={`"${folder}"`} />
 			<div className="p-page p-sponsors">
-				<div className="p-sponsors__list">{sponsorElements}</div>
-
-				<button className="p-sponsors__add" onClick={handleClickNewSponsor}>
-					<div className="p-sponsors__add-placeholder">
+				<div className="list">{sponsorElements}</div>
+				<IconButton
+					color="white"
+					label="Nieuwe Sponsor"
+					onClick={handleClickNewSponsor}
+					icon={
 						<svg
 							xmlns="http://www.w3.org/2000/svg"
-							width="30"
-							height="30"
+							width="24"
+							height="24"
 							viewBox="0 0 24 24"
 							fill="none"
 							stroke="currentColor"
-							stroke-width="2"
-							stroke-linecap="round"
-							stroke-linejoin="round">
+							strokeWidth="2"
+							strokeLinecap="round"
+							strokeLinejoin="round"
+							className="c-header__back">
 							<line x1="12" y1="5" x2="12" y2="19"></line>
 							<line x1="5" y1="12" x2="19" y2="12"></line>
 						</svg>
-					</div>
-					<p>Nieuwe sponsor</p>
-				</button>
+					}></IconButton>
 			</div>
 			<BottomTab />
 		</>

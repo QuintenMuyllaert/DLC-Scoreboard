@@ -108,6 +108,7 @@ export default () => {
 		<>
 			<Header title="User management" />
 			<div className="p-page p-users">
+				<div className="list scrollbar">{users || []}</div>
 				<div className="grid">
 					<Input
 						id="newUsername"
@@ -117,16 +118,8 @@ export default () => {
 							updateNewUser("username", event.currentTarget.value);
 						}}
 					/>
-					<p className={validationState.display ? "validatie" : "hidden"}>{validationState.message}</p>
-				</div>
-				<div className="p-users__button">
 					<IconButton label="Toevoegen" color="white" onClick={handleClickNewUser} />
 				</div>
-
-				{/* <div className="userlist"> */}
-				<h1 className="subtitle">Deze mensen hebben toegang</h1>
-				<div className="list scrollbar">{users || []}</div>
-				{/* </div> */}
 			</div>
 			<BottomTab />
 		</>

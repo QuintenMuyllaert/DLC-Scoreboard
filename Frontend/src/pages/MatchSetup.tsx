@@ -7,6 +7,7 @@ import BottomTab from "../components/BottomTab";
 import Colorpicker from "../components/Colorpicker";
 import Appstate from "../utils/Appstate";
 import Overlay from "../components/Overlay";
+import Header from "../components/Header";
 
 import { scoreboardInterface } from "../utils/ScoreboardInterface";
 
@@ -38,9 +39,9 @@ export default () => {
 
 	return (
 		<>
-			<div className="p-page p-matchsetup maxwidth">
-				<h1>Match instellen</h1>
-				<div className="teamsettings-container u-grid-vertical-gap">
+			<Header title="Match setup" />
+			<div className="p-page p-matchsetup">
+				<div className="teamsettings-container">
 					<div className="flagcontainer">
 						<p>{scoreboard.nameHome}</p>
 						<Flag top={scoreboard.hb} bottom={scoreboard.ho} onClick={() => setDisplayOverlayColorpickerT(true)} />
@@ -98,15 +99,13 @@ export default () => {
 						</div>
 					</div>
 				</div>
-				<div className="p-matchsetup__button">
-					<IconButton
-						color="white"
-						label="Start match"
-						onClick={() => {
-							scoreboardInterface.startMatch(parseInt(inputHalfs), parseInt(inputHalfLength));
-							navigate("/score");
-						}}></IconButton>
-				</div>
+				<IconButton
+					color="white"
+					label="Start match"
+					onClick={() => {
+						scoreboardInterface.startMatch(parseInt(inputHalfs), parseInt(inputHalfLength));
+						navigate("/score");
+					}}></IconButton>
 			</div>
 			<Overlay visible={displayOverlayColorpickerT} setVisible={setDisplayOverlayColorpickerT}>
 				<Colorpicker team={1} setVisible={setDisplayOverlayColorpickerT} />

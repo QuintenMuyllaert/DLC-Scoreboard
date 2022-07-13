@@ -10,7 +10,6 @@ import Login from "./pages/Login";
 import MatchSetup from "./pages/MatchSetup";
 import Score from "./pages/Score";
 import Templates from "./pages/Templates";
-import Spectate from "./pages/Spectate";
 import Scoreboard from "./pages/Scoreboard";
 import Manual from "./pages/Manual";
 import ChangePassword from "./pages/ChangePassword";
@@ -42,7 +41,6 @@ export const App = () => {
 					<Route path="/templatesettings" element={<Protect element={<TemplateSettings />} />} />
 					<Route path="/matchsetup" element={<Protect element={<MatchSetup />} />} />
 					<Route path="/manual" element={<Manual />} />
-					<Route path="/spectate" element={<Spectate />} />
 					<Route path="/users" element={<Protect element={<Users />} />} />
 					<Route path="/usersettings" element={<Protect element={<UserSettings />} />} />
 					<Route path="/sponsortemplates" element={<Protect element={<SponsorTemplates />} />} />

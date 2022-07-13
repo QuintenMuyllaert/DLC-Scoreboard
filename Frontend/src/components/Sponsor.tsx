@@ -1,12 +1,14 @@
 export default ({ imgUrl, onClick }: { imgUrl: string; onClick: () => any }) => {
 	const img = imgUrl.split("/").pop()?.split(".")[0];
 	return (
-		<article className="p-sponsors__list-item">
-			<div className="p-sponsors__list-img">
+		<div className="c-template">
+			<picture>
 				<img src={imgUrl} alt={img} />
+			</picture>
+			<div>
+				<p>{img}</p>
 			</div>
-			<p>{img}</p>
-			<button className="p-sponsors__list-btn" onClick={onClick}>
+			<button onClick={onClick}>
 				<svg
 					xmlns="http://www.w3.org/2000/svg"
 					width="30"
@@ -23,6 +25,6 @@ export default ({ imgUrl, onClick }: { imgUrl: string; onClick: () => any }) => 
 					<line x1="14" y1="11" x2="14" y2="17"></line>
 				</svg>
 			</button>
-		</article>
+		</div>
 	);
 };

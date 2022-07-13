@@ -43,6 +43,7 @@ export default () => {
 		<>
 			<Header title="Templates" />
 			<div className="p-page p-templates">
+				<div className="list">{templateElements}</div>
 				<div className="form">
 					<Input
 						id="sport"
@@ -78,8 +79,6 @@ export default () => {
 
 					<IconButton label="Toevoegen" color="white" onClick={onClickAddTemplate} />
 				</div>
-
-				<div className="list">{templateElements}</div>
 			</div>
 			<BottomTab />
 		</>
