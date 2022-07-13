@@ -4,6 +4,7 @@ import BottomTab from "../components/BottomTab";
 import { scoreboardInterface } from "../utils/ScoreboardInterface";
 import Appstate from "../utils/Appstate";
 import Switch from "../components/Switch";
+import Header from "../components/Header";
 
 export default () => {
 	const { sponsors, jwt, scoreboard } = Appstate.getState();
@@ -36,6 +37,7 @@ export default () => {
 
 	return (
 		<>
+			<Header title="Screen" />
 			<div className="p-page p-screen">
 				<div className="c-option">
 					<label htmlFor="selectedTemplate">Sponsor selecteren</label>

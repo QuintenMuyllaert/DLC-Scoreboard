@@ -5,6 +5,7 @@ import { getQuery } from "../utils/Utils";
 import Appstate from "../utils/Appstate";
 import { useNavigate } from "react-router-dom";
 import Input from "../components/Input";
+import Header from "../components/Header";
 import { scoreboardInterface } from "../utils/ScoreboardInterface";
 
 export default () => {
@@ -30,9 +31,8 @@ export default () => {
 
 	return (
 		<>
-			<div className="p-page p-templatesettings element">
-				<h1 className="pagetitle">{template.name}</h1>
-
+			<Header title={`Edit "${template.name}"`} />
+			<div className="p-page p-templatesettings">
 				<div className="content">
 					<Input
 						id="sport"

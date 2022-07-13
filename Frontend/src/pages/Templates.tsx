@@ -4,6 +4,7 @@ import BottomTab from "../components/BottomTab";
 import IconButton from "../components/IconButton";
 import Input from "../components/Input";
 import Template from "../components/Template";
+import Header from "../components/Header";
 
 import Appstate from "../utils/Appstate";
 import { scoreboardInterface } from "../utils/ScoreboardInterface";
@@ -40,8 +41,8 @@ export default () => {
 
 	return (
 		<>
+			<Header title="Templates" />
 			<div className="p-page p-templates">
-				<h1>Templates</h1>
 				<div className="form">
 					<Input
 						id="sport"

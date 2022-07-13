@@ -2,6 +2,7 @@ import Appstate from "../utils/Appstate";
 import BottomTab from "../components/BottomTab";
 import Logo from "../components/Logo";
 import Sponsor from "../components/Sponsor";
+import Header from "../components/Header";
 import { getQuery } from "../utils/Utils";
 import { useNavigate } from "react-router-dom";
 import { scoreboardInterface } from "../utils/ScoreboardInterface";
@@ -47,9 +48,8 @@ export default () => {
 
 	return (
 		<>
-			<div className="p-page p-sponsors element">
-				<h1>{folder}</h1>
-
+			<Header title={`"${folder}"`} />
+			<div className="p-page p-sponsors">
 				<div className="p-sponsors__list">{sponsorElements}</div>
 
 				<button className="p-sponsors__add" onClick={handleClickNewSponsor}>
