@@ -107,7 +107,7 @@ export default () => {
 	return (
 		<>
 			<Header title="User management" />
-			<div className="p-page p-users element">
+			<div className="p-page p-users">
 				<div className="grid">
 					<Input
 						id="newUsername"

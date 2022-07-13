@@ -75,7 +75,7 @@ export default () => {
 	};
 
 	return (
-		<div className="p-page p-manual element">
+		<div className="p-page p-manual">
 			<div className="content">
 				<div className="u-grid-vertical-gap">
 					<div className="text">

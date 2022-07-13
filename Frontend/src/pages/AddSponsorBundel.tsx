@@ -21,7 +21,7 @@ export default () => {
 
 	return (
 		<>
-			<div className="p-page p-addSponsor element">
+			<div className="p-page p-addSponsor">
 				<h1>Nieuwe sponsorbundel</h1>
 
 				<div className="p-addSponsor__form">
