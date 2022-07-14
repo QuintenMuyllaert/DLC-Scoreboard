@@ -40,7 +40,7 @@
 		}
 
 		.add {
-			border: 2px dashed #fff;
+			border: 2px dashed var(--global-color-text);
 			input {
 				position: absolute;
 				top: 0;
