@@ -6,25 +6,16 @@
 
 	--color-black: #121212;
 	--color-white: #eeeeee;
-	--global-color-detail: #95d1b5;
 
-	--global-color-text: #ffffff;
+	--global-color-detail: #95d1b5;
 
 	--global-color-accent-primary: #117d6d;
 	--global-color-accent-light: #4fad9b;
 	--global-color-accent-dark: #005042;
 
-	--global-color-card: #323232;
-
-	--bottomtab-color-background: #2f2f2f;
-	--bottomtab-color-background-selected: var(--global-color-accent-primary);
-	--bottomtab-color-selected-text: #ffffff;
-	--bottomtab-color-icon: #c8c8c8;
-
 	--iconbutton-color-background: transparent;
 	--iconbutton-color-border: var(--global-color-accent-primary);
 
-	--iconbutton-color-text: var(--global-color-text);
 	--iconbutton-color-icon: var(--global-color-accent-light);
 
 	.dark {
@@ -34,26 +25,35 @@
 		--global-color-text: #ffffff;
 		--global-color-label: #adadad;
 
-		/*White input*/
 		--global-color-input-border: #eeeeee;
-
-		/*Button*/
 		--global-color-button-border: #eeeeee;
+
+		--global-color-card: #323232;
+		--bottomtab-color-background: var(--global-color-card);
+		--bottomtab-color-text: var(--global-color-text);
+		--bottomtab-color-selected-text: var(--global-color-accent-primary);
+		--iconbutton-color-text: var(--global-color-text);
+
+		&.withbottom-tab {
+			--global-color-background: #292929;
+		}
 	}
 
 	.light {
-		--global-color-background: #eeeeee;
+		--global-color-background: #fafafa;
+
+		--global-color-container: #ffffff;
 		--global-color-text: #121212;
+		--global-color-label: #4c4c4c;
 
-		/*Input*/
-		--global-color-input-border: #121212;
-
-		/*Button*/
+		--global-color-input-border: var(--global-color-accent-primary);
 		--global-color-button-border: #121212;
-	}
 
-	.withbottom-tab {
-		--global-color-background: #292929;
+		--global-color-card: #ffffff;
+		--bottomtab-color-background: var(--global-color-accent-primary);
+		--bottomtab-color-text: #ffffff;
+		--bottomtab-color-selected-text: #ffffff;
+		--iconbutton-color-text: var(--global-color-accent-dark);
 	}
 }
 

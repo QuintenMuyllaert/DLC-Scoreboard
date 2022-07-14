@@ -6,7 +6,7 @@
 	justify-content: center;
 	gap: 1rem;
 
-	background-color: var(--global-color-card);
+	background-color: var(--bottomtab-color-background);
 	box-shadow: 0 0 -0.125rem 0 rgba(0, 0, 0, 0.3);
 
 	.empty {
@@ -14,8 +14,8 @@
 		height: 3.5rem;
 	}
 	.active {
-		color: var(--global-color-accent-primary);
-		stroke: var(--global-color-accent-primary);
+		color: var(--bottomtab-color-selected-text);
+		stroke: var(--bottomtab-color-selected-text);
 		p {
 			font-size: 0.9rem;
 		}
@@ -26,6 +26,8 @@
 		align-items: center;
 		justify-items: center;
 		width: 3.5rem;
+		color: var(--bottomtab-color-text);
+		stroke: var(--bottomtab-color-text);
 	}
 	p {
 		font-size: 0.8rem;

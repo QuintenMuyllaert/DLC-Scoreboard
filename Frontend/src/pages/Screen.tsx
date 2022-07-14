@@ -7,7 +7,7 @@ import Switch from "../components/Switch";
 import Header from "../components/Header";
 
 export default () => {
-	const { sponsors, jwt, scoreboard } = Appstate.getState();
+	const { sponsors, jwt, scoreboard, color } = Appstate.getState();
 	const options = [];
 	for (const sponsor of sponsors) {
 		options.push(<option value={sponsor.name}>{sponsor.name}</option>);
@@ -84,6 +84,16 @@ export default () => {
 						checked={scoreboard.clockData.realTime}
 						onChange={() => {
 							scoreboardInterface.setRealTime(!scoreboard.clockData.realTime);
+						}}
+					/>
+				</div>
+				<div>
+					<p>Light/Dark</p>
+					<Switch
+						checked={color == "dark"}
+						onChange={() => {
+							localStorage.setItem("theme", color == "dark" ? "light" : "dark");
+							Appstate.updateState("color", localStorage.getItem("theme"));
 						}}
 					/>
 				</div>

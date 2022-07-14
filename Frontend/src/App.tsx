@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 import Appstate from "./utils/Appstate";
@@ -27,6 +27,15 @@ import Screen from "./pages/Screen";
 export const App = () => {
 	Appstate.attachUseState(...useState(Appstate.defaultState));
 	const state = Appstate.getState();
+
+	useEffect(() => {
+		const color = localStorage.getItem("theme");
+		if (color) {
+			Appstate.updateState("color", color);
+		}
+
+		return () => {};
+	}, []);
 
 	return (
 		<Router>
