@@ -1,9 +1,14 @@
 .p-manual {
-	grid-template-rows: auto;
+	display: grid;
+	grid-template-rows: 1fr auto;
+	height: 100%;
+	align-items: center;
+	justify-items: center;
 
 	.content {
 		width: 100%;
 		display: grid;
+		gap: 1rem;
 
 		.validatie {
 			padding-top: 0.3rem;
