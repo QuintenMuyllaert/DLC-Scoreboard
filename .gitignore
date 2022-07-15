@@ -34,3 +34,12 @@ Backend/www/*/
 */greenlock.d/config.json
 
 Scoreboard/.preview.*
+
+
+# DigitalOcean
+.nimbella
+__deployer__.zip
+__pycache__/
+coverage/
+
+.deployed
