@@ -1,6 +1,7 @@
-const { main } = require("../index");
 const dotenv = require("dotenv");
-dotenv.config({ path: "../../../.env" });
+dotenv.config({ path: ".env" });
+
+const { main } = require("../index");
 
 describe("Test serverless functions", () => {
   test("Fetch account", async () => {
