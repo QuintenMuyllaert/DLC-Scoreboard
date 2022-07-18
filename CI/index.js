@@ -32,6 +32,8 @@ const uploadFile = async (path) => {
   const content = fs.readFileSync(path);
   const contentType = mime.getType(path);
 
+  console.log(`Uploading ${path} as ${contentType}`);
+
   path = path.replace(`${base}/`, "");
   console.log("Upload", path);
 
@@ -39,7 +41,8 @@ const uploadFile = async (path) => {
     Bucket: "dlcscoreboard",
     Key: path,
     Body: content,
-    ACL: "private",
+    ACL: "public-read",
+    ContentType: contentType,
     Metadata: {
       "Content-Type": contentType,
     },
