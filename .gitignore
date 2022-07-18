@@ -34,7 +34,8 @@ Backend/www/*/
 */greenlock.d/config.json
 
 Scoreboard/.preview.*
-
+redis-server.exe
+dump.rdb
 
 # DigitalOcean
 .nimbella
