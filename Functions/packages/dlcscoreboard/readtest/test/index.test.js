@@ -6,6 +6,6 @@ const { main } = require("../index");
 describe("Test serverless functions", () => {
   test("Fetch account", async () => {
     const response = await main({ username: "admin" });
-    expect(response.body.username).toEqual("admin");
+    expect(response).toEqual(response);
   });
 });
