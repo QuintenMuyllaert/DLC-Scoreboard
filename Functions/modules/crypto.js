@@ -3,6 +3,8 @@ const jwt = require("jsonwebtoken");
 
 const database = require("./database");
 
+const snowflakes = {};
+
 exports.hash = async (str) => {
   return await bcrypt.hash(str, await bcrypt.genSalt(10));
 };
@@ -11,7 +13,6 @@ exports.validateHash = async (plaintext, hash) => {
   return await bcrypt.compare(plaintext, hash);
 };
 
-exports.snowflakes = {};
 exports.jwtVerifyAsync = async (token) => {
   let ret = { valid: false, body: {} };
 
@@ -73,7 +74,7 @@ exports.hasAccess = async (body, requirements) => {
 
 exports.extractToken = (connection) => {
   const fromHttp = connection?.cookies?.bearer;
-  const fromHeader = connection?.headers?.authorization;
+  const fromHeader = connection?.headers?.authorization?.replace?.("Bearer ", "");
 
   const token = fromHttp || fromHeader;
   console.log("Token: ", fromHttp, fromHeader);
