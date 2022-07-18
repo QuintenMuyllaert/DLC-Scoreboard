@@ -32,6 +32,7 @@ export const App = () => {
 	useEffect(() => {
 		const color = localStorage.getItem("theme");
 		if (color) {
+			//@ts-ignore
 			Appstate.updateState("color", color);
 		}
 
