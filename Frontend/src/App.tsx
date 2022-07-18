@@ -23,6 +23,7 @@ import AddSponsor from "./pages/AddSponsor";
 import AddSponsorBundel from "./pages/AddSponsorBundel";
 import Settings from "./pages/Settings";
 import Screen from "./pages/Screen";
+import Schedule from "./pages/Schedule";
 
 export const App = () => {
 	Appstate.attachUseState(...useState(Appstate.defaultState));
@@ -59,6 +60,7 @@ export const App = () => {
 					<Route path="/changepassword" element={<Protect element={<ChangePassword />} />} />
 					<Route path="/settings" element={<Protect element={<Settings />} />} />
 					<Route path="/screen" element={<Protect element={<Screen />} />} />
+					<Route path="/schedule" element={<Protect element={<Schedule />} />} />
 				</Routes>
 			</div>
 		</Router>
