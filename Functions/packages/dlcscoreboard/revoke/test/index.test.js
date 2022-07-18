@@ -3,9 +3,9 @@ dotenv.config({ path: ".env" });
 
 const { main } = require("../index");
 
-/*describe("Test revoke", () => {
-  test("Revoke", async () => {
+describe("Test revoke", () => {
+  test("It runs", async () => {
     const response = await main();
-    expect(response.body).toEqual(false);
+    expect(response).toEqual(response);
   });
-});*/
+});
