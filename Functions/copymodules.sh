@@ -1,2 +1,2 @@
-cp -R modules ./packages/dlcscoreboard/auth/modules
-cp -R modules ./packages/dlcscoreboard/readtest/modules
+cp -R -T modules/ ./packages/dlcscoreboard/auth/modules/
+cp -R -T modules/ ./packages/dlcscoreboard/readtest/modules/
