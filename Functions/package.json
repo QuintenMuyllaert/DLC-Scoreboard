@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "description": "Serverless function",
   "scripts": {
-    "test": "jest --coverage --runInBand --forceExit --verbose false",
+    "copymodules": "bash copymodules.sh",
+    "test": "npm run copymodules && jest --coverage --runInBand --forceExit --verbose false",
     "deploy-unsafe": "doctl serverless deploy .",
     "deploy": "npm run test && npm run deploy-unsafe"
   },

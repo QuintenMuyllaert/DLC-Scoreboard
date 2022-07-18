@@ -3,6 +3,8 @@ packages:
     actions:
       - name: readtest
         runtime: "nodejs:default"
+      - name: auth
+        runtime: "nodejs:default"
 environment:
   TOKEN_SECRET: ${TOKEN_SECRET}
   MONGO_CONNECTION: ${MONGO_CONNECTION}
