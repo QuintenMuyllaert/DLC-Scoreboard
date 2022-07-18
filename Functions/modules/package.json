@@ -1,0 +1,20 @@
+{
+  "name": "serverless",
+  "version": "1.0.0",
+  "description": "Serverless function",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest --coverage --runInBand --forceExit --verbose false"
+  },
+  "keywords": [],
+  "author": "Quinten Muyllaert",
+  "license": "ISC",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "jsonwebtoken": "^8.5.1",
+    "mongodb": "^4.8.0"
+  },
+  "devDependencies": {
+    "jest": "^27.5.1"
+  }
+}
