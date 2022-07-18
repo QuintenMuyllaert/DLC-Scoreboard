@@ -5,7 +5,13 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build-frontend": "cd ../Frontend && npm run build",
+    "build-backend": "cd ../Backend && npm run build",
+    "deploy-frontend": "npm run build-frontend && node .",
+    "deploy-backend": "npm run build-backend && echo 'NYI",
+    "deploy-serverless": "cd ../Functions && npm run deploy",
+    "deploy-worker": "cd ../Worker && npm run deploy",
+    "deploy": "npm run deploy-frontend && npm run deploy-serverless && npm run deploy-backend && npm run deploy-worker"
   },
   "keywords": [],
   "author": "",
