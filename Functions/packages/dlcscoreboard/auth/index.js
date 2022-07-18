@@ -1,11 +1,14 @@
 const database = require("./modules/database");
+const parse = require("./modules/parse");
 const { extractToken, jwtVerifyAsync, validateHash, jwtSignAsync, generateSerial, hash } = require("./modules/crypto");
 
 exports.main = async (args) => {
+  const req = parse(args);
   console.log("Got auth request");
-  //TODO: Find out how to get body from DigitalOcean)
-  const username = args?.username || "";
-  const password = args?.password || "";
+
+  //TIL : body & query get treated as the same thing.
+  const username = req.body?.username || "";
+  const password = req.body?.password || "";
 
   if (!username || !password) {
     console.log("Missing username or password");
