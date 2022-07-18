@@ -5,13 +5,14 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
+    "serverless-uri": "(doctl serverless get-metadata ../Functions > meta.json) && node processMeta.js",
     "build-frontend": "cd ../Frontend && npm run build",
     "build-backend": "cd ../Backend && npm run build",
-    "deploy-frontend": "npm run build-frontend && node .",
+    "deploy-frontend": "npm run build-frontend && npm run serverless-uri && node .",
     "deploy-backend": "npm run build-backend && echo 'NYI",
     "deploy-serverless": "cd ../Functions && npm run deploy",
     "deploy-worker": "cd ../Worker && npm run deploy",
-    "deploy": "npm run deploy-frontend && npm run deploy-serverless && npm run deploy-backend && npm run deploy-worker"
+    "deploy": "npm run deploy-serverless && npm run deploy-frontend && npm run deploy-backend && npm run deploy-worker && echo 'Good job ☺'"
   },
   "keywords": [],
   "author": "",
