@@ -1,7 +1,7 @@
-module.exports = (args) => {
-  const headers = args["__ow_headers"] || {};
-  const method = args["__ow_method"] || "get";
-  const path = args["__ow_path"] || "";
+module.exports = (args = {}) => {
+  const headers = args?.["__ow_headers"] || {};
+  const method = args?.["__ow_method"] || "get";
+  const path = args?.["__ow_path"] || "";
   const body = {};
 
   //put every arg that does not start with "__" in body
