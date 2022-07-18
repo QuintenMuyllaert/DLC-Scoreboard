@@ -44,3 +44,4 @@ __pycache__/
 coverage/
 
 .deployed
+Functions/packages/*/*/modules
