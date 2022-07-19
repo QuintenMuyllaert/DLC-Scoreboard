@@ -4,7 +4,7 @@
   "description": "Serverless function",
   "scripts": {
     "copymodules": "bash copymodules.sh",
-    "test": "npm run copymodules && jest --coverage --runInBand --forceExit --verbose false",
+    "test": "npm run copymodules && jest --coverage --runInBand --forceExit --verbose false --silent",
     "deploy-unsafe": "doctl serverless deploy .",
     "deploy": "npm run test && npm run deploy-unsafe"
   },
