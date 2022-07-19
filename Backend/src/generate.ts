@@ -165,7 +165,7 @@ const scriptHTML = `
 				id: "YBkasrcXK8",
 				left: 0,
 				repeatDur: "indefinite",
-				src: "https://dlcscoreboard.computernetwork.be/scoreboard?serial=" + deviceInfo.serialNumber,
+				src: "https://dlcscoreboard.computernetwork.workers.dev/scoreboard?serial=" + deviceInfo.serialNumber,
 				top: 0,
 				width: ${width},
 			},

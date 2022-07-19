@@ -4,7 +4,6 @@ import { Scoreboard, defaultScoreboard, LooseObject, HMP } from "../../Interface
 
 import { outputFile } from "./modules/image-data-uri.js";
 
-import { createWriteStream, existsSync, mkdirSync, readdirSync, rmdirSync, statSync, unlinkSync, writeFileSync } from "fs";
 import path from "path";
 
 import { Generate } from "./generate";
@@ -29,8 +28,6 @@ export const Namespace = class Namespace {
 			this.updateScoreboard(this.scoreboard);
 			this.emitDisplays("clockData", this.timer.data);
 		};
-
-		existsSync(`./www/${this.serial}`) || mkdirSync(`./www/${this.serial}`);
 
 		(async () => {
 			const exists = await database.exists("scoreboards", { serial });
@@ -112,7 +109,7 @@ export const Namespace = class Namespace {
 		console.log("Added user to namespace", this.serial);
 		socket.emit("Appstate", "scoreboard", this.scoreboard);
 		socket.emit("Appstate", "jwt", socket.body);
-		socket.emit("Appstate", "sponsors", this.readSponsorTree());
+		//socket.emit("Appstate", "sponsors", this.readSponsorTree());
 
 		(async () => {
 			const templates = await database.read("templates", { serial: this.serial });
@@ -153,59 +150,6 @@ export const Namespace = class Namespace {
 			}
 			const templates = await database.read("templates", { serial: this.serial });
 			this.emitUsers("Appstate", "templates", templates);
-		});
-
-		socket.on("sponsors", async (data: any) => {
-			console.log("sponsors", data);
-			if (data && data.value && typeof data.value === "object" && !Array.isArray(data.value) && data.value !== null) {
-				data.value.serial = this.serial;
-			} else {
-				return;
-			}
-
-			let _id;
-			if (data.value._id) {
-				_id = new database.ObjectId(data.value._id);
-				delete data.value._id;
-			}
-
-			const folder = data?.value?.folder || "";
-			const file = data?.value?.file || "";
-			const uri = data?.value?.uri || "";
-			const type = data?.value?.type || "";
-			if (folder.includes("/") || folder.includes("\\") || folder.includes(".")) {
-				return;
-			}
-			if (file.includes("/") || file.includes("\\")) {
-				return;
-			}
-
-			switch (data.type) {
-				case "create":
-					if (!folder) {
-						break;
-					}
-
-					existsSync(`./www/${this.serial}/${folder}`) || mkdirSync(`./www/${this.serial}/${folder}`);
-
-					if (type == "link") {
-						writeFileSync(`./www/${this.serial}/${folder}/${file}`, JSON.stringify({ uri }, null, 2));
-					} else if (file) {
-						outputFile(uri, `./www/${this.serial}/${folder}/${file}`);
-					}
-
-					break;
-				case "delete":
-					if (folder && !file) {
-						rmdirSync(`www/${this.serial}/${folder}`, { recursive: true });
-					}
-					if (folder && file) {
-						unlinkSync(`www/${this.serial}/${folder}/${file}`);
-					}
-					break;
-			}
-
-			this.emitUsers("Appstate", "sponsors", this.readSponsorTree());
 		});
 
 		socket.on("clockEvent", (data: any) => {
@@ -345,20 +289,5 @@ export const Namespace = class Namespace {
 		socket.emit("sponsors", this.scoreboard.sponsors);
 		socket.emit("fullscreen", this.scoreboard.fullscreen);
 		socket.emit("display", this.scoreboard.display);
-	}
-	readSponsorTree() {
-		const tree = [];
-		const folder = `www/${this.serial}/`;
-		const files = readdirSync(folder);
-		for (const file of files) {
-			const stat = statSync(`${folder}/${file}`);
-			if (!stat.isFile()) {
-				tree.push({
-					name: file,
-					children: readdirSync(path.join(folder, file)),
-				});
-			}
-		}
-		return tree;
 	}
 };

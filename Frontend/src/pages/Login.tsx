@@ -5,6 +5,7 @@ import Logo from "../components/Logo";
 import IconButton from "../components/IconButton";
 import { LooseObject } from "../../../Interfaces/interfaces";
 import { getCookies } from "../utils/Utils";
+import Api from "../utils/Api";
 
 export default () => {
 	const navigate = useNavigate();
@@ -26,24 +27,21 @@ export default () => {
 	};
 
 	const sendAuthRequest = async () => {
-		const res = await fetch(`/auth`, {
+		const res = await Api.fetch("auth", {
 			method: "POST",
-			mode: "cors",
-			cache: "no-cache",
-			credentials: "same-origin",
 			headers: {
 				"Content-Type": "application/json",
 			},
-			redirect: "follow",
-			referrerPolicy: "no-referrer",
 			body: JSON.stringify(state),
 		});
 
 		const body = await res.json();
-		console.log(body);
 
-		if (body.status == "OK") {
+		if (body.status == 202) {
+			localStorage.setItem("Bearer", body.token);
+
 			if (body.firstLogin) {
+				//Urh?? What.?
 				console.log("fistlogin is true --> in if");
 				sessionStorage.setItem("password", state.password);
 				document.location.href = "/changepassword";

@@ -2,11 +2,11 @@
 import dotenv from "dotenv";
 import http from "http";
 import path from "path";
+import express from "express";
 
 import { existsSync, writeFileSync, readFileSync } from "fs";
 import { randomBytes } from "crypto";
 
-import { app } from "./app";
 import { attachSocketIO } from "./socket";
 
 export const dirname = process.cwd();
@@ -19,6 +19,8 @@ if (!existsSync("./.env")) {
 
 // get config vars
 dotenv.config();
+
+const app = express();
 
 const server = http.createServer(app);
 

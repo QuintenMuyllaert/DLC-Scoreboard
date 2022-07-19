@@ -8,6 +8,7 @@ import Logo from "../components/Logo";
 import User from "../components/User";
 import { LooseObject } from "../../../Interfaces/interfaces";
 import Header from "../components/Header";
+import Api from "../utils/Api";
 
 export default () => {
 	const { scoreboard, users } = Appstate.getState();
@@ -49,7 +50,7 @@ export default () => {
 	};
 
 	const fetchUsers = async () => {
-		const res = await fetch(`/user?serial=${state.serial}`, { mode: "no-cors", method: "GET" });
+		const res = await Api.fetch(`user?serial=${state.serial}`, { method: "GET" });
 		const json = await res.json();
 		//updateState("users", json);
 
@@ -66,16 +67,11 @@ export default () => {
 		const p = generatePassword();
 		updateNewUser("password", String(p));
 
-		const res = await fetch(`${document.location.origin}/register`, {
+		const res = await Api.fetch("register", {
 			method: "POST",
-			mode: "cors",
-			cache: "no-cache",
-			credentials: "same-origin",
 			headers: {
 				"Content-Type": "application/json",
 			},
-			redirect: "follow",
-			referrerPolicy: "no-referrer",
 			body: JSON.stringify(newUser),
 		});
 
