@@ -37,6 +37,8 @@ Scoreboard/.preview.*
 redis-server.exe
 dump.rdb
 
+CI/meta.json
+
 # DigitalOcean
 .nimbella
 __deployer__.zip
