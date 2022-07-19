@@ -1,5 +1,5 @@
 const mime = require("mime");
-const { PutObjectCommand, S3Client } = require("@aws-sdk/client-s3");
+const { PutObjectCommand, ListObjectsCommand, S3Client } = require("@aws-sdk/client-s3");
 
 const s3Client = new S3Client({
   endpoint: "https://fra1.digitaloceanspaces.com",
@@ -36,6 +36,23 @@ const uploadFile = async (path, content) => {
   }
 };
 
+const readDir = async (path) => {
+  const params = {
+    Bucket: "dlcscoreboard",
+    Prefix: path,
+  };
+
+  try {
+    const data = await s3Client.send(new ListObjectsCommand(params));
+    console.log("Successfully read dir: " + params.Bucket + "/" + params.Prefix);
+    return data;
+  } catch (err) {
+    console.log("Error", err);
+    process.exit(1);
+  }
+};
+
 module.exports = {
   uploadFile,
+  readDir,
 };
