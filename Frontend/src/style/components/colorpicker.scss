@@ -1,0 +1,62 @@
+.c-colorpicker {
+	display: grid;
+	grid-template-rows: auto auto 1fr;
+	gap: 1rem;
+	.top {
+		display: grid;
+		grid-template-columns: auto 1fr auto;
+		align-items: start;
+		justify-items: space-between;
+	}
+	.side {
+		align-self: center;
+		justify-self: center;
+		gap: 1rem;
+		display: grid;
+		width: min-content;
+		grid-template-columns: auto 1fr auto;
+	}
+	.colors {
+		display: grid;
+
+		grid-template-columns: repeat(5, 1fr);
+		grid-template-rows: auto;
+		grid-gap: 0.5rem;
+
+		.color {
+			width: 100%;
+			height: 3rem;
+			border-radius: 4px;
+			overflow: hidden;
+			cursor: pointer;
+			display: grid;
+			place-items: center;
+			> svg {
+				opacity: 0;
+			}
+			.delete-icon {
+				opacity: 1;
+			}
+		}
+
+		.add {
+			border: 2px dashed var(--global-color-text);
+			input {
+				position: absolute;
+				top: 0;
+				left: 0;
+				width: 0;
+				height: 0;
+				opacity: 0;
+				outline: 0;
+				border: 0;
+			}
+			label {
+				width: 100%;
+				height: 100%;
+				display: grid;
+				place-items: center;
+			}
+		}
+	}
+}

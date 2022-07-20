@@ -1,0 +1,1 @@
+npm --prefix ./Frontend run dev & npm --prefix ./Backend run dev && fg

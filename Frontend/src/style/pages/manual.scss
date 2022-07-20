@@ -1,0 +1,29 @@
+.p-manual {
+	display: grid;
+	grid-template-rows: 1fr auto;
+	height: 100%;
+	align-items: center;
+	justify-items: center;
+
+	.content {
+		width: 100%;
+		display: grid;
+		gap: 1rem;
+
+		.validatie {
+			padding-top: 0.3rem;
+			color: red;
+			text-align: center;
+			opacity: 1;
+		}
+
+		.hidden {
+			opacity: 0;
+		}
+
+		.text {
+			margin-bottom: 1rem;
+			text-align: center;
+		}
+	}
+}

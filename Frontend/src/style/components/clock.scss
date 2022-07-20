@@ -1,0 +1,11 @@
+.c-clock {
+	border: var(--global-border-size) solid var(--global-color-accent-primary);
+	box-shadow: 0 0.125rem 0.125rem 0 rgba(0, 0, 0, 0.3);
+	border-radius: var(--global-border-radius);
+	text-align: center;
+	font-family: DSEG7-Classic;
+	font-weight: 500;
+	font-size: 3.5rem;
+	justify-self: center;
+	width: min(100%, 18rem);
+}

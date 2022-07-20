@@ -1,0 +1,35 @@
+.p-matchsetup {
+	height: 100%;
+	grid-template-rows: 1fr 1fr auto;
+
+	.teamsettings-container {
+		display: grid;
+		grid-template-columns: 1fr 1fr;
+		align-self: center;
+		justify-items: center;
+		text-align: center;
+		gap: 1rem;
+
+		.flagcontainer {
+			overflow: hidden;
+			width: 100%;
+			font-family: Rajdhani;
+			font-size: 2rem;
+		}
+	}
+
+	.matchsettings-container {
+		display: grid;
+		grid-template-rows: auto auto;
+		align-self: center;
+		height: fit-content;
+		gap: 1rem;
+
+		.match-helft {
+			display: grid;
+			justify-items: space-between;
+			gap: 1rem;
+			grid-template-columns: 1fr 2fr;
+		}
+	}
+}

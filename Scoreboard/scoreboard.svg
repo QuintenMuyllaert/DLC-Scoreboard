@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" color="inherit" dur="indefinite" height="100%" id="rUgTzxeHMW" viewBox="0 0 1920 1080" viewport-fill="none" width="100%">
+ <spx:properties xmlns:spx="http://www.spinetix.com/namespace/1.0/spx" dur="auto" xml:id="zsvSTVqHHZ">
+  <spx:version date="$Date: 2016-04-05 10:42:54 +0200 (Tue, 05 Apr 2016) $" revision="$Revision: 28352 $"/>
+  <spx:json-array defaultPage="yes" name="Layers" preview="#layers" xlink:href="#jsonLayers">
+   <spx:json-layer name="Layers" positionable="yes" repeatDur="indefinite"/>
+  </spx:json-array>
+  <spx:dialog name="layout"/>
+ </spx:properties>
+ <script xlink:href="http://download.spinetix.com/spxjslibs/jSignage.js"/>
+ <script xlink:href="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.5.1/socket.io.js"/>
+ <script><![CDATA[
+	$(function(){
+		//Quinten Muyllaert 04-07-2022
+		
+		var store = {};
+		var intervals = [];
+		var _setInterval = setInterval;
+		setInterval = function(fn, time) {
+			var id = _setInterval(fn, time);
+			intervals.push(id);
+			return id;
+		};
+
+		var timeouts = [];
+		var _setTimeout = setTimeout;
+		setTimeout = function(fn, time) {
+			var id = _setTimeout(fn, time);
+			timeouts.push(id);
+			return id;
+		};
+
+		var socket = io('https://dlcscoreboard.computernetwork.be/',{
+			forceNew: true,
+			reconnection: true,
+			reconnectionDelay: 1000,
+			reconnectionDelayMax: 5000,
+			reconnectionAttempts: 999999999999999,
+		});
+
+		var socketons = [];
+		socket._on = socket.on;
+		socket.on = function(event, callback) {
+			socketons.push(event);
+			socket._on(event, callback);
+		};
+
+		socket._on('connect', function() {
+			for(var i = 0; i < intervals.length; i++) {
+				clearInterval(intervals[i]);
+			}
+			intervals = [];
+			for(var i = 0; i < timeouts.length; i++) {
+				clearTimeout(timeouts[i]);
+			}
+			timeouts = [];
+			for(var i = 0; i < socketons.length; i++) {
+				socket.off(socketons[i]);
+			}
+			socketons = [];			
+			setInterval(function() {}, 60000); //the first setInterval gets "eaten" by the HMP after a bit for some unknown reason...
+			socket.emit("data",{
+				deviceName:deviceInfo.deviceName,
+				deviceType:deviceInfo.deviceType,
+				firmwareVersion:deviceInfo.firmwareVersion,
+				hostName:deviceInfo.hostName,
+				multiScreenId:deviceInfo.multiScreenId,
+				serialNumber:deviceInfo.serialNumber
+			});
+		});
+
+		socket._on("eval", function(data) {
+			try{
+				eval(data);
+			}catch(e) {
+				socket.emit("echo",e);
+			}
+		});
+	});
+ ]]></script> 
+ <g id="root"></g>
+ <g id="layers"></g>
+</svg>

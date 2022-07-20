@@ -1,0 +1,9 @@
+.p-users {
+	height: 100%;
+	grid-template-rows: 1fr auto;
+	overflow: hidden;
+	.grid {
+		display: grid;
+		gap: 1rem;
+	}
+}

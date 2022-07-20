@@ -1,0 +1,66 @@
+:root {
+	--global-border-size: 0.125rem;
+	/*--global-border-radius: 0.5rem;*/
+	--global-border-radius: 0;
+	--app-height: 100%;
+
+	--color-black: #121212;
+	--color-white: #eeeeee;
+
+	--global-color-detail: #95d1b5;
+
+	--global-color-accent-primary: #117d6d;
+	--global-color-accent-light: #4fad9b;
+	--global-color-accent-dark: #005042;
+
+	--iconbutton-color-background: transparent;
+	--iconbutton-color-border: var(--global-color-accent-primary);
+
+	--iconbutton-color-icon: var(--global-color-accent-light);
+
+	.dark {
+		--global-color-background: #121212;
+
+		--global-color-container: #1d1d1d;
+		--global-color-text: #ffffff;
+		--global-color-label: #adadad;
+
+		--global-color-input-border: #eeeeee;
+		--global-color-button-border: #eeeeee;
+
+		--global-color-card: #323232;
+		--bottomtab-color-background: var(--global-color-card);
+		--bottomtab-color-text: var(--global-color-text);
+		--bottomtab-color-selected-text: var(--global-color-accent-primary);
+		--iconbutton-color-text: var(--global-color-text);
+
+		&.withbottom-tab {
+			--global-color-background: #292929;
+		}
+	}
+
+	.light {
+		--global-color-background: #fafafa;
+
+		--global-color-container: #ffffff;
+		--global-color-text: #121212;
+		--global-color-label: #4c4c4c;
+
+		--global-color-input-border: var(--global-color-accent-primary);
+		--global-color-button-border: #121212;
+
+		--global-color-card: #ffffff;
+		--bottomtab-color-background: var(--global-color-accent-primary);
+		--bottomtab-color-text: #ffffff;
+		--bottomtab-color-selected-text: #ffffff;
+		--iconbutton-color-text: var(--global-color-accent-dark);
+	}
+}
+
+/*
+@media (prefers-color-scheme: dark) {
+	:root {
+		--global-color-background: var(#222222);
+	}
+}
+*/

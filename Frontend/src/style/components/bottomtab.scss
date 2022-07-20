@@ -1,0 +1,35 @@
+.c-bottomtab {
+	display: flex;
+	width: 100%;
+	height: 3.5rem;
+	align-items: center;
+	justify-content: center;
+	gap: 1rem;
+
+	background-color: var(--bottomtab-color-background);
+	box-shadow: 0 0 -0.125rem 0 rgba(0, 0, 0, 0.3);
+
+	.empty {
+		flex-grow: 1;
+		height: 3.5rem;
+	}
+	.active {
+		color: var(--bottomtab-color-selected-text);
+		stroke: var(--bottomtab-color-selected-text);
+		p {
+			font-size: 0.9rem;
+		}
+	}
+	button {
+		display: grid;
+		text-align: center;
+		align-items: center;
+		justify-items: center;
+		width: 3.5rem;
+		color: var(--bottomtab-color-text);
+		stroke: var(--bottomtab-color-text);
+	}
+	p {
+		font-size: 0.8rem;
+	}
+}

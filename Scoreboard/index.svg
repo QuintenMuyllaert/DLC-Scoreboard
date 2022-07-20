@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Generator: SpinetiX Elementi 2020 -->
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" color="black" dur="indefinite" height="100%" id="w5noVlfZOG" viewBox="0 0 1920 1080" viewport-fill="black" width="100%">
+ <spx:properties xmlns:spx="http://www.spinetix.com/namespace/1.0/spx" dur="auto" translate="yes" xml:id="EU3nzIrZJT">
+  <spx:version date="$Date: 2020-07-17 20:07:22 +0200 (Fri, 17 Jul 2020) $" revision="$Revision: 36469 $"/>
+  <spx:json-array defaultPage="yes" name="Layers" preview="#layers" xlink:href="#jsonLayers">
+   <spx:json-layer name="Layers" positionable="yes" repeatDur="indefinite"/>
+  </spx:json-array>
+  <spx:dialog name="layout"/>
+  <spx:help xlink:href="https://support.spinetix.com/wiki/Elementi_layout"/>
+ </spx:properties>
+ <script xlink:href="http://download.spinetix.com/spxjslibs/jSignage.js"/>
+ <script><![CDATA[
+   $(function(){
+     var txt = $('#jsonLayers').text();
+     if ( $.trim(txt)=="") { txt = $('#defaultContent').text(); }
+     $('#layers').add( $.uncan( $.parseJSON( txt ) ) );
+   });
+ ]]></script>
+ <defs>
+  <title id="defaultContent"><![CDATA[[
+   { "ctor": "textArea", "args": { "begin": "0s", "left": "25%", "top": "25%", "width": "50%", "height": "50%", "frame": { "backColor": "#FFFFFF", "frameColor": "#8FB2FC", "frameSize": 1 }, "fontFamily": "Noto Sans", "fontSize": "10%" }, "textContent": "New Layout" }
+  ]]]></title>
+  <title id="jsonLayers"><![CDATA[[
+	{
+		"args": {
+			"begin": "0s",
+			"dur": "indefinite",
+			"fill": "white",
+			"fontFamily": "Noto Sans",
+			"fontSize": 54,
+			"frame": {
+				"backColor": "#000000"
+			},
+			"id": "sarVu3QPiP",
+			"left": 0,
+			"textBorderColor": "#ffffff",
+			"textBorderSize": 4,
+			"top": 0
+		},
+		"changeNumber": "139",
+		"ctor": "textArea",
+		"textContent": {
+			"fill": "#ffffff",
+			"fontFamily": "Noto Sans",
+			"fontSize": 54,
+			"text": "Connecting to Server. . ."
+		}
+	},
+	{
+		"args": {
+			"begin": "0s",
+			"dur": "indefinite",
+			"height": 1080,
+			"href": "scoreboard.svg",
+			"id": "ALcfWH8Npl",
+			"left": 0,
+			"repeatDur": "indefinite",
+			"top": 0,
+			"width": 1920
+		},
+		"changeNumber": "24",
+		"ctor": "animation"
+	}
+]]]></title>
+ </defs>
+ <rect fill="black" height="1080" id="bgrect" stroke="none" width="1920"/>
+ <g id="layers"/>
+</svg>

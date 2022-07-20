@@ -1,0 +1,48 @@
+.c-clockedit {
+	display: grid;
+	gap: 1rem;
+	text-align: center;
+	align-items: center;
+
+	.close {
+		justify-self: start;
+	}
+
+	.title {
+		color: var(--global-color-text);
+		font-family: Rajdhani;
+		font-size: 2rem;
+		font-weight: 600;
+	}
+
+	.clockinput {
+		border: var(--global-border-size) solid var(--global-color-accent-primary);
+		box-shadow: 0 0.125rem 0.125rem 0 rgba(0, 0, 0, 0.3);
+		display: flex;
+		justify-content: space-between;
+		width: min(100%, 18rem);
+		gap: 0.5rem;
+		align-self: center;
+		justify-self: center;
+
+		.side,
+		.middle {
+			text-align: center;
+			font-family: DSEG7-Classic;
+			font-weight: 500;
+			font-size: 3.5rem;
+			justify-self: center;
+			color: var(--global-color-text);
+		}
+
+		.side {
+			width: 8rem;
+		}
+	}
+
+	.buttons {
+		display: grid;
+		grid-template-columns: repeat(2, 1fr);
+		gap: 1rem;
+	}
+}
