@@ -1,4 +1,4 @@
-const { MongoClient } = require("mongodb");
+const { MongoClient, ObjectId } = require("mongodb");
 
 const connstr = process.env["MONGO_CONNECTION"];
 const database = new MongoClient(connstr);
@@ -81,4 +81,5 @@ module.exports = {
   delete: dbDelete,
   exists: dbExists,
   createUpdate: dbCreateUpdate,
+  ObjectId,
 };
