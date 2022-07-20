@@ -15,7 +15,7 @@ export const attachSocketIO = (server: any) => {
 		maxHttpBufferSize: 1e8,
 	});
 
-	const pubClient = createClient({ url: "redis://localhost:6379" });
+	const pubClient = createClient({ url: process.env["REDIS_CONNECTION"] });
 	const subClient = pubClient.duplicate();
 
 	Promise.all([pubClient.connect(), subClient.connect()]).then(() => {
@@ -34,7 +34,7 @@ export const attachSocketIO = (server: any) => {
 			managerID = socket.id;
 
 			for (const item of queue) {
-				socket.emit("newConnection", item);
+				socket.emit("manage", item);
 			}
 			queue = [];
 
@@ -47,7 +47,7 @@ export const attachSocketIO = (server: any) => {
 			const { valid, body } = await jwtVerifyAsync(token);
 			socket.auth = valid;
 			socket.body = body;
-			const { serial } = body?.serial;
+			const serial = body?.serial;
 
 			console.log(socket.id, "JWT :", valid, body);
 			if (!valid) {
