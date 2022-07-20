@@ -7,3 +7,4 @@ cp -R -T modules/ ./packages/dlcscoreboard/logout/modules/
 cp -R -T modules/ ./packages/dlcscoreboard/changepassword/modules/
 cp -R -T modules/ ./packages/dlcscoreboard/upload/modules/
 cp -R -T modules/ ./packages/dlcscoreboard/tree/modules/
+cp -R -T modules/ ./packages/dlcscoreboard/template/modules/
