@@ -27,17 +27,10 @@ export default () => {
 	};
 
 	const sendAuthRequest = async () => {
-		const res = await Api.fetch("auth", {
-			method: "POST",
-			headers: {
-				"Content-Type": "application/json",
-			},
-			body: JSON.stringify(state),
-		});
-
-		const body = await res.json();
-
+		const body = await Api.login(state.username, state.password);
+		console.log(body);
 		if (body.status == 202) {
+			console.log("Auth OK");
 			localStorage.setItem("Bearer", body.token);
 
 			if (body.firstLogin) {

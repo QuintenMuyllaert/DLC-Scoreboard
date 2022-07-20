@@ -5,6 +5,7 @@ export class InterfaceApi {
 	routes: any = {};
 	constructor() {}
 	async fetch(route: string, options?: any): Promise<any> {}
+	async login(username: string, password: string): Promise<any> {}
 }
 
 export class ServerLessApi {
@@ -31,7 +32,6 @@ export class ServerLessApi {
 		const defaults = {
 			mode: "cors",
 			cache: "no-cache",
-			credentials: "same-origin",
 			redirect: "follow",
 			referrerPolicy: "no-referrer",
 			headers: {},
@@ -44,7 +44,25 @@ export class ServerLessApi {
 			options.headers.Authorization = `Bearer ${Bearer}`;
 		}
 
-		return fetch(this.routes[cleanRoute], options || null);
+		console.log(this.routes[cleanRoute], options);
+
+		return fetch(this.routes[cleanRoute], options);
+	}
+	async login(username: string, password: string): Promise<any> {
+		const res = await this.fetch("auth", {
+			method: "POST",
+			body: JSON.stringify({ username, password }),
+			headers: {
+				"Content-Type": "application/json",
+			},
+		});
+
+		const body = await res.json();
+		if (body.token) {
+			localStorage.setItem("Bearer", body.token);
+		}
+
+		return body;
 	}
 }
 

@@ -1,12 +1,9 @@
 import { Navigate } from "react-router-dom";
-import { getCookies } from "../utils/Utils";
 
 export default ({ element }: { element: any }) => {
-	const cookie = getCookies();
-
 	// console.log(`Must protect "${document.location.pathname}" 💂‍♀️!`);
 
-	if (cookie.auth && cookie.auth === true) {
+	if (localStorage.getItem("Bearer")) {
 		// console.log("Access granted 🔑!");
 		return element;
 	}
