@@ -13,6 +13,9 @@ export default ({ team, setVisible = () => {} }: { team: 1 | 2; setVisible?: (ev
 	const [changing, setChanging] = useState("O" as "B" | "O");
 	const [color, setColor] = useState("#ff0000");
 
+	const [newColorTop, setNewColorTop] = useState(team == 1 ? scoreboard.hb : scoreboard.ub);
+	const [newColorBottom, setNewColorBottom] = useState(team == 1 ? scoreboard.ho : scoreboard.uo);
+
 	const onClickColor = (color: string, position: "B" | "O") => {
 		if (removing) {
 			//remove color from scoreboard.colors
@@ -20,7 +23,12 @@ export default ({ team, setVisible = () => {} }: { team: 1 | 2; setVisible?: (ev
 			scoreboardInterface.updateColorArray(colors);
 			return;
 		}
-		scoreboardInterface.changeColor(`${team}${position}`, color);
+
+		if (position == "B") {
+			setNewColorTop(color);
+		} else {
+			setNewColorBottom(color);
+		}
 	};
 
 	const onChangeColor = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -33,6 +41,12 @@ export default ({ team, setVisible = () => {} }: { team: 1 | 2; setVisible?: (ev
 			return;
 		}
 		scoreboardInterface.updateColorArray([...scoreboard.colors, color]);
+	};
+
+	const onClickSave = () => {
+		scoreboardInterface.changeColor(`${team}B`, newColorTop);
+		scoreboardInterface.changeColor(`${team}O`, newColorBottom);
+		setVisible(false);
 	};
 
 	const colors = [];
@@ -75,7 +89,7 @@ export default ({ team, setVisible = () => {} }: { team: 1 | 2; setVisible?: (ev
 						<line x1="6" y1="6" x2="18" y2="18"></line>
 					</svg>
 				</button>
-				<Flag top={team == 1 ? scoreboard.hb : scoreboard.ub} bottom={team == 1 ? scoreboard.ho : scoreboard.uo} />
+				<Flag top={newColorTop} bottom={newColorBottom} />
 				<button onClick={() => setRemoving(!removing)}>
 					<svg
 						xmlns="http://www.w3.org/2000/svg"
@@ -126,7 +140,7 @@ export default ({ team, setVisible = () => {} }: { team: 1 | 2; setVisible?: (ev
 					</label>
 				</div>
 			</div>
-			<IconButton color="black" label="Opslaan" onClick={() => setVisible(false)}></IconButton>
+			<IconButton color="black" label="Opslaan" onClick={onClickSave}></IconButton>
 		</div>
 	);
 };
