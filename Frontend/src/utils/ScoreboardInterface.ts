@@ -1,5 +1,5 @@
 import { io } from "socket.io-client";
-import { AppStateKeys, clockData, FlagPlace, HMP } from "../../../Interfaces/interfaces";
+import { AppStateKeys, clockData, FlagPlace, HMP, scheduleData } from "../../../Interfaces/interfaces";
 
 import { getQuery } from "../utils/Utils";
 import Appstate from "./Appstate";
@@ -32,6 +32,7 @@ export class InterfaceScoreboard {
 	updateColorArray(colorArray: string[]) {}
 	startMatch(halfs: number, halfLength: number) {}
 	stopMatch() {}
+	setSchedule(data: scheduleData) {}
 	emit(event: string, ...args: any[]) {}
 }
 
@@ -161,6 +162,9 @@ export class InterfaceSocket {
 	}
 	enableDisplay(enable: boolean) {
 		this.socket.emit("input", "enableDisplay", enable);
+	}
+	setSchedule(data: scheduleData) {
+		this.socket.emit("input", "schedule", data);
 	}
 	async startMatch(halfs: number = 0, halfLength: number = 0) {
 		console.log("startMatch");

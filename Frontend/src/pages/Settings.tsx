@@ -26,14 +26,11 @@ export default () => {
 								viewBox="0 0 24 24"
 								fill="none"
 								stroke="currentColor"
-								strokeWidth="2"
-								strokeLinecap="round"
-								strokeLinejoin="round"
-								className="c-bottomtab__page-icon">
-								<path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
-								<circle cx="9" cy="7" r="4"></circle>
-								<path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
-								<path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+								stroke-width="2"
+								stroke-linecap="round"
+								stroke-linejoin="round">
+								<path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path>
+								<circle cx="12" cy="7" r="4"></circle>
 							</svg>
 						}
 					/>
@@ -71,13 +68,15 @@ export default () => {
 								viewBox="0 0 24 24"
 								fill="none"
 								stroke="currentColor"
-								strokeWidth="2"
-								strokeLinecap="round"
-								strokeLinejoin="round"
-								className="c-bottomtab__page-icon">
-								<path d="M21 3H3v7h18V3z"></path>
-								<path d="M21 14h-5v7h5v-7z"></path>
-								<path d="M12 14H3v7h9v-7z"></path>
+								stroke-width="2"
+								stroke-linecap="round"
+								stroke-linejoin="round">
+								<path d="M21 7.5V6a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h3.5"></path>
+								<path d="M16 2v4"></path>
+								<path d="M8 2v4"></path>
+								<path d="M3 10h5"></path>
+								<path d="M17.5 17.5 16 16.25V14"></path>
+								<path d="M22 16a6 6 0 1 1-12 0 6 6 0 0 1 12 0Z"></path>
 							</svg>
 						}
 					/>

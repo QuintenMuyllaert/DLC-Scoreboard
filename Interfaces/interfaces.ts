@@ -38,6 +38,7 @@ export interface Scoreboard {
   nameHome: string;
   nameOut: string;
   clockData: clockData;
+  scheduleData: scheduleData;
   serial: string;
   hasAdmin: boolean;
   colors: string[];
@@ -57,6 +58,12 @@ export interface clockData {
   startPauseTime: number;
   pauseTime: number;
   pauseAt: number[];
+}
+
+export interface scheduleData {
+  startTime: number;
+  endTime: number;
+  sponsors: string[];
 }
 
 export type bottomTab = "" | "withbottom-tab";
@@ -116,6 +123,7 @@ export const defaultScoreboard: Scoreboard = {
   nameHome: "THUIS",
   nameOut: "UIT",
   clockData: { realTime: true, paused: true, startTime: Date.now(), startPauseTime: Date.now(), pauseTime: 0, pauseAt: [] },
+  scheduleData: { startTime: "", endTime: "", sponsors: [] },
   colors: ["green", "lightblue", "darkblue", "purple", "white", "black", "yellow", "red", "orange", "darkred"],
   hasAdmin: false,
 };

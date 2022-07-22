@@ -50,6 +50,33 @@ export const Namespace = class Namespace {
 			//this.emitDisplays("clockData", this.timer.data);
 			this.gotScoreboardFromDB = true;
 		})();
+
+		setInterval(() => {
+			if (this.scoreboard.isPlaying) {
+				return;
+			}
+
+			const getMinutes = (date): string => {
+				const hours = date.getHours();
+				const minutes = date.getMinutes();
+				return hours * 60 + minutes;
+			};
+
+			const now = new Date(Date.now());
+			const nowMinutes = getMinutes(now);
+
+			if (this.scoreboard.scheduleData.startTime <= nowMinutes && nowMinutes < this.scoreboard.scheduleData.endTime) {
+				console.log("Showing reel");
+				this.scoreboard.display = true;
+				this.scoreboard.sponsors = this.scoreboard.scheduleData.sponsors;
+				this.scoreboard.fullscreen = true;
+				this.updateScoreboard(this.scoreboard);
+			} else {
+				console.log("Turning off");
+				this.scoreboard.display = false;
+				this.updateScoreboard(this.scoreboard);
+			}
+		}, 1000);
 	}
 	emitDisplays = (event: string, ...args: any[]) => {
 		console.log("emitDisplays", event /*, args*/);
@@ -313,6 +340,10 @@ export const Namespace = class Namespace {
 				}
 				case "SPONSORS": {
 					this.scoreboard.sponsors = value;
+					break;
+				}
+				case "schedule": {
+					this.scoreboard.scheduleData = value;
 					break;
 				}
 				default: {
