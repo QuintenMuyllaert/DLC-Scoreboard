@@ -1,5 +1,4 @@
 import Appstate from "../utils/Appstate";
-import Api from "../utils/Api";
 
 export default ({ username }: { username: string }) => {
 	const state = Appstate.getState().scoreboard;
@@ -9,7 +8,7 @@ export default ({ username }: { username: string }) => {
 	};
 
 	const handleClickDeleteUser = async () => {
-		const res = await Api.fetch("user", {
+		const res = await fetch(`${document.location.origin}/user`, {
 			method: "DELETE",
 			mode: "cors",
 			cache: "no-cache",

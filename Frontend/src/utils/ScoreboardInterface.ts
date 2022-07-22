@@ -49,7 +49,6 @@ export class InterfaceSocket {
 			reconnectionDelayMax: 5000,
 			reconnectionAttempts: 999999,
 		});
-		this.socket.emit("auth", localStorage.getItem("Bearer"));
 
 		//@ts-ignore hack to get socket from console..
 		document.socket = this.socket;
@@ -190,7 +189,7 @@ export class InterfaceSocket {
 	}
 }
 
-export const scoreboardInterface: InterfaceScoreboard = new InterfaceSocket("https://dlcscoreboard.computernetwork.be/");
+export const scoreboardInterface: InterfaceScoreboard = new InterfaceSocket(document.location.origin);
 
 //@ts-ignore
 document.scoreboardInterface = scoreboardInterface;

@@ -93,7 +93,6 @@ export default () => {
 						checked={color == "dark"}
 						onChange={() => {
 							localStorage.setItem("theme", color == "dark" ? "light" : "dark");
-							//@ts-ignore
 							Appstate.updateState("color", localStorage.getItem("theme"));
 						}}
 					/>

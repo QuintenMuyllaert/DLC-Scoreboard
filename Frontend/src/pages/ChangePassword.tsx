@@ -4,7 +4,6 @@ import Input from "../components/Input";
 import Logo from "../components/Logo";
 import IconButton from "../components/IconButton";
 import { LooseObject } from "../../../Interfaces/interfaces";
-import Api from "../utils/Api";
 
 export default () => {
 	const localState: LooseObject = {
@@ -18,7 +17,7 @@ export default () => {
 	const navigate = useNavigate();
 
 	const fetchStatus = async () => {
-		const res = await Api.fetch("status", { method: "GET" });
+		const res = await fetch(`/status`, { mode: "no-cors", method: "GET" });
 		const json = await res.json();
 		updateState("currentUsername", json.username);
 	};
@@ -36,22 +35,32 @@ export default () => {
 		updateState("oldPassword", sessionStorage.getItem("password"));
 
 		if (state.password == state.checkPassword) {
-			const res = await Api.fetch("changepassword", {
+			const res = await fetch(`/changepassword`, {
 				method: "PUT",
+				mode: "cors",
+				cache: "no-cache",
+				credentials: "same-origin",
 				headers: {
 					"Content-Type": "application/json",
 				},
+				redirect: "follow",
+				referrerPolicy: "no-referrer",
 				body: JSON.stringify({ currentPassword: state.oldPassword, newPassword: state.password }),
 			});
 
 			await res.json;
 
 			console.log("changed password: ", state.password);
-			const res2 = await Api.fetch("auth", {
+			const res2 = await fetch(`/auth`, {
 				method: "POST",
+				mode: "cors",
+				cache: "no-cache",
+				credentials: "same-origin",
 				headers: {
 					"Content-Type": "application/json",
 				},
+				redirect: "follow",
+				referrerPolicy: "no-referrer",
 				body: JSON.stringify({ username: state.currentUsername, password: state.password }),
 			});
 

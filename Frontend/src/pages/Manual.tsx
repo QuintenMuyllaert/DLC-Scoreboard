@@ -3,7 +3,6 @@ import Input from "../components/Input";
 import Logo from "../components/Logo";
 import IconButton from "../components/IconButton";
 import { LooseObject } from "../../../Interfaces/interfaces";
-import Api from "../utils/Api";
 
 export default () => {
 	const defaultState: LooseObject = {
@@ -45,11 +44,16 @@ export default () => {
 
 		if (state.password === state.confirmPassword) {
 			if (state.hasScoreboard) {
-				const res = await Api.fetch("register", {
+				const res = await fetch(`/register`, {
 					method: "POST",
+					mode: "cors",
+					cache: "no-cache",
+					credentials: "same-origin",
 					headers: {
 						"Content-Type": "application/json",
 					},
+					redirect: "follow",
+					referrerPolicy: "no-referrer",
 					body: JSON.stringify({ ...state }),
 				});
 
@@ -58,11 +62,16 @@ export default () => {
 
 				if (res.status >= 200 && res.status < 300) {
 					updateValidation("display", false);
-					const res = await Api.fetch("auth", {
+					const res = await fetch(`/auth`, {
 						method: "POST",
+						mode: "cors",
+						cache: "no-cache",
+						credentials: "same-origin",
 						headers: {
 							"Content-Type": "application/json",
 						},
+						redirect: "follow",
+						referrerPolicy: "no-referrer",
 						body: JSON.stringify({ username: state.username, password: state.password }),
 					});
 
@@ -77,11 +86,16 @@ export default () => {
 			if (state.hasScoreboard == false) {
 				updateState("serial", "virtual");
 
-				const res = await Api.fetch("register", {
+				const res = await fetch(`${document.location.origin}/register`, {
 					method: "POST",
+					mode: "cors",
+					cache: "no-cache",
+					credentials: "same-origin",
 					headers: {
 						"Content-Type": "application/json",
 					},
+					redirect: "follow",
+					referrerPolicy: "no-referrer",
 					body: JSON.stringify({ ...state }),
 				});
 
@@ -90,11 +104,16 @@ export default () => {
 
 				if (res.status >= 200 && res.status < 300) {
 					updateValidation("display", false);
-					const res = await Api.fetch("auth", {
+					const res = await fetch(`/auth`, {
 						method: "POST",
+						mode: "cors",
+						cache: "no-cache",
+						credentials: "same-origin",
 						headers: {
 							"Content-Type": "application/json",
 						},
+						redirect: "follow",
+						referrerPolicy: "no-referrer",
 						body: JSON.stringify({ username: state.username, password: state.password }),
 					});
 
