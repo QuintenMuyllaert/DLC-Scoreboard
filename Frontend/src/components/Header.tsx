@@ -1,9 +1,9 @@
 import Logo from "./Logo";
 
-export default ({ title, onClick }: { title: string; onClick?: (event?: any) => any }) => {
+export default ({ title, icon = <div></div>, onClick }: { title: string; icon?: any; onClick?: (event?: any) => any }) => {
 	return (
 		<nav className="c-header">
-			<div></div>
+			{icon}
 			<h1>{title}</h1>
 			<Logo width="auto" height="100%" />
 		</nav>

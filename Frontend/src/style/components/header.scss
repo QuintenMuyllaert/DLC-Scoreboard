@@ -26,4 +26,8 @@
 		width: fit-content;
 		justify-self: end;
 	}
+
+	> :first-child {
+		justify-self: start;
+	}
 }
