@@ -1,3 +1,5 @@
+import QRCode from "qrcode";
+
 import database from "./database";
 import { Timer } from "./timer";
 import { Scoreboard, defaultScoreboard, LooseObject, HMP } from "../../Interfaces/Interfaces";
@@ -42,6 +44,11 @@ export const Namespace = class Namespace {
 				this.scoreboard = { ...this.scoreboard, ...scoreboardRecord };
 			} else {
 				console.log("Scoreboard not found, creating new scoreboard", serial);
+
+				const uri = await QRCode.toDataURL(`https://dlcscoreboard.computernetwork.be/manual?serial=${serial}`);
+				await outputFile(uri, `./www/${serial}/qr.png`);
+				this.scoreboard.sponsors = [`https://dlcscoreboard.computernetwork.be/data/${serial}/qr.png`];
+				this.scoreboard.message += serial;
 				await database.create("scoreboards", { ...this.scoreboard, serial });
 			}
 
@@ -50,7 +57,7 @@ export const Namespace = class Namespace {
 			//this.emitDisplays("clockData", this.timer.data);
 			this.gotScoreboardFromDB = true;
 		})();
-
+		/*
 		setInterval(() => {
 			if (this.scoreboard.isPlaying) {
 				return;
@@ -77,6 +84,7 @@ export const Namespace = class Namespace {
 				this.updateScoreboard(this.scoreboard);
 			}
 		}, 1000);
+		*/
 	}
 	emitDisplays = (event: string, ...args: any[]) => {
 		console.log("emitDisplays", event /*, args*/);
