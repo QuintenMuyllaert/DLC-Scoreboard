@@ -1,6 +1,7 @@
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import cookie from "cookie";
+import { v4 as uuidv4 } from "uuid";
 
 import database from "./database";
 import { LooseObject } from "../../Interfaces/Interfaces";
@@ -93,3 +94,5 @@ export const generateSerial = (pre = "", post = "") => {
 	a.toString(36).split(".").pop();
 	return pre + a + post;
 };
+
+export const uuid = uuidv4;
