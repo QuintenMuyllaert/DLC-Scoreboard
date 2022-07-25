@@ -3,17 +3,18 @@ import { Request, Response } from "express";
 import database from "../database";
 import { validateHash, jwtSignAsync } from "../crypto";
 
-//auth
+//login
 export default async (req: Request, res: Response) => {
-	console.log("Got auth request");
-	const { email, password } = req.body;
-	console.log(req.body);
-	console.log(email, password);
+	console.log("Got login request");
+	let { email, password } = req.body;
 	if (!email || !password) {
 		console.log("Missing email or password");
 		res.status(400).send("Missing email or password");
 		return;
 	}
+
+	email = email.toLowerCase();
+
 	const userExists = await database.exists("accounts", { email });
 	if (!userExists) {
 		console.log(email + " does not exist");
@@ -43,5 +44,5 @@ export default async (req: Request, res: Response) => {
 
 	console.log("Sending auth", email, obj);
 	database.update("accounts", { email }, { ...userdata, firstLogin: false });
-	res.status(202).send(JSON.stringify(obj, null, 4));
+	res.status(200).send(JSON.stringify(obj, null, 4));
 };

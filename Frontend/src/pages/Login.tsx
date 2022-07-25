@@ -4,10 +4,13 @@ import Input from "../components/Input";
 import Logo from "../components/Logo";
 import IconButton from "../components/IconButton";
 import { LooseObject } from "../../../Interfaces/interfaces";
-import { getCookies } from "../utils/Utils";
+import { getCookies, getQuery } from "../utils/Utils";
 import Api from "../utils/Api";
 
 export default () => {
+	const { serial } = getQuery();
+	const queryString = serial ? "?serial=" + serial : "";
+
 	const navigate = useNavigate();
 	const cookie = getCookies();
 	if (cookie.auth && cookie.auth === true) {
@@ -33,6 +36,11 @@ export default () => {
 		console.log(body);
 
 		if (body.status == "OK") {
+			if (serial) {
+				navigate("/linkscoreboard" + queryString);
+				return;
+			}
+
 			if (body.firstLogin) {
 				console.log("fistlogin is true --> in if");
 				sessionStorage.setItem("password", state.password);
@@ -128,10 +136,10 @@ export default () => {
 							<line x1="5" y1="12" x2="19" y2="12"></line>
 						</svg>
 					}
-					label="NIEUW"
+					label="REGISTREREN"
 					color="black"
 					onClick={() => {
-						navigate("/manual");
+						navigate("/register" + queryString);
 					}}
 				/>
 			</div>

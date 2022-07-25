@@ -5,13 +5,14 @@ import bodyParser from "body-parser";
 import cookieParser from "cookie-parser";
 import cors from "cors";
 
-import auth from "./routes/auth";
+import login from "./routes/login";
 import register from "./routes/register";
 import status from "./routes/status";
 import scoreboards from "./routes/scoreboards";
 import changepassword from "./routes/changepassword";
 import logout from "./routes/logout";
 import revoke from "./routes/revoke";
+import link from "./routes/link";
 
 export const dirname = process.cwd();
 export const app = express();
@@ -26,13 +27,14 @@ app.use(bodyParser.text());
 
 //DEFINE API ROUTES BELOW !!!
 
-app.post("/auth", auth);
+app.post("/login", login);
 app.post("/register", register);
 app.get("/status", status);
 app.get("/scoreboards", scoreboards);
 app.put("/changepassword", changepassword);
 app.get("/logout", logout);
 app.get("/revoke", revoke);
+app.post("/link", link);
 
 //DEFINE API ROUTES ABOVE !!!
 

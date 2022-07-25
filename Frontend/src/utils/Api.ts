@@ -1,4 +1,4 @@
-import { registerData } from "../../Interfaces/Interfaces";
+import { registerData, loginData, linkData } from "../../Interfaces/Interfaces";
 
 class Api {
 	url: string = document.location.origin;
@@ -37,12 +37,26 @@ class Api {
 		});
 	}
 	login(loginData: loginData) {
-		return this.fetch("auth", {
+		return this.fetch("login", {
 			method: "POST",
 			headers: {
 				"Content-Type": "application/json",
 			},
 			body: JSON.stringify(loginData),
+		});
+	}
+	link(linkData: linkData) {
+		return this.fetch("link", {
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json",
+			},
+			body: JSON.stringify(linkData),
+		});
+	}
+	status() {
+		return this.fetch("status", {
+			method: "GET",
 		});
 	}
 }

@@ -80,6 +80,11 @@ export interface loginData {
   password: string;
 }
 
+export interface linkData {
+  serial: string;
+  name: string;
+}
+
 export type bottomTab = "" | "withbottom-tab";
 
 export type themeColors = "light" | "dark" | "png";

@@ -11,7 +11,6 @@ import MatchSetup from "./pages/MatchSetup";
 import Score from "./pages/Score";
 import Templates from "./pages/Templates";
 import Scoreboard from "./pages/Scoreboard";
-import Manual from "./pages/Manual";
 import ChangePassword from "./pages/ChangePassword";
 import Livestream from "./pages/Livestream";
 import Users from "./pages/Users";
@@ -25,6 +24,9 @@ import Settings from "./pages/Settings";
 import Screen from "./pages/Screen";
 import Schedule from "./pages/Schedule";
 import Switchscoreboard from "./pages/Switchscoreboard";
+import Register from "./pages/Register";
+import LinkScoreboard from "./pages/LinkScoreboard";
+import QRLink from "./pages/QRLink";
 
 export const App = () => {
 	Appstate.attachUseState(...useState(Appstate.defaultState));
@@ -52,7 +54,6 @@ export const App = () => {
 					<Route path="/templates" element={<Protect element={<Templates />} />} />
 					<Route path="/templatesettings" element={<Protect element={<TemplateSettings />} />} />
 					<Route path="/matchsetup" element={<Protect element={<MatchSetup />} />} />
-					<Route path="/manual" element={<Manual />} />
 					<Route path="/users" element={<Protect element={<Users />} />} />
 					<Route path="/usersettings" element={<Protect element={<UserSettings />} />} />
 					<Route path="/sponsortemplates" element={<Protect element={<SponsorTemplates />} />} />
@@ -64,6 +65,9 @@ export const App = () => {
 					<Route path="/screen" element={<Protect element={<Screen />} />} />
 					<Route path="/schedule" element={<Protect element={<Schedule />} />} />
 					<Route path="/switchscoreboard" element={<Protect element={<Switchscoreboard />} />} />
+					<Route path="/register" element={<Register />} />
+					<Route path="/linkscoreboard" element={<Protect element={<LinkScoreboard />} />} />
+					<Route path="/qrlink" element={<QRLink />} />
 				</Routes>
 			</div>
 		</Router>

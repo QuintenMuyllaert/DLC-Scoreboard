@@ -1,3 +1,5 @@
+import { useState } from "react";
+
 import IconButton from "../components/IconButton";
 import BottomTab from "../components/BottomTab";
 
@@ -5,8 +7,12 @@ import { scoreboardInterface } from "../utils/ScoreboardInterface";
 import Appstate from "../utils/Appstate";
 import Switch from "../components/Switch";
 import Header from "../components/Header";
+import TextEdit from "../components/TextEdit";
+import Overlay from "../components/Overlay";
 
 export default () => {
+	const [displayOverlayMessage, setDisplayOverlayMessage] = useState(false);
+
 	const { sponsors, jwt, scoreboard, color } = Appstate.getState();
 	const options = [];
 	for (const sponsor of sponsors) {
@@ -97,7 +103,27 @@ export default () => {
 						}}
 					/>
 				</div>
+				<IconButton
+					icon={
+						<svg
+							xmlns="http://www.w3.org/2000/svg"
+							width="24"
+							height="24"
+							viewBox="0 0 24 24"
+							fill="none"
+							strokeWidth="2"
+							strokeLinecap="round"
+							strokeLinejoin="round">
+							<path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+						</svg>
+					}
+					color="white"
+					label="WIJZIG BERICHT"
+					onClick={() => setDisplayOverlayMessage(true)}></IconButton>
 			</div>
+			<Overlay visible={displayOverlayMessage} setVisible={setDisplayOverlayMessage}>
+				<TextEdit setVisible={setDisplayOverlayMessage} />
+			</Overlay>
 			<BottomTab />
 		</>
 	);
