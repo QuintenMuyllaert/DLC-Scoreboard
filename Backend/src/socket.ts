@@ -51,15 +51,33 @@ export const attachSocketIO = (server: any) => {
 			console.log("Display joined", serial, socket.id);
 		});
 
-		const token = extractToken(socket);
-		const { valid, body } = await jwtVerifyAsync(token);
-		socket.auth = valid;
-		socket.body = body;
-		console.log(socket.id, "JWT :", valid, body);
-		if (socket.auth && body.serial) {
-			console.log("Client joined", body.serial, socket.id);
-			const ns = getNamespace(body.serial);
+		socket.on("join", async (serial: string) => {
+			const token = extractToken(socket);
+			const { valid, body } = await jwtVerifyAsync(token);
+			socket.auth = valid;
+			socket.body = body;
+			console.log(socket.id, "JWT :", valid, body);
+			if (!socket.auth || !body.uuid) {
+				console.log("Invalid JWT");
+				return;
+			}
+
+			const permissions = await database.read("permissions", { "users.uuid": body.uuid });
+			for (const permission of permissions) {
+				if (permission.serial == serial) {
+					socket.permission = permission;
+					break;
+				}
+			}
+
+			if (!socket.permission) {
+				console.log("No permission for this serial");
+				return;
+			}
+
+			console.log("Client joined", serial, socket.id);
+			const ns = getNamespace(serial);
 			ns.addUser(socket);
-		}
+		});
 	});
 };
