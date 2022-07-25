@@ -3,17 +3,21 @@ import path from "path";
 import express, { Request, Response } from "express";
 import bodyParser from "body-parser";
 import cookieParser from "cookie-parser";
-import { extractToken, jwtVerifyAsync, validateHash, jwtSignAsync, generateSerial, hash } from "./crypto";
+import cors from "cors";
+import { extractToken, jwtVerifyAsync, validateHash, jwtSignAsync, generateSerial, hash, uuid } from "./crypto";
 import database from "./database";
-import { LooseObject, User } from "../../Interfaces/Interfaces";
+import { LooseObject, User, registerData, emailRegex } from "../../Interfaces/Interfaces";
 
 export const dirname = process.cwd();
 export const app = express();
 
 // HTTP(S) webserver
+app.use(cors());
 app.use(cookieParser());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
+app.use(bodyParser.text());
+
 app.use((req: Request, res: Response, next: any) => {
 	//set cache header on png & jpg
 	console.log("req.url", req.url);
@@ -53,29 +57,59 @@ app.get("/status", async (req: Request, res: Response) => {
 	});
 });
 
+app.get("/scoreboards", async (req: Request, res: Response) => {
+	console.log("Got scoreboard request");
+	await protect(req, res, async (body: LooseObject) => {
+		if (!body.uuid) {
+			console.log("Invalid JWT");
+			return;
+		}
+
+		const permissions = await database.read("permissions", { "users.uuid": body.uuid });
+		const serials = [];
+		for (const permission of permissions) {
+			serials.push(permission.serial);
+		}
+
+		const scoreboards = await database.read("scoreboards", { serial: { $in: serials } });
+		const scoreboardData = [];
+		for (const scoreboard of scoreboards) {
+			scoreboardData.push({
+				name: scoreboard.name,
+				serial: scoreboard.serial,
+			});
+		}
+
+		console.log("Sending scoreboards", scoreboardData);
+		res.send(scoreboardData);
+	});
+});
+
 app.post("/auth", async (req: Request, res: Response) => {
 	console.log("Got auth request");
-	const { username, password } = req.body;
-	if (!username || !password) {
-		console.log("Missing username or password");
-		res.status(400).send("Missing username or password");
+	const { email, password } = req.body;
+	console.log(req.body);
+	console.log(email, password);
+	if (!email || !password) {
+		console.log("Missing email or password");
+		res.status(400).send("Missing email or password");
 		return;
 	}
-	const userExists = await database.exists("accounts", { username });
+	const userExists = await database.exists("accounts", { email });
 	if (!userExists) {
-		console.log(username + " does not exist");
-		res.status(401).send("Invalid username or password");
+		console.log(email + " does not exist");
+		res.status(401).send("Invalid email or password");
 		return;
 	}
-	const [userdata] = await database.read("accounts", { username });
+	const [userdata] = await database.read("accounts", { email });
 	const valid = await validateHash(password, userdata?.password);
 	if (!valid) {
-		console.log(username + " hash does not match");
+		console.log(email + " hash does not match");
 		res.status(401).send("Hash does not match");
 		return;
 	}
 
-	const tokenBody = { username: userdata?.username, serial: userdata?.serial, isAdmin: userdata?.isAdmin };
+	const tokenBody = { uuid: userdata.uuid };
 	const token = await jwtSignAsync(tokenBody);
 	console.log("Signing token", tokenBody);
 	res.cookie("bearer", token, {
@@ -88,22 +122,29 @@ app.post("/auth", async (req: Request, res: Response) => {
 		firstLogin: userdata?.firstLogin,
 	};
 
-	console.log("Sending auth", username, obj);
-	database.update("accounts", { username }, { ...userdata, firstLogin: false });
+	console.log("Sending auth", email, obj);
+	database.update("accounts", { email }, { ...userdata, firstLogin: false });
 	res.status(202).send(JSON.stringify(obj, null, 4));
 });
 
 app.post("/register", async (req: Request, res: Response) => {
-	const { username, password } = req.body;
-	let { serial } = req.body;
-	if (!username || !password || !serial) {
-		console.log("Missing username or password or serial");
-		console.log({ username, serial });
-		res.status(400).send("Missing username or password or serial");
+	let { username, password, email, serial, name } = req.body as registerData;
+
+	if (!username || !password || !email || !serial || !name) {
+		console.log("Missing username or password or email or serial or name");
+		res.status(400).send("Missing username or password or email or serial or name");
 		return;
 	}
 
-	const userExists = await database.exists("accounts", { username });
+	email = email.toLowerCase();
+
+	if (!email.match(emailRegex)) {
+		console.log("Invalid email");
+		res.status(400).send("Invalid email");
+		return;
+	}
+
+	const userExists = await database.exists("accounts", { email });
 	if (userExists) {
 		console.log(username + " already exists");
 		res.status(401).send("User exists");
@@ -122,26 +163,32 @@ app.post("/register", async (req: Request, res: Response) => {
 	if (!scoreboarddata.hasAdmin) {
 		console.log("Scoreboard does not have admin");
 		const newUser: User = {
+			uuid: uuid(),
 			username,
 			password: await hash(password),
-			serial,
-			isAdmin: true,
+			email,
 			firstLogin: false,
 		};
-		await database.update("scoreboards", { serial }, { ...scoreboarddata, hasAdmin: true });
+
+		//TODO : refresh scoreboards after setting this ↙
+		await database.update(
+			"scoreboards",
+			{ serial },
+			{
+				...scoreboarddata,
+				hasAdmin: true,
+				name: name,
+				message: "DLC Scoreboard | Made with 💙 by Quinten",
+				sponsors: ["https://dlcscoreboard.computernetwork.be/img/favicon.png"],
+			},
+		);
+
 		await database.create("accounts", newUser);
-		res.status(202).send("REGISTER ADMIN OK");
-	} else {
-		console.log("Scoreboard already has admin, making user");
-		const newUser: User = {
-			username,
-			password: await hash(password),
+		await database.create("permissions", {
 			serial,
-			isAdmin: false,
-			firstLogin: true,
-		};
-		await database.create("accounts", newUser);
-		res.status(202).send("REGISTER USER OK");
+			users: [{ uuid: newUser.uuid, permissions: ["*"] }],
+		});
+		res.status(202).send("REGISTER ADMIN OK");
 	}
 });
 
