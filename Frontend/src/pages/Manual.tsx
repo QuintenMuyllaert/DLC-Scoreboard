@@ -3,12 +3,19 @@ import Input from "../components/Input";
 import Logo from "../components/Logo";
 import IconButton from "../components/IconButton";
 import { LooseObject } from "../../../Interfaces/interfaces";
+import Api from "../utils/Api";
+import { getQuery } from "../utils/Utils";
+import Appstate from "../utils/Appstate";
 
 export default () => {
+	const { serial } = getQuery();
+	const { jwt } = Appstate.getState();
+
 	const defaultState: LooseObject = {
-		serial: "",
+		serial: serial || "",
 		username: "",
 		password: "",
+		email: "",
 		confirmPassword: "",
 		hasScoreboard: true,
 	};
@@ -44,17 +51,12 @@ export default () => {
 
 		if (state.password === state.confirmPassword) {
 			if (state.hasScoreboard) {
-				const res = await fetch(`/register`, {
-					method: "POST",
-					mode: "cors",
-					cache: "no-cache",
-					credentials: "same-origin",
-					headers: {
-						"Content-Type": "application/json",
-					},
-					redirect: "follow",
-					referrerPolicy: "no-referrer",
-					body: JSON.stringify({ ...state }),
+				const res = await Api.register({
+					username: state.username,
+					password: state.password,
+					serial: state.serial,
+					email: state.email,
+					name: state.name,
 				});
 
 				const message = await res.text();
@@ -132,37 +134,61 @@ export default () => {
 			<div className="content">
 				<Input
 					id="serienummer"
-					label="serienummer"
+					label="Serienummer"
 					type="text"
 					disabled={!state.hasScoreboard}
+					inputValue={state.serial}
 					onChange={(event: React.FormEvent<HTMLInputElement>) => {
 						updateState("serial", event.currentTarget.value);
 					}}
 				/>
 				<Input
-					id="username"
-					label="username"
+					id="scorenaam"
+					label="Scoreboard Naam"
 					type="text"
+					disabled={!state.hasScoreboard}
 					onChange={(event: React.FormEvent<HTMLInputElement>) => {
-						updateState("username", event.currentTarget.value);
+						updateState("name", event.currentTarget.value);
 					}}
 				/>
-				<Input
-					id="password"
-					label="wachtwoord"
-					type="password"
-					onChange={(event: React.FormEvent<HTMLInputElement>) => {
-						updateState("password", event.currentTarget.value);
-					}}
-				/>
-				<Input
-					id="confirmpassword"
-					label="bevestig wachtwoord"
-					type="password"
-					onChange={(event: React.FormEvent<HTMLInputElement>) => {
-						updateState("confirmPassword", event.currentTarget.value);
-					}}
-				/>
+				{!jwt ? (
+					<>
+						<Input
+							id="username"
+							label="Gebruikersnaam"
+							type="text"
+							onChange={(event: React.FormEvent<HTMLInputElement>) => {
+								updateState("username", event.currentTarget.value);
+							}}
+						/>
+						<Input
+							id="email"
+							label="E-mail"
+							type="text"
+							onChange={(event: React.FormEvent<HTMLInputElement>) => {
+								updateState("email", event.currentTarget.value);
+							}}
+						/>
+						<Input
+							id="password"
+							label="Wachtwoord"
+							type="password"
+							onChange={(event: React.FormEvent<HTMLInputElement>) => {
+								updateState("password", event.currentTarget.value);
+							}}
+						/>
+						<Input
+							id="confirmpassword"
+							label="Bevestig wachtwoord"
+							type="password"
+							onChange={(event: React.FormEvent<HTMLInputElement>) => {
+								updateState("confirmPassword", event.currentTarget.value);
+							}}
+						/>
+					</>
+				) : (
+					<></>
+				)}
 			</div>
 			<IconButton
 				icon={

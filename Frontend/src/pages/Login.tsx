@@ -5,6 +5,7 @@ import Logo from "../components/Logo";
 import IconButton from "../components/IconButton";
 import { LooseObject } from "../../../Interfaces/interfaces";
 import { getCookies } from "../utils/Utils";
+import Api from "../utils/Api";
 
 export default () => {
 	const navigate = useNavigate();
@@ -14,7 +15,7 @@ export default () => {
 	}
 
 	const defaultState: LooseObject = {
-		username: "",
+		email: "",
 		password: "",
 	};
 
@@ -26,18 +27,7 @@ export default () => {
 	};
 
 	const sendAuthRequest = async () => {
-		const res = await fetch(`/auth`, {
-			method: "POST",
-			mode: "cors",
-			cache: "no-cache",
-			credentials: "same-origin",
-			headers: {
-				"Content-Type": "application/json",
-			},
-			redirect: "follow",
-			referrerPolicy: "no-referrer",
-			body: JSON.stringify(state),
-		});
+		const res = await Api.login({ email: state.email, password: state.password });
 
 		const body = await res.json();
 		console.log(body);
@@ -64,16 +54,16 @@ export default () => {
 
 			<div className="p-login-maxwidth">
 				<Input
-					id="username"
-					label="username"
+					id="email"
+					label="Email"
 					type="text"
 					onChange={(event: React.FormEvent<HTMLInputElement>) => {
-						updateState("username", event.currentTarget.value);
+						updateState("email", event.currentTarget.value);
 					}}
 				/>
 				<Input
 					id="password"
-					label="wachtwoord"
+					label="Wachtwoord"
 					type="password"
 					onChange={(event: React.FormEvent<HTMLInputElement>) => {
 						updateState("password", event.currentTarget.value);
