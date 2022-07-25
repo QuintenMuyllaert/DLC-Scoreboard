@@ -82,6 +82,27 @@ export class InterfaceSocket {
 			console.log("Appstate", key, value);
 			Appstate.updateState(key, value);
 		});
+
+		(async () => {
+			const serial = localStorage.getItem("serial");
+			if (serial) {
+				this.socket.emit("join", serial);
+				return;
+			}
+
+			const res = await fetch("/scoreboards");
+			const scoreboards = await res.json();
+
+			if (scoreboards.length == 1) {
+				localStorage.setItem("serial", scoreboards[0].serial);
+				console.log("join", scoreboards[0].serial);
+				this.socket.emit("join", scoreboards[0].serial);
+				return;
+			}
+
+			console.log("scoreboards", scoreboards);
+			console.log("You control multiple scoreboards NYI");
+		})();
 	}
 	emit(event: string, ...args: any[]) {
 		console.log("emit", event, ...args);
