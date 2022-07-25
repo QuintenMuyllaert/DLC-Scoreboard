@@ -149,7 +149,7 @@ export const defaultScoreboard: Scoreboard = {
   nameHome: "THUIS",
   nameOut: "UIT",
   clockData: { realTime: true, paused: true, startTime: Date.now(), startPauseTime: Date.now(), pauseTime: 0, pauseAt: [] },
-  scheduleData: { startTime: "", endTime: "", sponsors: [] },
+  scheduleData: { startTime: 0, endTime: 0, sponsors: [] },
   colors: ["green", "lightblue", "darkblue", "purple", "white", "black", "yellow", "red", "orange", "darkred"],
   hasAdmin: false,
 };
