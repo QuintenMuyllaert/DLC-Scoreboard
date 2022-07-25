@@ -10,8 +10,10 @@ class Api {
 	fetch(url: string, options: any) {
 		const defaultOptions = {
 			method: "GET",
-			mode: "no-cors",
+			mode: "cors",
 			cache: "no-cache",
+			credentials: "same-origin",
+			headers: {},
 			redirect: "follow",
 			referrerPolicy: "no-referrer",
 		};
@@ -23,15 +25,13 @@ class Api {
 			url = `${this.url}${url}`;
 		}
 
-		console.log(url, { ...defaultOptions, ...options });
-
 		return fetch(url, { ...defaultOptions, ...options });
 	}
 	register(registerData: registerData) {
 		return this.fetch("register", {
 			method: "POST",
 			headers: {
-				"Content-Type": "application/json;charset=UTF-8",
+				"Content-Type": "application/json",
 			},
 			body: JSON.stringify(registerData),
 		});
