@@ -1,31 +1,29 @@
 import { useState, useEffect } from "react";
 
+import Header from "../components/Header";
 import IconButton from "../components/IconButton";
 import BottomTab from "../components/BottomTab";
-
-import { scheduleData } from "../../../Interfaces/Interfaces";
-import { scoreboardInterface } from "../utils/ScoreboardInterface";
-import Appstate from "../utils/Appstate";
-import Header from "../components/Header";
 
 export default () => {
 	const [options, setOptions] = useState([]);
 	const [scoreboards, setScoreboards] = useState([]);
 	const [selected, setSelected] = useState("");
 
-	useEffect(async () => {
-		console.log("Fetching scoreboards");
-		const res = await fetch("/scoreboards");
-		const scoreboards = await res.json();
-		setScoreboards(scoreboards);
+	useEffect(() => {
+		(async () => {
+			console.log("Fetching scoreboards");
+			const res = await fetch("/scoreboards");
+			const scoreboards = await res.json();
+			setScoreboards(scoreboards);
 
-		const opts = [];
-		for (const scoreboard of scoreboards) {
-			opts.push(<option value={scoreboard.serial}>{scoreboard.name}</option>);
-		}
+			const opts = [];
+			for (const scoreboard of scoreboards) {
+				opts.push(<option value={scoreboard.serial}>{scoreboard.name}</option>);
+			}
 
-		console.log("Fetched scoreboards", opts);
-		setOptions(opts);
+			console.log("Fetched scoreboards", opts);
+			setOptions(opts);
+		})();
 
 		return () => {};
 	}, []);
@@ -52,7 +50,7 @@ export default () => {
 			<div className="p-page p-schedule">
 				<main>
 					<div className="c-option">
-						<label htmlFor="selectedTemplate">Reel selecteren</label>
+						<label htmlFor="selectedTemplate">Scoreboard</label>
 						<select id="selectedTemplate" onChange={onChangeTemplate}>
 							<option value="0" selected>
 								Selecteer een scoreboard
