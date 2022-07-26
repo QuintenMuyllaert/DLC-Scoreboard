@@ -66,11 +66,9 @@ export default () => {
 	];
 
 	useEffect(() => {
-		console.log("hello bottomtab");
 		Appstate.updateState("bottomtab", "withbottom-tab");
 
 		return () => {
-			console.log("woosh bottomtab");
 			Appstate.updateState("bottomtab", "");
 		};
 	}, []);
