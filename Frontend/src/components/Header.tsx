@@ -5,7 +5,7 @@ export default ({ title, icon = <div></div>, onClick }: { title: string; icon?: 
 		<nav className="c-header">
 			{icon}
 			<h1>{title}</h1>
-			<Logo width="auto" height="100%" />
+			<Logo height="100%" />
 		</nav>
 	);
 };
