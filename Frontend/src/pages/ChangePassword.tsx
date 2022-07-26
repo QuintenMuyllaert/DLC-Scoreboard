@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import Input from "../components/Input";
 import Logo from "../components/Logo";
 import IconButton from "../components/IconButton";
-import { LooseObject } from "../../../Interfaces/interfaces";
+import { LooseObject } from "../../../Interfaces/Interfaces";
 
 export default () => {
 	const localState: LooseObject = {

@@ -10,7 +10,7 @@ import Overlay from "../components/Overlay";
 import Header from "../components/Header";
 
 import { scoreboardInterface } from "../utils/ScoreboardInterface";
-import { LooseObject } from "../../../Interfaces/interfaces";
+import { LooseObject } from "../../../Interfaces/Interfaces";
 
 export default () => {
 	const state = Appstate.getState();

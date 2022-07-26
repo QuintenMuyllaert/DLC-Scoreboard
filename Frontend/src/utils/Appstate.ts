@@ -1,4 +1,4 @@
-import { defaultAppState, AppState, AppStateKeys, AppStateValues } from "../../../Interfaces/interfaces";
+import { defaultAppState, AppState, AppStateKeys, AppStateValues } from "../../../Interfaces/Interfaces";
 
 export let state: AppState = defaultAppState;
 export let setState: any;

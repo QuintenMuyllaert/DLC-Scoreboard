@@ -1,5 +1,5 @@
 import { io } from "socket.io-client";
-import { AppStateKeys, clockData, FlagPlace, HMP, scheduleData } from "../../../Interfaces/interfaces";
+import { AppStateKeys, HMP, scheduleData } from "../../../Interfaces/Interfaces";
 
 import { getQuery } from "../utils/Utils";
 import Appstate from "./Appstate";

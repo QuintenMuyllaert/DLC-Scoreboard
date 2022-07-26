@@ -8,7 +8,7 @@ import Header from "../components/Header";
 
 import Appstate from "../utils/Appstate";
 import { scoreboardInterface } from "../utils/ScoreboardInterface";
-import { LooseObject } from "../../../Interfaces/interfaces";
+import { LooseObject } from "../../../Interfaces/Interfaces";
 
 export default () => {
 	const [inputName, setInputName] = useState("");

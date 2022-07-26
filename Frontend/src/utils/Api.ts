@@ -1,7 +1,8 @@
-import { registerData, loginData, linkData } from "../../Interfaces/Interfaces";
+import { registerData, loginData, linkData } from "../../../Interfaces/Interfaces";
 
 class Api {
 	url: string = document.location.origin;
+	isOrigin: boolean = false;
 	constructor(endpoint: string) {
 		this.url = endpoint;
 		this.isOrigin = this.url == document.location.origin;

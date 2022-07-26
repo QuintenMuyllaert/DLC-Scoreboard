@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom";
 import Input from "../components/Input";
 import Header from "../components/Header";
 import { scoreboardInterface } from "../utils/ScoreboardInterface";
-import { LooseObject } from "../../../Interfaces/interfaces";
+import { LooseObject } from "../../../Interfaces/Interfaces";
 
 export default () => {
 	const { id } = getQuery();

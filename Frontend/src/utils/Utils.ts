@@ -1,4 +1,4 @@
-import { LooseObject, clockData } from "../../../Interfaces/interfaces";
+import { LooseObject, clockData } from "../../../Interfaces/Interfaces";
 
 export const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 

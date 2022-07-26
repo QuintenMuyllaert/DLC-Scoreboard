@@ -6,7 +6,7 @@ import IconButton from "../components/IconButton";
 
 import Api from "../utils/Api";
 import { getQuery } from "../utils/Utils";
-import { LooseObject, linkData } from "../../../Interfaces/interfaces";
+import { LooseObject, linkData } from "../../../Interfaces/Interfaces";
 
 export default () => {
 	const { serial } = getQuery();
