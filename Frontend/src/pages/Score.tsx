@@ -15,6 +15,10 @@ import { scoreboardInterface } from "../utils/ScoreboardInterface";
 import Appstate from "../utils/Appstate";
 
 export default () => {
+	if (!scoreboardInterface.getSerial()) {
+		return <Navigate replace to="/switchscoreboard" />;
+	}
+
 	const scoreboard = Appstate.getState().scoreboard;
 	if (!scoreboard.isPlaying) {
 		return <Navigate to={`/matchsetup`} />;
