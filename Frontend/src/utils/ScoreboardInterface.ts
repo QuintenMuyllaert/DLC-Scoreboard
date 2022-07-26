@@ -11,6 +11,9 @@ export class InterfaceScoreboard {
 	constructor(uri: string) {
 		this.uri = uri;
 	}
+	getSerial() {
+		return "";
+	}
 	changeColor(team: `${1 | 2}${"B" | "O"}`, color: string) {}
 	resetScore() {}
 	addScore(team: "G1" | "G2", score: number) {}
@@ -104,6 +107,9 @@ export class InterfaceSocket {
 			console.log("You control multiple scoreboards NYI");
 		})();
 	}
+	getSerial() {
+		return localStorage.getItem("serial") || "";
+	}
 	emit(event: string, ...args: any[]) {
 		console.log("emit", event, ...args);
 		this.socket.emit(event, ...args);
@@ -195,7 +201,7 @@ export class InterfaceSocket {
 		scoreboardInterface.resetScore();
 		scoreboardInterface.pauseTimer();
 		scoreboardInterface.resetTimer();
-		scoreboardInterface.setRealTime(false);
+		scoreboardInterface.setRealTime(true);
 
 		if (halfs && halfLength) {
 			for (let i = 1; i <= halfs; i++) {
