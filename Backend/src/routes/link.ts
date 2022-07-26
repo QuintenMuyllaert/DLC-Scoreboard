@@ -39,7 +39,7 @@ export default async (req: Request, res: Response) => {
 
 		const [scoreboarddata] = await database.read("scoreboards", { serial });
 		if (!scoreboarddata.hasAdmin) {
-			console.log("Scoreboard does not have admin");
+			console.log("Linking scoreboard");
 
 			//TODO : refresh scoreboards after setting this ↙
 			await database.update(
@@ -60,5 +60,8 @@ export default async (req: Request, res: Response) => {
 			});
 			res.status(201).send("LINK OK");
 		}
+
+		console.log("Scoreboard already linked");
+		res.status(400).send("Scoreboard already linked");
 	});
 };
