@@ -75,6 +75,13 @@ export interface registerData {
   name: string;
 }
 
+export interface userdataData {
+  newUsername: string;
+  newPassword: string;
+  newEmail: string;
+  password: string;
+}
+
 export interface loginData {
   email: string;
   password: string;
@@ -83,6 +90,13 @@ export interface loginData {
 export interface linkData {
   serial: string;
   name: string;
+}
+
+export interface apiResponse {
+  status: number;
+  success: boolean;
+  message: string;
+  data: any;
 }
 
 export type bottomTab = "" | "withbottom-tab";
