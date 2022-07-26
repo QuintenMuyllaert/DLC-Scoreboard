@@ -11,7 +11,7 @@ export default () => {
 	const navigate = useNavigate();
 
 	const onClickLogout = () => {
-		alert("Logout");
+		document.location.href = "/logout";
 	};
 
 	return (
