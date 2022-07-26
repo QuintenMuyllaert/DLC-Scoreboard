@@ -29,6 +29,7 @@ export default ({ setVisible = () => {} }: { setVisible?: (event?: any) => any }
 	};
 
 	const onClickPause = () => {
+		scoreboardInterface.setRealTime(false);
 		scoreboard.clockData.paused ? scoreboardInterface.resumeTimer() : scoreboardInterface.pauseTimer();
 	};
 
