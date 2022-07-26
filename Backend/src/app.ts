@@ -13,6 +13,7 @@ import changepassword from "./routes/changepassword";
 import logout from "./routes/logout";
 import revoke from "./routes/revoke";
 import link from "./routes/link";
+import permission from "./routes/permission";
 
 export const dirname = process.cwd();
 export const app = express();
@@ -35,6 +36,7 @@ app.put("/changepassword", changepassword);
 app.get("/logout", logout);
 app.get("/revoke", revoke);
 app.post("/link", link);
+app.post("/permission", permission);
 
 //DEFINE API ROUTES ABOVE !!!
 

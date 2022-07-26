@@ -129,6 +129,16 @@ export interface Permissions {
   users: UserPermissions[];
 }
 
+export type PermissionType = "grant" | "revoke" | "list";
+export type PermissionValue = "*" | "admin" | "user";
+
+export interface PermissionRequest {
+  type: PermissionType;
+  value: PermissionValue;
+  email: string;
+  serial: string;
+}
+
 // Defaults
 export const defaultTemplate: Template = {
   serial: "N/A",
