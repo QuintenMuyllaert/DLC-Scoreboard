@@ -1,4 +1,4 @@
-import { registerData, loginData, linkData } from "../../../Interfaces/Interfaces";
+import { registerData, loginData, linkData, userdataData } from "../../../Interfaces/Interfaces";
 
 class Api {
 	url: string = document.location.origin;
@@ -59,6 +59,22 @@ class Api {
 		return this.fetch("status", {
 			method: "GET",
 		});
+	}
+	async getUserdata() {
+		const res = await this.fetch("userdata", {
+			method: "GET",
+		});
+		return await res.json();
+	}
+	async postUserdata(userdata: userdataData) {
+		const res = await this.fetch("userdata", {
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json",
+			},
+			body: JSON.stringify(userdata),
+		});
+		return res;
 	}
 }
 

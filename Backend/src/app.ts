@@ -14,6 +14,7 @@ import logout from "./routes/logout";
 import revoke from "./routes/revoke";
 import link from "./routes/link";
 import permission from "./routes/permission";
+import userdata from "./routes/userdata";
 
 export const dirname = process.cwd();
 export const app = express();
@@ -37,6 +38,8 @@ app.get("/logout", logout);
 app.get("/revoke", revoke);
 app.post("/link", link);
 app.post("/permission", permission);
+app.get("/userdata", userdata.get);
+app.post("/userdata", userdata.post);
 
 //DEFINE API ROUTES ABOVE !!!
 
