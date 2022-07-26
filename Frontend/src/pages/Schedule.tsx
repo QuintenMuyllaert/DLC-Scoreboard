@@ -10,7 +10,7 @@ import Appstate from "../utils/Appstate";
 import Header from "../components/Header";
 
 export default () => {
-	const { sponsors, jwt, scoreboard, color } = Appstate.getState();
+	const { sponsors, scoreboard } = Appstate.getState();
 
 	const navigate = useNavigate();
 	const [startMinutes, setStartMinutes] = useState(scoreboard.scheduleData.startTime);
@@ -31,7 +31,7 @@ export default () => {
 
 		let uriList = [];
 		for (const sponsor of selected.children) {
-			const uri = `${document.location.origin}/data/${jwt.serial}/${encodeURIComponent(name)}/${encodeURIComponent(sponsor)}`;
+			const uri = `${document.location.origin}/data/${scoreboardInterface.getSerial()}/${encodeURIComponent(name)}/${encodeURIComponent(sponsor)}`;
 			if (sponsor.endsWith(".json")) {
 				const res = await fetch(uri);
 				const json = await res.json();
