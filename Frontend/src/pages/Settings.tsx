@@ -19,7 +19,7 @@ export default () => {
 			<Header
 				title="Settings"
 				icon={
-					<button class="c-svgbutton" onClick={onClickLogout}>
+					<button className="c-svgbutton" onClick={onClickLogout}>
 						<svg
 							xmlns="http://www.w3.org/2000/svg"
 							width="24"
