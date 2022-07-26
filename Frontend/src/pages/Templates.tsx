@@ -9,6 +9,7 @@ import Header from "../components/Header";
 import Appstate from "../utils/Appstate";
 import { scoreboardInterface } from "../utils/ScoreboardInterface";
 import { LooseObject } from "../../../Interfaces/Interfaces";
+import Backarrow from "../components/Backarrow";
 
 export default () => {
 	const [inputName, setInputName] = useState("");
@@ -42,7 +43,7 @@ export default () => {
 
 	return (
 		<>
-			<Header title="Templates" />
+			<Header title="Templates" icon={<Backarrow />} />
 			<div className="p-page p-templates">
 				<div className="list">{templateElements}</div>
 				<div className="form">

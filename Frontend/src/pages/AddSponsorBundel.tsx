@@ -5,6 +5,7 @@ import Input from "../components/Input";
 import Header from "../components/Header";
 import { scoreboardInterface } from "../utils/ScoreboardInterface";
 import { useNavigate } from "react-router-dom";
+import Backarrow from "../components/Backarrow";
 
 export default () => {
 	const navigate = useNavigate();
@@ -22,7 +23,7 @@ export default () => {
 
 	return (
 		<>
-			<Header title="Sponsorbundel toevoegen" />
+			<Header title="Sponsorbundel toevoegen" icon={<Backarrow />} />
 			<div className="p-page p-addSponsor">
 				<Input
 					id="naamBundel"

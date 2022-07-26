@@ -27,6 +27,7 @@ import Switchscoreboard from "./pages/Switchscoreboard";
 import Register from "./pages/Register";
 import LinkScoreboard from "./pages/LinkScoreboard";
 import QRLink from "./pages/QRLink";
+import Appsettings from "./pages/Appsettings";
 
 export const App = () => {
 	Appstate.attachUseState(...useState(Appstate.defaultState));
@@ -68,6 +69,7 @@ export const App = () => {
 					<Route path="/register" element={<Register />} />
 					<Route path="/linkscoreboard" element={<Protect element={<LinkScoreboard />} />} />
 					<Route path="/qrlink" element={<QRLink />} />
+					<Route path="/appsettings" element={<Protect element={<Appsettings />} />} />
 				</Routes>
 			</div>
 		</Router>

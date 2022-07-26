@@ -7,6 +7,7 @@ import Api from "../utils/Api";
 import { getQuery } from "../utils/Utils";
 import Appstate from "../utils/Appstate";
 import Header from "../components/Header";
+import Backarrow from "../components/Backarrow";
 
 export default () => {
 	const { serial } = getQuery();
@@ -60,7 +61,7 @@ export default () => {
 
 	return (
 		<>
-			<Header title="Register" />
+			<Header title="Register" icon={<Backarrow />} />
 			<div className="p-page p-manual">
 				<div className="content">
 					<Input

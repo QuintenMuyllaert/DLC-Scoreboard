@@ -9,6 +9,7 @@ import Header from "../components/Header";
 import { scoreboardInterface } from "../utils/ScoreboardInterface";
 import { getQuery } from "../utils/Utils";
 import { useNavigate } from "react-router-dom";
+import Backarrow from "../components/Backarrow";
 
 export default () => {
 	const navigate = useNavigate();
@@ -44,7 +45,7 @@ export default () => {
 
 	return (
 		<>
-			<Header title="Add sponsor" />
+			<Header title="Add sponsor" icon={<Backarrow />} />
 			<div className="p-page p-addSponsor">
 				<div className="c-addSponsor__tekst">
 					<p>

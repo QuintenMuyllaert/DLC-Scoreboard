@@ -8,6 +8,7 @@ import Logo from "../components/Logo";
 import User from "../components/User";
 import { LooseObject } from "../../../Interfaces/Interfaces";
 import Header from "../components/Header";
+import Backarrow from "../components/Backarrow";
 
 export default () => {
 	const { scoreboard, users } = Appstate.getState();
@@ -106,7 +107,7 @@ export default () => {
 
 	return (
 		<>
-			<Header title="User management" />
+			<Header title="User management" icon={<Backarrow />} />
 			<div className="p-page p-users">
 				<div className="list scrollbar">{users || []}</div>
 				<div className="grid">

@@ -5,15 +5,15 @@ import BottomTab from "../components/BottomTab";
 
 import { scoreboardInterface } from "../utils/ScoreboardInterface";
 import Appstate from "../utils/Appstate";
-import Switch from "../components/Switch";
 import Header from "../components/Header";
 import TextEdit from "../components/TextEdit";
 import Overlay from "../components/Overlay";
+import Backarrow from "../components/Backarrow";
 
 export default () => {
 	const [displayOverlayMessage, setDisplayOverlayMessage] = useState(false);
 
-	const { sponsors, jwt, scoreboard, color } = Appstate.getState();
+	const { sponsors } = Appstate.getState();
 	const options = [];
 	for (const sponsor of sponsors) {
 		options.push(<option value={sponsor.name}>{sponsor.name}</option>);
@@ -43,7 +43,7 @@ export default () => {
 
 	return (
 		<>
-			<Header title="Screen" />
+			<Header title="Screen" icon={<Backarrow />} />
 			<div className="p-page p-screen">
 				<div className="c-option">
 					<label htmlFor="selectedTemplate">Sponsor selecteren</label>
@@ -65,43 +65,6 @@ export default () => {
 						strokeLinejoin="round">
 						<polyline points="6 9 12 15 18 9"></polyline>
 					</svg>
-				</div>
-				<div>
-					<p>OFF/ON</p>
-					<Switch
-						checked={scoreboard.display}
-						onChange={() => {
-							scoreboardInterface.enableDisplay(!scoreboard.display);
-						}}
-					/>
-				</div>
-				<div>
-					<p>Fullscreen</p>
-					<Switch
-						checked={scoreboard.fullscreen}
-						onChange={() => {
-							scoreboardInterface.setFullScreenSponsors(!scoreboard.fullscreen);
-						}}
-					/>
-				</div>
-				<div>
-					<p>Realtime</p>
-					<Switch
-						checked={scoreboard.clockData.realTime}
-						onChange={() => {
-							scoreboardInterface.setRealTime(!scoreboard.clockData.realTime);
-						}}
-					/>
-				</div>
-				<div>
-					<p>Light/Dark</p>
-					<Switch
-						checked={color == "dark"}
-						onChange={() => {
-							localStorage.setItem("theme", color == "dark" ? "light" : "dark");
-							Appstate.updateState("color", localStorage.getItem("theme"));
-						}}
-					/>
 				</div>
 				<IconButton
 					icon={

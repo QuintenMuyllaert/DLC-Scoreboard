@@ -13,6 +13,7 @@ import Overlay from "../components/Overlay";
 
 import { scoreboardInterface } from "../utils/ScoreboardInterface";
 import Appstate from "../utils/Appstate";
+import Backarrow from "../components/Backarrow";
 
 export default () => {
 	if (!scoreboardInterface.getSerial()) {
@@ -39,7 +40,7 @@ export default () => {
 
 	return (
 		<>
-			<Header title={scoreboard.name} />
+			<Header title={scoreboard.name} icon={<Backarrow />} />
 			<div className="p-page p-score">
 				<Clock onClick={() => setDisplayOverlayClock(true)}></Clock>
 				<div className="container">

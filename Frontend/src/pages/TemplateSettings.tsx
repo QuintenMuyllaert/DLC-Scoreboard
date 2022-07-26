@@ -8,6 +8,7 @@ import Input from "../components/Input";
 import Header from "../components/Header";
 import { scoreboardInterface } from "../utils/ScoreboardInterface";
 import { LooseObject } from "../../../Interfaces/Interfaces";
+import Backarrow from "../components/Backarrow";
 
 export default () => {
 	const { id } = getQuery();
@@ -38,7 +39,7 @@ export default () => {
 
 	return (
 		<>
-			<Header title={`Edit "${template?.name || ""}"`} />
+			<Header title={`Edit "${template?.name || ""}"`} icon={<Backarrow />} />
 			<div className="p-page p-templatesettings">
 				<div className="content">
 					<Input

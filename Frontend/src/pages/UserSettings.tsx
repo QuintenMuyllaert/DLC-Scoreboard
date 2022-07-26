@@ -5,6 +5,7 @@ import BottomTab from "../components/BottomTab";
 import IconButton from "../components/IconButton";
 import Input from "../components/Input";
 import Header from "../components/Header";
+import Backarrow from "../components/Backarrow";
 
 export default () => {
 	const [originalUsername, setOriginalUsername] = useState("");
@@ -44,9 +45,32 @@ export default () => {
 		}
 	};
 
+	const onClickLogout = () => {
+		document.location.href = "/logout";
+	};
+
 	return (
 		<>
-			<Header title="Usersettings" />
+			<Header
+				title="Usersettings"
+				icon={
+					<button onClick={onClickLogout} style={{ padding: "0.5rem" }}>
+						<svg
+							xmlns="http://www.w3.org/2000/svg"
+							height="100%"
+							viewBox="0 0 24 24"
+							fill="none"
+							stroke="currentColor"
+							strokeWidth="2"
+							strokeLinecap="round"
+							strokeLinejoin="round">
+							<path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+							<polyline points="16 17 21 12 16 7"></polyline>
+							<line x1="21" y1="12" x2="9" y2="12"></line>
+						</svg>
+					</button>
+				}
+			/>
 			<div className="p-page p-usersettings">
 				<h1>Hallo {originalUsername}</h1>
 				<div className="content">

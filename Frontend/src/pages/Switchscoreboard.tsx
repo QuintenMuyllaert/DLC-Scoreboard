@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import Header from "../components/Header";
 import IconButton from "../components/IconButton";
 import BottomTab from "../components/BottomTab";
+import Backarrow from "../components/Backarrow";
 
 export default () => {
 	const [options, setOptions] = useState([]);
@@ -46,7 +47,7 @@ export default () => {
 
 	return (
 		<>
-			<Header title="Settings" />
+			<Header title="Settings" icon={<Backarrow />} />
 			<div className="p-page p-schedule">
 				<main>
 					<div className="c-option">

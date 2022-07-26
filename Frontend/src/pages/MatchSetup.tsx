@@ -11,6 +11,7 @@ import Header from "../components/Header";
 
 import { scoreboardInterface } from "../utils/ScoreboardInterface";
 import { LooseObject } from "../../../Interfaces/Interfaces";
+import Backarrow from "../components/Backarrow";
 
 export default () => {
 	const state = Appstate.getState();
@@ -43,7 +44,7 @@ export default () => {
 
 	return (
 		<>
-			<Header title="Match setup" />
+			<Header title="Match setup" icon={<Backarrow />} />
 			<div className="p-page p-matchsetup">
 				<div className="teamsettings-container">
 					<div className="flagcontainer">

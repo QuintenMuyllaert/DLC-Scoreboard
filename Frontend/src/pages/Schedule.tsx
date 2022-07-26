@@ -8,6 +8,7 @@ import { scheduleData } from "../../../Interfaces/Interfaces";
 import { scoreboardInterface } from "../utils/ScoreboardInterface";
 import Appstate from "../utils/Appstate";
 import Header from "../components/Header";
+import Backarrow from "../components/Backarrow";
 
 export default () => {
 	const { sponsors, scoreboard } = Appstate.getState();
@@ -91,7 +92,7 @@ export default () => {
 
 	return (
 		<>
-			<Header title="Settings" />
+			<Header title="Settings" icon={<Backarrow />} />
 			<div className="p-page p-schedule">
 				<main>
 					<div className="timecontainer">

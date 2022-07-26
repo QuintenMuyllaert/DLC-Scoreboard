@@ -7,6 +7,7 @@ import IconButton from "../components/IconButton";
 import { getQuery } from "../utils/Utils";
 import { useNavigate } from "react-router-dom";
 import { scoreboardInterface } from "../utils/ScoreboardInterface";
+import Backarrow from "../components/Backarrow";
 
 export default () => {
 	const navigate = useNavigate();
@@ -49,7 +50,7 @@ export default () => {
 
 	return (
 		<>
-			<Header title={`"${folder}"`} />
+			<Header title={`"${folder}"`} icon={<Backarrow />} />
 			<div className="p-page p-sponsors">
 				<div className="list">{sponsorElements}</div>
 				<IconButton

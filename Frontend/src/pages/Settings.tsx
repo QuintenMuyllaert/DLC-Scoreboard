@@ -1,44 +1,39 @@
 import { useNavigate } from "react-router-dom";
 
+import Header from "../components/Header";
 import IconButton from "../components/IconButton";
 import BottomTab from "../components/BottomTab";
-
-import { scoreboardInterface } from "../utils/ScoreboardInterface";
-import Appstate from "../utils/Appstate";
-import Header from "../components/Header";
+import Backarrow from "../components/Backarrow";
 
 export default () => {
 	const navigate = useNavigate();
 
-	const onClickLogout = () => {
-		document.location.href = "/logout";
-	};
-
 	return (
 		<>
-			<Header
-				title="Settings"
-				icon={
-					<button className="c-svgbutton" onClick={onClickLogout}>
-						<svg
-							xmlns="http://www.w3.org/2000/svg"
-							width="24"
-							height="24"
-							viewBox="0 0 24 24"
-							fill="none"
-							stroke="currentColor"
-							stroke-width="2"
-							stroke-linecap="round"
-							stroke-linejoin="round">
-							<path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
-							<polyline points="16 17 21 12 16 7"></polyline>
-							<line x1="21" y1="12" x2="9" y2="12"></line>
-						</svg>
-					</button>
-				}
-			/>
+			<Header title="Settings" icon={<Backarrow />} />
 			<div className="p-page p-settings">
 				<main>
+					<IconButton
+						color="white"
+						label="App"
+						onClick={() => navigate("/appsettings")}
+						icon={
+							<svg
+								xmlns="http://www.w3.org/2000/svg"
+								width="24"
+								height="24"
+								viewBox="0 0 24 24"
+								fill="none"
+								stroke="currentColor"
+								strokeWidth="2"
+								strokeLinecap="round"
+								strokeLinejoin="round">
+								<path d="m18 16 4-4-4-4"></path>
+								<path d="m6 8-4 4 4 4"></path>
+								<path d="m14.5 4-5 16"></path>
+							</svg>
+						}
+					/>
 					<IconButton
 						color="white"
 						label="Account"
