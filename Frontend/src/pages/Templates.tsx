@@ -5,11 +5,11 @@ import IconButton from "../components/IconButton";
 import Input from "../components/Input";
 import Template from "../components/Template";
 import Header from "../components/Header";
-
 import Appstate from "../utils/Appstate";
+import Backarrow from "../components/Backarrow";
+
 import { scoreboardInterface } from "../utils/ScoreboardInterface";
 import { LooseObject } from "../../../Interfaces/Interfaces";
-import Backarrow from "../components/Backarrow";
 
 export default () => {
 	const [inputName, setInputName] = useState("");

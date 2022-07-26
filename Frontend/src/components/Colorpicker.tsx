@@ -1,9 +1,10 @@
 import { useState } from "react";
+
 import Flag from "./Flag";
 import IconButton from "./IconButton";
 import Switch from "./Switch";
-
 import Appstate from "../utils/Appstate";
+
 import { scoreboardInterface } from "../utils/ScoreboardInterface";
 
 export default ({ team, setVisible = () => {} }: { team: 1 | 2; setVisible?: (event?: any) => any }) => {

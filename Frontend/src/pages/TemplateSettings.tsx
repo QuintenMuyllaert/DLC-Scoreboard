@@ -1,14 +1,16 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+
 import BottomTab from "../components/BottomTab";
 import IconButton from "../components/IconButton";
-import { getQuery } from "../utils/Utils";
 import Appstate from "../utils/Appstate";
-import { useNavigate } from "react-router-dom";
 import Input from "../components/Input";
 import Header from "../components/Header";
+import Backarrow from "../components/Backarrow";
+
+import { getQuery } from "../utils/Utils";
 import { scoreboardInterface } from "../utils/ScoreboardInterface";
 import { LooseObject } from "../../../Interfaces/Interfaces";
-import Backarrow from "../components/Backarrow";
 
 export default () => {
 	const { id } = getQuery();

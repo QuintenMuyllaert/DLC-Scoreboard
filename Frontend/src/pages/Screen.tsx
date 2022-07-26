@@ -2,13 +2,13 @@ import { useState } from "react";
 
 import IconButton from "../components/IconButton";
 import BottomTab from "../components/BottomTab";
-
-import { scoreboardInterface } from "../utils/ScoreboardInterface";
 import Appstate from "../utils/Appstate";
 import Header from "../components/Header";
 import TextEdit from "../components/TextEdit";
 import Overlay from "../components/Overlay";
 import Backarrow from "../components/Backarrow";
+
+import { scoreboardInterface } from "../utils/ScoreboardInterface";
 
 export default () => {
 	const [displayOverlayMessage, setDisplayOverlayMessage] = useState(false);

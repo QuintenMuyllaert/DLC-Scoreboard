@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate, Navigate } from "react-router-dom";
+
 import Input from "../components/Input";
 import IconButton from "../components/IconButton";
 import Flag from "../components/Flag";
@@ -8,10 +9,10 @@ import Colorpicker from "../components/Colorpicker";
 import Appstate from "../utils/Appstate";
 import Overlay from "../components/Overlay";
 import Header from "../components/Header";
+import Backarrow from "../components/Backarrow";
 
 import { scoreboardInterface } from "../utils/ScoreboardInterface";
 import { LooseObject } from "../../../Interfaces/Interfaces";
-import Backarrow from "../components/Backarrow";
 
 export default () => {
 	const state = Appstate.getState();

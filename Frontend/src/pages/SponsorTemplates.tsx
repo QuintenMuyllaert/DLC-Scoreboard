@@ -1,11 +1,13 @@
+import { useNavigate } from "react-router-dom";
+
 import Appstate from "../utils/Appstate";
 import BottomTab from "../components/BottomTab";
 import IconButton from "../components/IconButton";
 import SponsorTemplate from "../components/sponsorTemplate";
 import Header from "../components/Header";
-import { useNavigate } from "react-router-dom";
-import { scoreboardInterface } from "../utils/ScoreboardInterface";
 import Backarrow from "../components/Backarrow";
+
+import { scoreboardInterface } from "../utils/ScoreboardInterface";
 
 export default () => {
 	const { sponsors } = Appstate.getState();

@@ -5,15 +5,14 @@ import Header from "../components/Header";
 import Flag from "../components/Flag";
 import Clock from "../components/Clock";
 import Digit from "../components/Digit";
-import IconButton from "../components/IconButton";
 import BottomTab from "../components/BottomTab";
 import Colorpicker from "../components/Colorpicker";
 import ClockEdit from "../components/ClockEdit";
 import Overlay from "../components/Overlay";
-
-import { scoreboardInterface } from "../utils/ScoreboardInterface";
 import Appstate from "../utils/Appstate";
 import Backarrow from "../components/Backarrow";
+
+import { scoreboardInterface } from "../utils/ScoreboardInterface";
 
 export default () => {
 	if (!scoreboardInterface.getSerial()) {

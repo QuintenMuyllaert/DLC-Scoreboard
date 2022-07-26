@@ -1,7 +1,9 @@
 import { useState } from "react";
+
 import IconButton from "./IconButton";
-import { scoreboardInterface } from "../utils/ScoreboardInterface";
 import Appstate from "../utils/Appstate";
+
+import { scoreboardInterface } from "../utils/ScoreboardInterface";
 
 export default ({ setVisible = () => {} }: { setVisible?: (event?: any) => any }) => {
 	const [message, setMessage] = useState(Appstate.getState().scoreboard.message);

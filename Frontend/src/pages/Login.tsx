@@ -1,11 +1,13 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+
 import Input from "../components/Input";
 import Logo from "../components/Logo";
 import IconButton from "../components/IconButton";
+import Api from "../utils/Api";
+
 import { LooseObject } from "../../../Interfaces/Interfaces";
 import { getCookies, getQuery } from "../utils/Utils";
-import Api from "../utils/Api";
 
 export default () => {
 	const { serial } = getQuery();

@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { Navigate, useNavigate } from "react-router-dom";
 
 import Api from "../utils/Api";
+
 import { getQuery } from "../utils/Utils";
 
 export default () => {

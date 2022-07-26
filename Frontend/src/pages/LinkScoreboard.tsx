@@ -3,11 +3,11 @@ import { useState } from "react";
 import Header from "../components/Header";
 import Input from "../components/Input";
 import IconButton from "../components/IconButton";
-
+import Backarrow from "../components/Backarrow";
 import Api from "../utils/Api";
+
 import { getQuery } from "../utils/Utils";
 import { LooseObject, linkData } from "../../../Interfaces/Interfaces";
-import Backarrow from "../components/Backarrow";
 
 export default () => {
 	const { serial } = getQuery();

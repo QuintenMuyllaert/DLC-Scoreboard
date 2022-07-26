@@ -1,15 +1,13 @@
-import { useState, useRef } from "react";
-import { LooseObject } from "../../../Interfaces/Interfaces";
+import { useState } from "react";
+
 import BottomTab from "../components/BottomTab";
-import UserSetting from "../components/UserSetting";
-import IconButton from "../components/IconButton";
-import Logo from "../components/Logo";
 import Input from "../components/Input";
 import Header from "../components/Header";
+import Backarrow from "../components/Backarrow";
+
 import { scoreboardInterface } from "../utils/ScoreboardInterface";
 import { getQuery } from "../utils/Utils";
 import { useNavigate } from "react-router-dom";
-import Backarrow from "../components/Backarrow";
 
 export default () => {
 	const navigate = useNavigate();

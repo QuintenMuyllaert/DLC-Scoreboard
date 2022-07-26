@@ -1,13 +1,13 @@
 import { useState } from "react";
+
 import Input from "../components/Input";
-import Logo from "../components/Logo";
 import IconButton from "../components/IconButton";
-import { LooseObject, registerData } from "../../../Interfaces/Interfaces";
 import Api from "../utils/Api";
-import { getQuery } from "../utils/Utils";
-import Appstate from "../utils/Appstate";
 import Header from "../components/Header";
 import Backarrow from "../components/Backarrow";
+
+import { LooseObject, registerData } from "../../../Interfaces/Interfaces";
+import { getQuery } from "../utils/Utils";
 
 export default () => {
 	const { serial } = getQuery();

@@ -3,12 +3,12 @@ import { useNavigate } from "react-router-dom";
 
 import IconButton from "../components/IconButton";
 import BottomTab from "../components/BottomTab";
-
-import { scheduleData } from "../../../Interfaces/Interfaces";
-import { scoreboardInterface } from "../utils/ScoreboardInterface";
 import Appstate from "../utils/Appstate";
 import Header from "../components/Header";
 import Backarrow from "../components/Backarrow";
+
+import { scheduleData } from "../../../Interfaces/Interfaces";
+import { scoreboardInterface } from "../utils/ScoreboardInterface";
 
 export default () => {
 	const { sponsors, scoreboard } = Appstate.getState();

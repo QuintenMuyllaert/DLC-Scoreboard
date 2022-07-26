@@ -1,13 +1,14 @@
+import { useNavigate } from "react-router-dom";
+
 import Appstate from "../utils/Appstate";
 import BottomTab from "../components/BottomTab";
-import Logo from "../components/Logo";
 import Sponsor from "../components/Sponsor";
 import Header from "../components/Header";
 import IconButton from "../components/IconButton";
-import { getQuery } from "../utils/Utils";
-import { useNavigate } from "react-router-dom";
-import { scoreboardInterface } from "../utils/ScoreboardInterface";
 import Backarrow from "../components/Backarrow";
+
+import { getQuery } from "../utils/Utils";
+import { scoreboardInterface } from "../utils/ScoreboardInterface";
 
 export default () => {
 	const navigate = useNavigate();
