@@ -3,6 +3,10 @@ export interface LooseObject {
   [key: string]: any;
 }
 
+export type FunctionType = (...args: any[]) => any | Promise<any>;
+
+export type HTML = Element | DocumentFragment | JSX.Element;
+
 export type CollectionName = "accounts" | "scoreboards" | "templates" | "jwt" | "HMP" | "permissions";
 
 export interface HMP {

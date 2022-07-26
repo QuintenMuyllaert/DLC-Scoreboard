@@ -5,8 +5,10 @@ import IconButton from "../components/IconButton";
 import BottomTab from "../components/BottomTab";
 import Backarrow from "../components/Backarrow";
 
+import { HTML } from "../../../Interfaces/Interfaces";
+
 export default () => {
-	const [options, setOptions] = useState([]);
+	const [options, setOptions] = useState([] as HTML[]);
 	const [scoreboards, setScoreboards] = useState([]);
 	const [selected, setSelected] = useState("");
 
@@ -53,10 +55,12 @@ export default () => {
 					<div className="c-option">
 						<label htmlFor="selectedTemplate">Scoreboard</label>
 						<select id="selectedTemplate" onChange={onChangeTemplate}>
-							<option value="0" selected>
-								Selecteer een scoreboard
-							</option>
-							{options}
+							<>
+								<option value="0" selected>
+									Selecteer een scoreboard
+								</option>
+								{options}
+							</>
 						</select>
 						<svg
 							xmlns="http://www.w3.org/2000/svg"
