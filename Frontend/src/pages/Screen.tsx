@@ -28,7 +28,7 @@ export default () => {
 
 		let uriList = [];
 		for (const sponsor of selected.children) {
-			const uri = `${document.location.origin}/data/${jwt.serial}/${encodeURIComponent(name)}/${encodeURIComponent(sponsor)}`;
+			const uri = `${document.location.origin}/data/${scoreboardInterface.getSerial()}/${encodeURIComponent(name)}/${encodeURIComponent(sponsor)}`;
 			if (sponsor.endsWith(".json")) {
 				const res = await fetch(uri);
 				const json = await res.json();
