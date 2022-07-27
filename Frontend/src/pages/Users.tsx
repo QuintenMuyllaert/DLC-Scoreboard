@@ -19,7 +19,20 @@ export default () => {
 	const [email, setEmail] = useState("");
 	const [username, setUsername] = useState("");
 
-	const { users } = Appstate.getState();
+	const [users, setUsers] = useState([] as any[]);
+
+	useEffect(() => {
+		(async () => {
+			const users = await Api.getUsers();
+			const userObjects = [];
+			for (const user of users) {
+				userObjects.push(<User username={user.username} />);
+			}
+			setUsers(userObjects);
+		})();
+
+		return () => {};
+	}, []);
 
 	const generatePassword = () => {
 		const a = Math.random();
@@ -70,7 +83,6 @@ export default () => {
 			<div className="p-page p-users">
 				<div className="list scrollbar">{users || []}</div>
 				<div className="grid">
-					<Input id="newUsername" label="Naam" type="text" onChange={(event: React.FormEvent<HTMLInputElement>) => {}} />
 					<IconButton label="Toevoegen" color="white" onClick={() => setAddUserOverlay(true)} />
 				</div>
 			</div>
