@@ -59,6 +59,7 @@ export default async (req: Request, res: Response) => {
 				users: [{ uuid, permissions: ["*"] }],
 			});
 			res.status(201).send("LINK OK");
+			return;
 		}
 
 		console.log("Scoreboard already linked");
