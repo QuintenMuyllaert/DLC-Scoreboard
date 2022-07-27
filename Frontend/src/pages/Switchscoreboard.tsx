@@ -5,10 +5,8 @@ import IconButton from "../components/IconButton";
 import BottomTab from "../components/BottomTab";
 import Backarrow from "../components/Backarrow";
 
-import { HTML } from "../../../Interfaces/Interfaces";
-
 export default () => {
-	const [options, setOptions] = useState([] as HTML[]);
+	const [options, setOptions] = useState([] as JSX.Element[]);
 	const [scoreboards, setScoreboards] = useState([]);
 	const [selected, setSelected] = useState("");
 
@@ -19,7 +17,7 @@ export default () => {
 			const scoreboards = await res.json();
 			setScoreboards(scoreboards);
 
-			const opts = [];
+			const opts: JSX.Element[] = [];
 			for (const scoreboard of scoreboards) {
 				opts.push(<option value={scoreboard.serial}>{scoreboard.name}</option>);
 			}
