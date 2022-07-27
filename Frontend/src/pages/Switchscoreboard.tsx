@@ -17,6 +17,12 @@ export default () => {
 			const scoreboards = await res.json();
 			setScoreboards(scoreboards);
 
+			if (scoreboards.length == 1 && !localStorage.getItem("serial")) {
+				localStorage.setItem("serial", scoreboards[0].serial);
+				document.location.href = "/score";
+				return;
+			}
+
 			const opts: JSX.Element[] = [];
 			for (const scoreboard of scoreboards) {
 				opts.push(<option value={scoreboard.serial}>{scoreboard.name}</option>);
