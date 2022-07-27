@@ -13,7 +13,7 @@ import { scoreboardInterface } from "../utils/ScoreboardInterface";
 export default () => {
 	const [displayOverlayMessage, setDisplayOverlayMessage] = useState(false);
 
-	const { sponsors } = Appstate.getState();
+	const { sponsors, scoreboard } = Appstate.getState();
 	const options = [];
 	for (const sponsor of sponsors) {
 		options.push(<option value={sponsor.name}>{sponsor.name}</option>);
@@ -43,7 +43,7 @@ export default () => {
 
 	return (
 		<>
-			<Header title="Screen" icon={<Backarrow />} />
+			<Header title={scoreboard.name} icon={<Backarrow />} />
 			<div className="p-page p-screen">
 				<div className="c-option">
 					<label htmlFor="selectedTemplate">Sponsor selecteren</label>
