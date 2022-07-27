@@ -16,7 +16,19 @@ export default {
 				return;
 			}
 
-			const [user] = (await database.read("accounts", { uuid: body.uuid })) as unknown as User[];
+			const { email } = req.query;
+			let byEmail = false;
+			if (email) {
+				const exists = await database.exists("accounts", { email });
+				if (!exists) {
+					console.log("Email not found");
+					res.status(404).send("Email not found");
+					return;
+				}
+				byEmail = true;
+			}
+
+			const [user] = (await database.read("accounts", byEmail ? { email } : { uuid: body.uuid })) as unknown as User[];
 			if (!user) {
 				console.log("User does not exist");
 				res.status(401).send("User does not exist");
@@ -37,7 +49,9 @@ export default {
 			}
 
 			const { newUsername, newEmail, newPassword, password } = req.body as unknown as userdataData;
-			console.log(newUsername, newEmail, newPassword, password);
+			if (!password) {
+				return;
+			}
 
 			const [user] = (await database.read("accounts", { uuid: body.uuid })) as unknown as User[];
 			if (!user) {
