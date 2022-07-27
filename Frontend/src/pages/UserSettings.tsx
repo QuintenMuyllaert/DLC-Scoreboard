@@ -46,6 +46,7 @@ export default () => {
 	};
 
 	const onClickLogout = () => {
+		localStorage.removeItem("serial");
 		document.location.href = "/logout";
 	};
 
