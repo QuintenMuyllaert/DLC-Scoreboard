@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Navigate } from "react-router-dom";
 
 import IconButton from "../components/IconButton";
 import BottomTab from "../components/BottomTab";
@@ -11,6 +12,10 @@ import Backarrow from "../components/Backarrow";
 import { scoreboardInterface } from "../utils/ScoreboardInterface";
 
 export default () => {
+	if (!scoreboardInterface.getSerial()) {
+		return <Navigate replace to="/switchscoreboard" />;
+	}
+
 	const [displayOverlayMessage, setDisplayOverlayMessage] = useState(false);
 
 	const { sponsors, scoreboard } = Appstate.getState();

@@ -15,6 +15,10 @@ import { scoreboardInterface } from "../utils/ScoreboardInterface";
 import { LooseObject } from "../../../Interfaces/Interfaces";
 
 export default () => {
+	if (!scoreboardInterface.getSerial()) {
+		return <Navigate replace to="/switchscoreboard" />;
+	}
+
 	const state = Appstate.getState();
 	const scoreboard = state.scoreboard;
 	const templates: LooseObject[] = state.templates;
@@ -45,7 +49,7 @@ export default () => {
 
 	return (
 		<>
-			<Header title="Match setup" icon={<Backarrow />} />
+			<Header title={scoreboard.name} icon={<Backarrow />} />
 			<div className="p-page p-matchsetup">
 				<div className="teamsettings-container">
 					<div className="flagcontainer">
