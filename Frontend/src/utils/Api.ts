@@ -1,4 +1,5 @@
 import { registerData, loginData, linkData, userdataData, PermissionRequest } from "../../../Interfaces/Interfaces";
+import { scoreboardInterface } from "./ScoreboardInterface";
 
 class Api {
 	url: string = document.location.origin;
@@ -90,6 +91,13 @@ class Api {
 			body: JSON.stringify(permissionRequest),
 		});
 		return res;
+	}
+	async getUsers() {
+		const serial = await scoreboardInterface.getSerial();
+		const res = await this.fetch(`getusers?serial=${serial}`, {
+			method: "GET",
+		});
+		return await res.json();
 	}
 }
 
