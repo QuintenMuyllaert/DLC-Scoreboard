@@ -72,9 +72,8 @@ export interface scheduleData {
 export interface registerData {
   username: string;
   password: string;
-  serial: string;
   email: string;
-  name: string;
+  isRandomPassword?: boolean;
 }
 
 export interface userdataData {

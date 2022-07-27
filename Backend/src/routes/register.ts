@@ -6,7 +6,7 @@ import { User, registerData, emailRegex } from "../../../Interfaces/Interfaces";
 
 //register
 export default async (req: Request, res: Response) => {
-	let { username, password, email } = req.body as registerData;
+	let { username, password, email, isRandomPassword } = req.body as registerData;
 
 	if (!username || !password || !email) {
 		console.log("Missing username or password or email");
@@ -34,7 +34,7 @@ export default async (req: Request, res: Response) => {
 		username,
 		password: await hash(password),
 		email,
-		firstLogin: false,
+		firstLogin: isRandomPassword || false,
 	};
 	await database.create("accounts", newUser);
 	res.status(201).send("REGISTER OK");
