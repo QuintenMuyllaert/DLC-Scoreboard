@@ -13,7 +13,7 @@ import { scoreboardInterface } from "../utils/ScoreboardInterface";
 export default () => {
 	const navigate = useNavigate();
 
-	const { sponsors, jwt } = Appstate.getState();
+	const { sponsors } = Appstate.getState();
 
 	const { folder } = getQuery();
 
@@ -21,7 +21,7 @@ export default () => {
 	for (const sponsor of sponsors) {
 		if (sponsor.name === folder) {
 			for (const file of sponsor.children) {
-				const imgUrl = `${document.location.origin}/data/${jwt?.serial}/${folder}/${file}`;
+				const imgUrl = `${document.location.origin}/data/${scoreboardInterface.getSerial()}/${folder}/${file}`;
 
 				sponsorElements.push(
 					<Sponsor
@@ -43,10 +43,6 @@ export default () => {
 
 	const handleClickNewSponsor = async () => {
 		navigate(`/addsponsor?folder=${folder}`);
-	};
-
-	const goToSponsorTemplates = () => {
-		navigate(`/sponsortemplates`);
 	};
 
 	return (
