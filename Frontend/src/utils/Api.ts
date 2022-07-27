@@ -1,4 +1,4 @@
-import { registerData, loginData, linkData, userdataData } from "../../../Interfaces/Interfaces";
+import { registerData, loginData, linkData, userdataData, PermissionRequest } from "../../../Interfaces/Interfaces";
 
 class Api {
 	url: string = document.location.origin;
@@ -60,11 +60,16 @@ class Api {
 			method: "GET",
 		});
 	}
-	async getUserdata() {
-		const res = await this.fetch("userdata", {
+	async getUserdata(email?: string) {
+		const uri = "userdata" + (email ? `?email=${email}` : "");
+		const res = await this.fetch(uri, {
 			method: "GET",
 		});
-		return await res.json();
+		if (res.status === 200) {
+			return await res.json();
+		} else {
+			return await res.text();
+		}
 	}
 	async postUserdata(userdata: userdataData) {
 		const res = await this.fetch("userdata", {
@@ -73,6 +78,16 @@ class Api {
 				"Content-Type": "application/json",
 			},
 			body: JSON.stringify(userdata),
+		});
+		return res;
+	}
+	async permission(permissionRequest: PermissionRequest) {
+		const res = await this.fetch("permission", {
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json",
+			},
+			body: JSON.stringify(permissionRequest),
 		});
 		return res;
 	}
