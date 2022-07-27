@@ -7,102 +7,61 @@ import Input from "../components/Input";
 import User from "../components/User";
 import Header from "../components/Header";
 import Backarrow from "../components/Backarrow";
+import Overlay from "../components/Overlay";
+import Api from "../utils/Api";
 
-import { LooseObject } from "../../../Interfaces/Interfaces";
+import { scoreboardInterface } from "../utils/ScoreboardInterface";
+import { emailRegex, registerData } from "../../../Interfaces/Interfaces";
 
 export default () => {
-	const { scoreboard, users } = Appstate.getState();
-	const state = scoreboard;
+	const [addUserOverlay, setAddUserOverlay] = useState(false);
+	const [existingUser, setExistingUser] = useState(false);
+	const [email, setEmail] = useState("");
+	const [username, setUsername] = useState("");
+
+	const { users } = Appstate.getState();
 
 	const generatePassword = () => {
 		const a = Math.random();
 		const b = a.toString(36).split(".").pop();
-		return b;
+		return b as string;
 	};
 
-	const user: LooseObject = {
-		username: "",
-		password: generatePassword(),
-		serial: state.serial,
-	};
+	const onClickAddUser = async () => {
+		if (!existingUser) {
+			const password = generatePassword();
+			const user: registerData = {
+				email,
+				username,
+				password,
+				isRandomPassword: true,
+			};
 
-	const validation: LooseObject = {
-		message: "",
-		display: false,
-	};
+			await Api.register(user);
 
-	const [newUser, setNewUser] = useState(user);
-	const [validationState, setValidation] = useState(validation);
-	let userList: ReactElement[] = [];
+			const shareData = {
+				title: "DLC Scoreboard - Account",
+				text: `Dag ${username}\nJe kan inloggen met deze gegevens:\nE-mail: ${email}\nWachtwoord: ${password}`,
+				url: `${document.location.origin}/login`,
+			};
 
-	useEffect(() => {
-		fetchUsers();
-	}, []);
-
-	const updateNewUser = (key: any, value: string) => {
-		newUser[key] = value;
-		setNewUser(newUser);
-	};
-
-	const updateValidation = (key: any, value: any) => {
-		validation[key] = value;
-		setValidation(validation);
-	};
-
-	const fetchUsers = async () => {
-		const res = await fetch(`/user?serial=${state.serial}`, { mode: "no-cors", method: "GET" });
-		const json = await res.json();
-		//updateState("users", json);
-
-		for (const userInList of json) {
-			if (userInList.isAdmin == false) {
-				userList.push(<User username={userInList.username} />);
-			}
-		}
-
-		Appstate.updateState("users", userList);
-	};
-
-	const handleClickNewUser = async () => {
-		const p = generatePassword();
-		updateNewUser("password", String(p));
-
-		const res = await fetch(`${document.location.origin}/register`, {
-			method: "POST",
-			mode: "cors",
-			cache: "no-cache",
-			credentials: "same-origin",
-			headers: {
-				"Content-Type": "application/json",
-			},
-			redirect: "follow",
-			referrerPolicy: "no-referrer",
-			body: JSON.stringify(newUser),
-		});
-
-		fetchUsers();
-
-		const message = await res.text();
-		updateValidation("message", message);
-
-		if (res.status >= 400) {
-			updateValidation("display", true);
-		}
-
-		if (res.status < 400) {
-			updateValidation("display", false);
+			console.log(shareData);
 
 			if (navigator.share) {
-				navigator
-					.share({
-						title: "DLC Scoreboard - Account",
-						text: `Log nu in met deze user:\nusername: ${newUser.username}\nwachtwoord: ${newUser.password}`,
-						url: `${document.location.origin}/login`,
-					})
-					.then(() => console.log("Successful share"))
-					.catch((error) => console.log("Error sharing", error));
+				await navigator.share(shareData);
 			}
 		}
+
+		await Api.permission({
+			serial: scoreboardInterface.getSerial(),
+			type: "grant",
+			value: "user",
+			email,
+		});
+
+		setEmail("");
+		setUsername("");
+		setAddUserOverlay(false);
 	};
 
 	return (
@@ -111,18 +70,47 @@ export default () => {
 			<div className="p-page p-users">
 				<div className="list scrollbar">{users || []}</div>
 				<div className="grid">
-					<Input
-						id="newUsername"
-						label="Naam"
-						type="text"
-						onChange={(event: React.FormEvent<HTMLInputElement>) => {
-							updateNewUser("username", event.currentTarget.value);
-						}}
-					/>
-					<IconButton label="Toevoegen" color="white" onClick={handleClickNewUser} />
+					<Input id="newUsername" label="Naam" type="text" onChange={(event: React.FormEvent<HTMLInputElement>) => {}} />
+					<IconButton label="Toevoegen" color="white" onClick={() => setAddUserOverlay(true)} />
 				</div>
 			</div>
 			<BottomTab />
+			<Overlay visible={addUserOverlay} setVisible={setAddUserOverlay}>
+				<div className="c-card">
+					<h1>Gebruiker toevoegen</h1>
+					<Input
+						id="email"
+						label="Email"
+						type="email"
+						inputValue={email}
+						onChange={async (event: any) => {
+							const email = event.target.value.toLowerCase();
+							setEmail(email);
+
+							if (emailRegex.test(email)) {
+								const data = await Api.getUserdata(email);
+								if (data && data.email) {
+									setExistingUser(true);
+									setUsername(data.username);
+								} else {
+									setExistingUser(false);
+								}
+							} else {
+								setExistingUser(false);
+							}
+						}}
+					/>
+					<Input
+						id="username"
+						label="Username"
+						type="text"
+						inputValue={username}
+						disabled={existingUser}
+						onChange={(event: any) => setUsername(event.target.value)}
+					/>
+					<IconButton label="Toevoegen" color="white" onClick={onClickAddUser} />
+				</div>
+			</Overlay>
 		</>
 	);
 };
