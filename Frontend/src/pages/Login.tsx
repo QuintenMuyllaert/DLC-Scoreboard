@@ -44,9 +44,7 @@ export default () => {
 			}
 
 			if (body.firstLogin) {
-				console.log("fistlogin is true --> in if");
-				sessionStorage.setItem("password", state.password);
-				document.location.href = "/changepassword";
+				document.location.href = "/changepassword?password=" + state.password;
 			} else {
 				document.location.href = "/score"; // Socket needs to reconnect after login
 			}
