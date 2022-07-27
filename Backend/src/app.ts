@@ -13,6 +13,7 @@ import logout from "./routes/logout";
 import link from "./routes/link";
 import permission from "./routes/permission";
 import userdata from "./routes/userdata";
+import getusers from "./routes/getusers";
 
 export const dirname = process.cwd();
 export const app = express();
@@ -36,6 +37,7 @@ app.post("/link", link);
 app.post("/permission", permission);
 app.get("/userdata", userdata.get);
 app.post("/userdata", userdata.post);
+app.get("/getusers", getusers);
 
 //DEFINE API ROUTES ABOVE !!!
 
