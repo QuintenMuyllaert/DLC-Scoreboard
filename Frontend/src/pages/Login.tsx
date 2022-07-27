@@ -64,7 +64,7 @@ export default () => {
 				<Input
 					id="email"
 					label="Email"
-					type="text"
+					type="email"
 					onChange={(event: React.FormEvent<HTMLInputElement>) => {
 						updateState("email", event.currentTarget.value);
 					}}

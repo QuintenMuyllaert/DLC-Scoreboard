@@ -76,7 +76,7 @@ export default () => {
 				<h1>Hallo {originalUsername}</h1>
 				<div className="content">
 					<Input label="Username" type="text" inputValue={username} onChange={(event) => setUsername(event.target.value)} />
-					<Input label="Email" type="text" inputValue={email} onChange={(event) => setEmail(event.target.value)} />
+					<Input label="Email" type="email" inputValue={email} onChange={(event) => setEmail(event.target.value)} />
 					<Input label="Nieuw wachtwoord" type="password" onChange={(event) => setNewPassword(event.target.value)} />
 					<Input label="Herhaal nieuw wachtwoord" type="password" onChange={(event) => setNewPasswordConfirm(event.target.value)} />
 					<Input label="Wachtwoord" type="password" onChange={(event) => setPassword(event.target.value)} />
