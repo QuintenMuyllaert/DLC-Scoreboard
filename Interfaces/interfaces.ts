@@ -132,10 +132,10 @@ export type AppStateValues = AppState[AppStateKeys];
 
 export type FlagPlace = `${"h" | "u"}${"b" | "o"}`;
 
-export type Permission = "*" | "Template" | "Schedule" | "Sponsor";
+export type Permission = "*" | "admin" | "user";
 
 export interface UserPermissions {
-  email: string;
+  uuid: string;
   permissions: Permission[];
 }
 
@@ -144,12 +144,10 @@ export interface Permissions {
   users: UserPermissions[];
 }
 
-export type PermissionType = "grant" | "revoke" | "list";
-export type PermissionValue = "*" | "admin" | "user";
-
+export type PermissionType = "grant" | "revoke" | "list" | "addUser" | "removeUser";
 export interface PermissionRequest {
   type: PermissionType;
-  value: PermissionValue;
+  value: Permission;
   email: string;
   serial: string;
 }
