@@ -57,13 +57,13 @@ export const Namespace = class Namespace {
 			//this.emitDisplays("clockData", this.timer.data);
 			this.gotScoreboardFromDB = true;
 		})();
-		/*
+
 		setInterval(() => {
 			if (this.scoreboard.isPlaying) {
 				return;
 			}
 
-			const getMinutes = (date): string => {
+			const getMinutes = (date: Date): number => {
 				const hours = date.getHours();
 				const minutes = date.getMinutes();
 				return hours * 60 + minutes;
@@ -84,7 +84,6 @@ export const Namespace = class Namespace {
 				this.updateScoreboard(this.scoreboard);
 			}
 		}, 1000);
-		*/
 	}
 	emitDisplays = (event: string, ...args: any[]) => {
 		console.log("emitDisplays", event /*, args*/);

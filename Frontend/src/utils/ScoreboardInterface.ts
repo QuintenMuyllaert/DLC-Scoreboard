@@ -198,6 +198,7 @@ export class InterfaceSocket {
 		//Screen to scoreboard
 		this.socket.emit("input", "match", true);
 
+		scoreboardInterface.enableDisplay(true);
 		scoreboardInterface.resetScore();
 		scoreboardInterface.pauseTimer();
 		scoreboardInterface.resetTimer();
