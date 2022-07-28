@@ -133,6 +133,7 @@ export type AppStateValues = AppState[AppStateKeys];
 export type FlagPlace = `${"h" | "u"}${"b" | "o"}`;
 
 export type Permission = "*" | "admin" | "user";
+export const permissionList: Permission[] = ["*", "admin", "user"];
 
 export interface UserPermissions {
   uuid: string;
