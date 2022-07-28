@@ -101,4 +101,8 @@ class Api {
 	}
 }
 
-export default new Api(document.location.origin);
+const api = new Api(document.location.origin);
+export default api;
+
+//@ts-ignore
+document.Api = api;
