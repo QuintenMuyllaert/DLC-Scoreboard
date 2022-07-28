@@ -1,11 +1,10 @@
-import { useState, useRef } from "react";
-import { LooseObject } from "../../../Interfaces/interfaces";
+import { useState } from "react";
+
 import BottomTab from "../components/BottomTab";
-import UserSetting from "../components/UserSetting";
-import IconButton from "../components/IconButton";
-import Logo from "../components/Logo";
 import Input from "../components/Input";
 import Header from "../components/Header";
+import Backarrow from "../components/Backarrow";
+
 import { scoreboardInterface } from "../utils/ScoreboardInterface";
 import { getQuery } from "../utils/Utils";
 import { useNavigate } from "react-router-dom";
@@ -44,7 +43,7 @@ export default () => {
 
 	return (
 		<>
-			<Header title="Add sponsor" />
+			<Header title="Add sponsor" icon={<Backarrow />} />
 			<div className="p-page p-addSponsor">
 				<div className="c-addSponsor__tekst">
 					<p>

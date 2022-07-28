@@ -1,8 +1,11 @@
 import { useState } from "react";
+
 import BottomTab from "../components/BottomTab";
 import IconButton from "../components/IconButton";
 import Input from "../components/Input";
 import Header from "../components/Header";
+import Backarrow from "../components/Backarrow";
+
 import { scoreboardInterface } from "../utils/ScoreboardInterface";
 import { useNavigate } from "react-router-dom";
 
@@ -22,7 +25,7 @@ export default () => {
 
 	return (
 		<>
-			<Header title="Sponsorbundel toevoegen" />
+			<Header title="Sponsorbundel toevoegen" icon={<Backarrow />} />
 			<div className="p-page p-addSponsor">
 				<Input
 					id="naamBundel"

@@ -1,0 +1,20 @@
+.p-appsettings {
+	align-self: center;
+	height: fit-content;
+	display: flex;
+	flex-direction: column;
+
+	.setting {
+		display: flex;
+		justify-content: space-between;
+		width: 100%;
+		> * {
+			width: fit-content;
+		}
+	}
+
+	.setting + .setting {
+		border-top: 1px solid #ccc;
+		padding-top: 1rem;
+	}
+}

@@ -1,0 +1,19 @@
+{
+  "name": "serverlessfunction",
+  "version": "1.0.0",
+  "description": "Serverless function",
+  "scripts": {
+    "copymodules": "bash copymodules.sh",
+    "test": "npm run copymodules && jest --coverage --runInBand --forceExit --verbose false --silent",
+    "deploy-unsafe": "doctl serverless deploy .",
+    "deploy": "npm run test && npm run deploy-unsafe"
+  },
+  "devDependencies": {
+    "jest": "^27.5.1"
+  },
+  "dependencies": {
+    "@socket.io/redis-emitter": "^4.1.1",
+    "jsonwebtoken": "^8.5.1",
+    "redis": "^4.2.0"
+  }
+}

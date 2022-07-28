@@ -1,0 +1,13 @@
+packages:
+  - name: dlcscoreboard
+    actions:
+      - name: readtest
+        runtime: "nodejs:default"
+      - name: auth
+        runtime: "nodejs:default"
+environment:
+  TOKEN_SECRET: ${TOKEN_SECRET}
+  MONGO_CONNECTION: ${MONGO_CONNECTION}
+  REDIS_CONNECTION: ${REDIS_CONNECTION}
+  SPACES_ACCESS_KEY_ID: ${SPACES_ACCESS_KEY_ID}
+  SPACES_SECRET_ACCESS_KEY: ${SPACES_SECRET_ACCESS_KEY}

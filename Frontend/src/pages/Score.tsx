@@ -1,26 +1,29 @@
 import { useState } from "react";
 import { Navigate } from "react-router-dom";
 
+import Header from "../components/Header";
 import Flag from "../components/Flag";
 import Clock from "../components/Clock";
 import Digit from "../components/Digit";
-import IconButton from "../components/IconButton";
 import BottomTab from "../components/BottomTab";
 import Colorpicker from "../components/Colorpicker";
-import TextEdit from "../components/TextEdit";
 import ClockEdit from "../components/ClockEdit";
 import Overlay from "../components/Overlay";
+import Appstate from "../utils/Appstate";
+import Backarrow from "../components/Backarrow";
 
 import { scoreboardInterface } from "../utils/ScoreboardInterface";
-import Appstate from "../utils/Appstate";
 
 export default () => {
+	if (!scoreboardInterface.getSerial()) {
+		return <Navigate replace to="/switchscoreboard" />;
+	}
+
 	const scoreboard = Appstate.getState().scoreboard;
 	if (!scoreboard.isPlaying) {
 		return <Navigate to={`/matchsetup`} />;
 	}
 	const [displayOverlayClock, setDisplayOverlayClock] = useState(false);
-	const [displayOverlayMessage, setDisplayOverlayMessage] = useState(false);
 	const [displayOverlayColorpickerT, setDisplayOverlayColorpickerT] = useState(false);
 	const [displayOverlayColorpickerU, setDisplayOverlayColorpickerU] = useState(false);
 
@@ -36,6 +39,7 @@ export default () => {
 
 	return (
 		<>
+			<Header title={scoreboard.name} icon={<Backarrow />} />
 			<div className="p-page p-score">
 				<Clock onClick={() => setDisplayOverlayClock(true)}></Clock>
 				<div className="container">
@@ -71,31 +75,9 @@ export default () => {
 						}}
 					/>
 				</div>
-				<div className="p-score__textedit">
-					<IconButton
-						icon={
-							<svg
-								xmlns="http://www.w3.org/2000/svg"
-								width="24"
-								height="24"
-								viewBox="0 0 24 24"
-								fill="none"
-								strokeWidth="2"
-								strokeLinecap="round"
-								strokeLinejoin="round">
-								<path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
-							</svg>
-						}
-						color="white"
-						label="WIJZIG BERICHT"
-						onClick={() => setDisplayOverlayMessage(true)}></IconButton>
-				</div>
 			</div>
 			<Overlay visible={displayOverlayClock} setVisible={setDisplayOverlayClock}>
 				<ClockEdit setVisible={setDisplayOverlayClock} />
-			</Overlay>
-			<Overlay visible={displayOverlayMessage} setVisible={setDisplayOverlayMessage}>
-				<TextEdit setVisible={setDisplayOverlayMessage} />
 			</Overlay>
 			<Overlay visible={displayOverlayColorpickerT} setVisible={setDisplayOverlayColorpickerT}>
 				<Colorpicker team={1} setVisible={setDisplayOverlayColorpickerT} />

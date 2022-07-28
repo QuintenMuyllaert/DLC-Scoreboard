@@ -1,4 +1,4 @@
-import { ReactEventHandler, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
 import Clock from "../components/Clock";
 import Flag from "../components/Flag";
@@ -20,16 +20,14 @@ export default () => {
 			sponsorIndex++;
 			const state = Appstate.getState().scoreboard;
 			const sponsor = state.sponsors[sponsorIndex % state.sponsors.length];
-			if (lastSponsor == sponsor) {
+			if (lastSponsor == sponsor && state.display) {
 				return;
 			}
 
 			let script = `$('#layers').empty();`;
 			if (!state.display) {
-				return;
-			}
-
-			if (!sponsor?.includes?.(document.location.origin) || sponsor.match(/[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}/)) {
+				//do nothing
+			} else if (!sponsor?.includes?.(document.location.origin) || sponsor.match(/[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}/)) {
 				script += `
 					var layers = [
 						{

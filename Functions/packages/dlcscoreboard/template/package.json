@@ -1,0 +1,19 @@
+{
+  "name": "serverlessfunction",
+  "version": "1.0.0",
+  "description": "Serverless function",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest --coverage --runInBand --forceExit --verbose false"
+  },
+  "devDependencies": {
+    "jest": "^27.5.1"
+  },
+  "dependencies": {
+    "@socket.io/redis-emitter": "^4.1.1",
+    "bcryptjs": "^2.4.3",
+    "dotenv": "^16.0.1",
+    "mongodb": "^4.8.0",
+    "redis": "^4.2.0"
+  }
+}

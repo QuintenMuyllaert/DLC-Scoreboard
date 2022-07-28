@@ -1,9 +1,12 @@
+import { useNavigate } from "react-router-dom";
+
 import Appstate from "../utils/Appstate";
 import BottomTab from "../components/BottomTab";
 import IconButton from "../components/IconButton";
 import SponsorTemplate from "../components/sponsorTemplate";
 import Header from "../components/Header";
-import { useNavigate } from "react-router-dom";
+import Backarrow from "../components/Backarrow";
+
 import { scoreboardInterface } from "../utils/ScoreboardInterface";
 
 export default () => {
@@ -32,7 +35,7 @@ export default () => {
 
 	return (
 		<>
-			<Header title="Sponsorbundels" />
+			<Header title="Sponsorbundels" icon={<Backarrow />} />
 			<div className="p-page p-sponsorTemplates">
 				<div className="list">{sponsorBundleElements}</div>
 				<IconButton

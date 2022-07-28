@@ -1,77 +1,53 @@
-import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useState, useEffect } from "react";
+
 import Input from "../components/Input";
-import Logo from "../components/Logo";
 import IconButton from "../components/IconButton";
-import { LooseObject } from "../../../Interfaces/interfaces";
+import Api from "../utils/Api";
+
+import { getQuery } from "../utils/Utils";
 
 export default () => {
-	const localState: LooseObject = {
-		currentUsername: "",
-		oldPassword: "",
-		password: "",
-		checkPassword: "",
-	};
+	const [newPassword, setNewPassword] = useState("");
+	const [newPasswordConfirm, setNewPasswordConfirm] = useState("");
+	const [username, setUsername] = useState("");
+	const [email, setEmail] = useState("");
 
-	const [state, setState] = useState(localState);
-	const navigate = useNavigate();
-
-	const fetchStatus = async () => {
-		const res = await fetch(`/status`, { mode: "no-cors", method: "GET" });
-		const json = await res.json();
-		updateState("currentUsername", json.username);
-	};
+	const { password } = getQuery();
 
 	useEffect(() => {
-		fetchStatus();
+		(async () => {
+			const user = await Api.getUserdata();
+			setUsername(user.username);
+			setEmail(user.email);
+		})();
+
+		return () => {};
 	}, []);
 
-	const updateState = (key: string, value: any) => {
-		state[key] = value;
-		setState({ ...state });
-	};
-
-	const onChangePassword = async () => {
-		updateState("oldPassword", sessionStorage.getItem("password"));
-
-		if (state.password == state.checkPassword) {
-			const res = await fetch(`/changepassword`, {
-				method: "PUT",
-				mode: "cors",
-				cache: "no-cache",
-				credentials: "same-origin",
-				headers: {
-					"Content-Type": "application/json",
-				},
-				redirect: "follow",
-				referrerPolicy: "no-referrer",
-				body: JSON.stringify({ currentPassword: state.oldPassword, newPassword: state.password }),
-			});
-
-			await res.json;
-
-			console.log("changed password: ", state.password);
-			const res2 = await fetch(`/auth`, {
-				method: "POST",
-				mode: "cors",
-				cache: "no-cache",
-				credentials: "same-origin",
-				headers: {
-					"Content-Type": "application/json",
-				},
-				redirect: "follow",
-				referrerPolicy: "no-referrer",
-				body: JSON.stringify({ username: state.currentUsername, password: state.password }),
-			});
-
-			await res2.json;
-
-			sessionStorage.setItem("password", "");
-
-			navigate("/score");
-		} else {
-			console.log("password and confirm password are not the same");
+	const onClickSave = async () => {
+		if (newPassword !== newPasswordConfirm) {
+			setNewPassword("");
+			setNewPasswordConfirm("");
+			return;
 		}
+
+		if (!newPassword) {
+			return;
+		}
+
+		const res = await Api.postUserdata({
+			newUsername: "",
+			newEmail: "",
+			newPassword,
+			password,
+		});
+
+		const res2 = await Api.login({
+			email,
+			password: newPassword,
+		});
+
+		document.location.href = "/";
 	};
 
 	return (
@@ -79,7 +55,7 @@ export default () => {
 			<div className="content">
 				<div className="u-grid-vertical-gap">
 					<div className="text">
-						<h1>Welkom {state.currentUsername}!</h1>
+						<h1>Welkom {username}!</h1>
 						<p>Kies hier je nieuwe wachtwoord</p>
 					</div>
 
@@ -88,7 +64,7 @@ export default () => {
 						label="wachtwoord"
 						type="password"
 						onChange={(event: React.FormEvent<HTMLInputElement>) => {
-							updateState("password", event.currentTarget.value);
+							setNewPassword(event.currentTarget.value);
 						}}
 					/>
 					<Input
@@ -96,7 +72,7 @@ export default () => {
 						label="bevestig wachtwoord"
 						type="password"
 						onChange={(event: React.FormEvent<HTMLInputElement>) => {
-							updateState("checkPassword", event.currentTarget.value);
+							setNewPasswordConfirm(event.currentTarget.value);
 						}}
 					/>
 				</div>
@@ -120,7 +96,7 @@ export default () => {
 						}
 						label="BEVESTIGEN"
 						color="white"
-						onClick={onChangePassword}
+						onClick={onClickSave}
 					/>
 				</div>
 			</div>

@@ -1,5 +1,6 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+
 import Appstate from "../utils/Appstate";
 
 export default () => {
@@ -65,11 +66,9 @@ export default () => {
 	];
 
 	useEffect(() => {
-		console.log("hello bottomtab");
 		Appstate.updateState("bottomtab", "withbottom-tab");
 
 		return () => {
-			console.log("woosh bottomtab");
 			Appstate.updateState("bottomtab", "");
 		};
 	}, []);

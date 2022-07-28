@@ -1,4 +1,5 @@
 import { Navigate } from "react-router-dom";
+
 import { getCookies } from "../utils/Utils";
 
 export default ({ element }: { element: any }) => {

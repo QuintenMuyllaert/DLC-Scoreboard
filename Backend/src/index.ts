@@ -1,4 +1,8 @@
 "use-strict";
+console.log(`###########################################`);
+console.log(`##### Starting DLC-SCOREBOARD-BACKEND #####`);
+console.log(`###########################################`);
+
 import dotenv from "dotenv";
 import http from "http";
 import path from "path";

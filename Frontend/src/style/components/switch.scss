@@ -2,7 +2,7 @@
 	position: relative;
 	display: grid;
 	grid-template-rows: auto 1fr;
-	width: 100%;
+	width: fit-content;
 	height: fit-content;
 	--ballsize: 1.5rem;
 	--padding: 0.25rem;

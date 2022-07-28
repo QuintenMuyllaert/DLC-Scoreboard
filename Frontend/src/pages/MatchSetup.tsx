@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate, Navigate } from "react-router-dom";
+
 import Input from "../components/Input";
 import IconButton from "../components/IconButton";
 import Flag from "../components/Flag";
@@ -8,11 +9,16 @@ import Colorpicker from "../components/Colorpicker";
 import Appstate from "../utils/Appstate";
 import Overlay from "../components/Overlay";
 import Header from "../components/Header";
+import Backarrow from "../components/Backarrow";
 
 import { scoreboardInterface } from "../utils/ScoreboardInterface";
-import { LooseObject } from "../../../Interfaces/interfaces";
+import { LooseObject } from "../../../Interfaces/Interfaces";
 
 export default () => {
+	if (!scoreboardInterface.getSerial()) {
+		return <Navigate replace to="/switchscoreboard" />;
+	}
+
 	const state = Appstate.getState();
 	const scoreboard = state.scoreboard;
 	const templates: LooseObject[] = state.templates;
@@ -43,7 +49,7 @@ export default () => {
 
 	return (
 		<>
-			<Header title="Match setup" />
+			<Header title={scoreboard.name} icon={<Backarrow />} />
 			<div className="p-page p-matchsetup">
 				<div className="teamsettings-container">
 					<div className="flagcontainer">

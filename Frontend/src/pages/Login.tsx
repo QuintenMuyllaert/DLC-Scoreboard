@@ -1,12 +1,18 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+
 import Input from "../components/Input";
 import Logo from "../components/Logo";
 import IconButton from "../components/IconButton";
-import { LooseObject } from "../../../Interfaces/interfaces";
-import { getCookies } from "../utils/Utils";
+import Api from "../utils/Api";
+
+import { LooseObject } from "../../../Interfaces/Interfaces";
+import { getCookies, getQuery } from "../utils/Utils";
 
 export default () => {
+	const { serial } = getQuery();
+	const queryString = serial ? "?serial=" + serial : "";
+
 	const navigate = useNavigate();
 	const cookie = getCookies();
 	if (cookie.auth && cookie.auth === true) {
@@ -14,7 +20,7 @@ export default () => {
 	}
 
 	const defaultState: LooseObject = {
-		username: "",
+		email: "",
 		password: "",
 	};
 
@@ -26,27 +32,19 @@ export default () => {
 	};
 
 	const sendAuthRequest = async () => {
-		const res = await fetch(`/auth`, {
-			method: "POST",
-			mode: "cors",
-			cache: "no-cache",
-			credentials: "same-origin",
-			headers: {
-				"Content-Type": "application/json",
-			},
-			redirect: "follow",
-			referrerPolicy: "no-referrer",
-			body: JSON.stringify(state),
-		});
+		const res = await Api.login({ email: state.email, password: state.password });
 
 		const body = await res.json();
 		console.log(body);
 
 		if (body.status == "OK") {
+			if (serial) {
+				navigate("/linkscoreboard" + queryString);
+				return;
+			}
+
 			if (body.firstLogin) {
-				console.log("fistlogin is true --> in if");
-				sessionStorage.setItem("password", state.password);
-				document.location.href = "/changepassword";
+				document.location.href = "/changepassword?password=" + state.password;
 			} else {
 				document.location.href = "/score"; // Socket needs to reconnect after login
 			}
@@ -64,16 +62,16 @@ export default () => {
 
 			<div className="p-login-maxwidth">
 				<Input
-					id="username"
-					label="username"
-					type="text"
+					id="email"
+					label="Email"
+					type="email"
 					onChange={(event: React.FormEvent<HTMLInputElement>) => {
-						updateState("username", event.currentTarget.value);
+						updateState("email", event.currentTarget.value);
 					}}
 				/>
 				<Input
 					id="password"
-					label="wachtwoord"
+					label="Wachtwoord"
 					type="password"
 					onChange={(event: React.FormEvent<HTMLInputElement>) => {
 						updateState("password", event.currentTarget.value);
@@ -138,10 +136,10 @@ export default () => {
 							<line x1="5" y1="12" x2="19" y2="12"></line>
 						</svg>
 					}
-					label="NIEUW"
+					label="REGISTREREN"
 					color="black"
 					onClick={() => {
-						navigate("/manual");
+						navigate("/register" + queryString);
 					}}
 				/>
 			</div>

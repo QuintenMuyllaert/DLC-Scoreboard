@@ -1,5 +1,5 @@
 import { io } from "socket.io-client";
-import { AppStateKeys, clockData, FlagPlace, HMP } from "../../../Interfaces/interfaces";
+import { AppStateKeys, HMP, scheduleData } from "../../../Interfaces/Interfaces";
 
 import { getQuery } from "../utils/Utils";
 import Appstate from "./Appstate";
@@ -10,6 +10,9 @@ export class InterfaceScoreboard {
 	uri: string;
 	constructor(uri: string) {
 		this.uri = uri;
+	}
+	getSerial() {
+		return "";
 	}
 	changeColor(team: `${1 | 2}${"B" | "O"}`, color: string) {}
 	resetScore() {}
@@ -32,6 +35,7 @@ export class InterfaceScoreboard {
 	updateColorArray(colorArray: string[]) {}
 	startMatch(halfs: number, halfLength: number) {}
 	stopMatch() {}
+	setSchedule(data: scheduleData) {}
 	emit(event: string, ...args: any[]) {}
 }
 
@@ -81,6 +85,30 @@ export class InterfaceSocket {
 			console.log("Appstate", key, value);
 			Appstate.updateState(key, value);
 		});
+
+		(async () => {
+			const serial = localStorage.getItem("serial");
+			if (serial) {
+				this.socket.emit("join", serial);
+				return;
+			}
+
+			const res = await fetch("/scoreboards");
+			const scoreboards = await res.json();
+
+			if (scoreboards.length == 1) {
+				localStorage.setItem("serial", scoreboards[0].serial);
+				console.log("join", scoreboards[0].serial);
+				this.socket.emit("join", scoreboards[0].serial);
+				return;
+			}
+
+			console.log("scoreboards", scoreboards);
+			console.log("You control multiple scoreboards NYI");
+		})();
+	}
+	getSerial() {
+		return localStorage.getItem("serial") || "";
 	}
 	emit(event: string, ...args: any[]) {
 		console.log("emit", event, ...args);
@@ -162,15 +190,19 @@ export class InterfaceSocket {
 	enableDisplay(enable: boolean) {
 		this.socket.emit("input", "enableDisplay", enable);
 	}
+	setSchedule(data: scheduleData) {
+		this.socket.emit("input", "schedule", data);
+	}
 	async startMatch(halfs: number = 0, halfLength: number = 0) {
 		console.log("startMatch");
 		//Screen to scoreboard
 		this.socket.emit("input", "match", true);
 
+		scoreboardInterface.enableDisplay(true);
 		scoreboardInterface.resetScore();
 		scoreboardInterface.pauseTimer();
 		scoreboardInterface.resetTimer();
-		scoreboardInterface.setRealTime(false);
+		scoreboardInterface.setRealTime(true);
 
 		if (halfs && halfLength) {
 			for (let i = 1; i <= halfs; i++) {

@@ -1,9 +1,10 @@
+import { useState, useRef, useEffect } from "react";
+
 import IconButton from "./IconButton";
 import Appstate from "../utils/Appstate";
+
 import { scoreboardInterface } from "../utils/ScoreboardInterface";
 import { calculateClockData, to2digits } from "../utils/Utils";
-
-import { useState, useRef, useEffect } from "react";
 
 export default ({ setVisible = () => {} }: { setVisible?: (event?: any) => any }) => {
 	const scoreboard = Appstate.getState().scoreboard;
@@ -29,6 +30,7 @@ export default ({ setVisible = () => {} }: { setVisible?: (event?: any) => any }
 	};
 
 	const onClickPause = () => {
+		scoreboardInterface.setRealTime(false);
 		scoreboard.clockData.paused ? scoreboardInterface.resumeTimer() : scoreboardInterface.pauseTimer();
 	};
 

@@ -1,17 +1,19 @@
+import { useNavigate } from "react-router-dom";
+
 import Appstate from "../utils/Appstate";
 import BottomTab from "../components/BottomTab";
-import Logo from "../components/Logo";
 import Sponsor from "../components/Sponsor";
 import Header from "../components/Header";
 import IconButton from "../components/IconButton";
+import Backarrow from "../components/Backarrow";
+
 import { getQuery } from "../utils/Utils";
-import { useNavigate } from "react-router-dom";
 import { scoreboardInterface } from "../utils/ScoreboardInterface";
 
 export default () => {
 	const navigate = useNavigate();
 
-	const { sponsors, jwt } = Appstate.getState();
+	const { sponsors } = Appstate.getState();
 
 	const { folder } = getQuery();
 
@@ -19,7 +21,7 @@ export default () => {
 	for (const sponsor of sponsors) {
 		if (sponsor.name === folder) {
 			for (const file of sponsor.children) {
-				const imgUrl = `${document.location.origin}/data/${jwt?.serial}/${folder}/${file}`;
+				const imgUrl = `${document.location.origin}/data/${scoreboardInterface.getSerial()}/${folder}/${file}`;
 
 				sponsorElements.push(
 					<Sponsor
@@ -43,13 +45,9 @@ export default () => {
 		navigate(`/addsponsor?folder=${folder}`);
 	};
 
-	const goToSponsorTemplates = () => {
-		navigate(`/sponsortemplates`);
-	};
-
 	return (
 		<>
-			<Header title={`"${folder}"`} />
+			<Header title={`"${folder}"`} icon={<Backarrow />} />
 			<div className="p-page p-sponsors">
 				<div className="list">{sponsorElements}</div>
 				<IconButton

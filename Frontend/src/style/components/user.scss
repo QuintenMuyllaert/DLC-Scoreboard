@@ -1,6 +1,10 @@
 .c-user {
 	grid-template-columns: 1fr auto;
-	div {
+	padding: 0;
+	padding-right: 1rem;
+	align-items: center;
+	button {
+		padding: 1rem;
 		overflow: hidden;
 	}
 }

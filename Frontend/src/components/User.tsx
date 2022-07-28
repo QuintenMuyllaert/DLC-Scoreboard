@@ -1,32 +1,23 @@
-import Appstate from "../utils/Appstate";
+import Api from "../utils/Api";
 
-export default ({ username }: { username: string }) => {
-	const state = Appstate.getState().scoreboard;
-	const requestBody = {
-		username: username,
-		serial: state.serial,
-	};
+import { scoreboardInterface } from "../utils/ScoreboardInterface";
+import { FunctionType } from "../../../Interfaces/Interfaces";
+
+export default ({ username, email, onClickEdit }: { username: string; email: string; onClickEdit: FunctionType }) => {
+	const serial = scoreboardInterface.getSerial();
 
 	const handleClickDeleteUser = async () => {
-		const res = await fetch(`${document.location.origin}/user`, {
-			method: "DELETE",
-			mode: "cors",
-			cache: "no-cache",
-			credentials: "same-origin",
-			headers: {
-				"Content-Type": "application/json",
-			},
-			redirect: "follow",
-			referrerPolicy: "no-referrer",
-			body: JSON.stringify(requestBody),
-		});
+		const res = await Api.permission({ type: "removeUser", value: "user", email, serial });
+		if (res) {
+			document.location.reload();
+		}
 	};
 
 	return (
 		<article className="c-template c-user">
-			<div>
+			<button onClick={onClickEdit}>
 				<p>{username}</p>
-			</div>
+			</button>
 			<svg
 				onClick={handleClickDeleteUser}
 				className="icon"

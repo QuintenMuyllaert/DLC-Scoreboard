@@ -1,3 +1,5 @@
+import QRCode from "qrcode";
+
 import database from "./database";
 import { Timer } from "./timer";
 import { Scoreboard, defaultScoreboard, LooseObject, HMP } from "../../Interfaces/Interfaces";
@@ -42,6 +44,11 @@ export const Namespace = class Namespace {
 				this.scoreboard = { ...this.scoreboard, ...scoreboardRecord };
 			} else {
 				console.log("Scoreboard not found, creating new scoreboard", serial);
+
+				const uri = await QRCode.toDataURL(`https://dlcscoreboard.computernetwork.be/qrlink?serial=${serial}`);
+				await outputFile(uri, `./www/${serial}/qr.png`);
+				this.scoreboard.sponsors = [`https://dlcscoreboard.computernetwork.be/data/${serial}/qr.png`];
+				this.scoreboard.message += serial;
 				await database.create("scoreboards", { ...this.scoreboard, serial });
 			}
 
@@ -50,6 +57,33 @@ export const Namespace = class Namespace {
 			//this.emitDisplays("clockData", this.timer.data);
 			this.gotScoreboardFromDB = true;
 		})();
+
+		setInterval(() => {
+			if (this.scoreboard.isPlaying) {
+				return;
+			}
+
+			const getMinutes = (date: Date): number => {
+				const hours = date.getHours();
+				const minutes = date.getMinutes();
+				return hours * 60 + minutes;
+			};
+
+			const now = new Date(Date.now());
+			const nowMinutes = getMinutes(now);
+
+			if (this.scoreboard.scheduleData.startTime <= nowMinutes && nowMinutes < this.scoreboard.scheduleData.endTime) {
+				console.log("Showing reel");
+				this.scoreboard.display = true;
+				this.scoreboard.sponsors = this.scoreboard.scheduleData.sponsors;
+				this.scoreboard.fullscreen = true;
+				this.updateScoreboard(this.scoreboard);
+			} else {
+				console.log("Turning off");
+				this.scoreboard.display = false;
+				this.updateScoreboard(this.scoreboard);
+			}
+		}, 1000);
 	}
 	emitDisplays = (event: string, ...args: any[]) => {
 		console.log("emitDisplays", event /*, args*/);
@@ -110,6 +144,10 @@ export const Namespace = class Namespace {
 		}
 
 		console.log("Added user to namespace", this.serial);
+
+		//TODO : Do this cleaner..
+		await this.refetchScoreboard();
+
 		socket.emit("Appstate", "scoreboard", this.scoreboard);
 		socket.emit("Appstate", "jwt", socket.body);
 		socket.emit("Appstate", "sponsors", this.readSponsorTree());
@@ -315,6 +353,10 @@ export const Namespace = class Namespace {
 					this.scoreboard.sponsors = value;
 					break;
 				}
+				case "schedule": {
+					this.scoreboard.scheduleData = value;
+					break;
+				}
 				default: {
 					console.log("No type");
 					break;
@@ -360,5 +402,19 @@ export const Namespace = class Namespace {
 			}
 		}
 		return tree;
+	}
+	async refetchScoreboard() {
+		const exists = await database.exists("scoreboards", { serial: this.serial });
+		if (exists) {
+			console.log("Existing scoreboard found", this.serial);
+			const [scoreboardRecord] = await database.read("scoreboards", { serial: this.serial });
+
+			//@ts-ignore
+			this.scoreboard = { ...this.scoreboard, ...scoreboardRecord };
+		} else {
+			console.log("No scoreboard found, this should not be possible");
+		}
+
+		this.updateScoreboard(this.scoreboard);
 	}
 };
