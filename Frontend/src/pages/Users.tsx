@@ -107,7 +107,7 @@ export default () => {
 	const sliders: any[] = [];
 	for (const permission of permissionList) {
 		sliders.push(
-			<div className="c-setting">
+			<div className="setting">
 				<label htmlFor={permission}>{permission}</label>
 				<Switch
 					id={permission}
@@ -134,23 +134,26 @@ export default () => {
 			</div>
 			<BottomTab />
 			<Overlay visible={addUserOverlay} setVisible={setAddUserOverlay}>
-				<div className="c-card">
-					<button className="close" onClick={() => setAddUserOverlay(false)}>
-						<svg
-							xmlns="http://www.w3.org/2000/svg"
-							width="24"
-							height="24"
-							viewBox="0 0 24 24"
-							fill="none"
-							stroke="currentColor"
-							strokeWidth="3"
-							strokeLinecap="round"
-							strokeLinejoin="round">
-							<line x1="18" y1="6" x2="6" y2="18"></line>
-							<line x1="6" y1="6" x2="18" y2="18"></line>
-						</svg>
-					</button>
-					<h1>Gebruiker toevoegen</h1>
+				<div className="c-card c-useroverlay new">
+					<header>
+						<button className="close" onClick={() => setAddUserOverlay(false)}>
+							<svg
+								xmlns="http://www.w3.org/2000/svg"
+								width="24"
+								height="24"
+								viewBox="0 0 24 24"
+								fill="none"
+								stroke="currentColor"
+								strokeWidth="3"
+								strokeLinecap="round"
+								strokeLinejoin="round">
+								<line x1="18" y1="6" x2="6" y2="18"></line>
+								<line x1="6" y1="6" x2="18" y2="18"></line>
+							</svg>
+						</button>
+						<h1>Gebruiker toevoegen</h1>
+						<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"></svg>
+					</header>
 					<Input
 						id="email"
 						label="Email"
@@ -185,24 +188,27 @@ export default () => {
 				</div>
 			</Overlay>
 			<Overlay visible={editUserOverlay} setVisible={setEditUserOverlay}>
-				<div className="c-card">
-					<button className="close" onClick={() => setEditUserOverlay(false)}>
-						<svg
-							xmlns="http://www.w3.org/2000/svg"
-							width="24"
-							height="24"
-							viewBox="0 0 24 24"
-							fill="none"
-							stroke="currentColor"
-							strokeWidth="3"
-							strokeLinecap="round"
-							strokeLinejoin="round">
-							<line x1="18" y1="6" x2="6" y2="18"></line>
-							<line x1="6" y1="6" x2="18" y2="18"></line>
-						</svg>
-					</button>
-					<h1>{userPermissionData.username}</h1>
-					<div>{sliders}</div>
+				<div className="c-card c-useroverlay edit">
+					<header>
+						<button className="close" onClick={() => setEditUserOverlay(false)}>
+							<svg
+								xmlns="http://www.w3.org/2000/svg"
+								width="24"
+								height="24"
+								viewBox="0 0 24 24"
+								fill="none"
+								stroke="currentColor"
+								strokeWidth="3"
+								strokeLinecap="round"
+								strokeLinejoin="round">
+								<line x1="18" y1="6" x2="6" y2="18"></line>
+								<line x1="6" y1="6" x2="18" y2="18"></line>
+							</svg>
+						</button>
+						<h1>{userPermissionData.username}</h1>
+						<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"></svg>
+					</header>
+					<main>{sliders}</main>
 					<IconButton
 						label="Opslaan"
 						color="white"

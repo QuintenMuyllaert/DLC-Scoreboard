@@ -13,17 +13,58 @@
 	}
 }
 
-.c-setting {
-	display: flex;
-	justify-content: space-between;
-	width: 100%;
-	padding-bottom: 1rem;
-	> * {
-		width: fit-content;
+.c-useroverlay {
+	&.edit,
+	&.new {
+		header {
+			display: grid;
+			grid-template-columns: auto 1fr auto;
+			align-items: center;
+			gap: 1rem;
+			button {
+				height: fit-content;
+				display: grid;
+				place-items: center;
+			}
+			h1 {
+				height: fit-content;
+				font-family: Rajdhani;
+				font-size: 1.25rem;
+				text-align: center;
+				font-weight: 900;
+			}
+		}
 	}
-}
 
-.c-setting + .c-setting {
-	border-top: 1px solid #ccc;
-	padding-top: 1rem;
+	&.edit {
+		main {
+			display: flex;
+			flex-direction: column;
+			gap: 1rem;
+			padding: 1rem;
+		}
+
+		.setting {
+			display: flex;
+			justify-content: space-between;
+			width: 100%;
+			> * {
+				width: fit-content;
+			}
+		}
+
+		.setting + .setting {
+			border-top: 1px solid #ccc;
+			padding-top: 1rem;
+		}
+	}
+	&.new {
+		display: flex;
+		flex-direction: column;
+		gap: 1rem;
+	}
+
+	.c-input {
+		--global-color-background: var(--global-color-card);
+	}
 }
