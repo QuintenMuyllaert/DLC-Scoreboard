@@ -7,6 +7,7 @@ import Template from "../components/Template";
 import Header from "../components/Header";
 import Appstate from "../utils/Appstate";
 import Backarrow from "../components/Backarrow";
+import Modal from "../components/Modal";
 
 import { scoreboardInterface } from "../utils/ScoreboardInterface";
 import { LooseObject } from "../../../Interfaces/Interfaces";
@@ -83,6 +84,7 @@ export default () => {
 				</div>
 			</div>
 			<BottomTab />
+			<Modal />
 		</>
 	);
 };

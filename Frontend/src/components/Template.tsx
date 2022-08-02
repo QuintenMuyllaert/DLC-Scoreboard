@@ -1,4 +1,7 @@
 import { useNavigate } from "react-router-dom";
+
+import Appstate from "../utils/Appstate";
+
 import { scoreboardInterface } from "../utils/ScoreboardInterface";
 
 export default ({ id, name, halfs, halfLength }: { id: string; name: string; halfs: number; halfLength: number }) => {
@@ -9,7 +12,19 @@ export default ({ id, name, halfs, halfLength }: { id: string; name: string; hal
 	};
 
 	const onClickDelete = () => {
-		scoreboardInterface.emit("template", { type: "delete", value: { _id: id } });
+		Appstate.updateState("modal", {
+			visible: true,
+			title: "Remove Template",
+			message: "Are you sure you want to remove this template?",
+			buttons: [
+				{
+					text: "Confirm",
+					onClick: async () => {
+						scoreboardInterface.emit("template", { type: "delete", value: { _id: id } });
+					},
+				},
+			],
+		});
 	};
 
 	return (
