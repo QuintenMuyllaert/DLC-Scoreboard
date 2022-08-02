@@ -20,11 +20,15 @@ export default () => {
 
 	const onClickSave = () => {
 		if (sponsorName === "") {
+			console.log("No name");
 			return;
 		}
-		if (sponsorLink === "") {
-			return;
-		} else if (sponsorUri !== "" && sponsorExtention !== "") {
+		if (sponsorLink === "" && sponsorUri !== "" && sponsorExtention !== "") {
+			console.log("No link but uri and extention");
+		} else if (sponsorLink) {
+			console.log("Has link");
+		} else {
+			console.log("No link no uri and no extention");
 			return;
 		}
 
