@@ -11,6 +11,7 @@ import ClockEdit from "../components/ClockEdit";
 import Overlay from "../components/Overlay";
 import Appstate from "../utils/Appstate";
 import Backarrow from "../components/Backarrow";
+import Modal from "../components/Modal";
 
 import { scoreboardInterface } from "../utils/ScoreboardInterface";
 
@@ -85,6 +86,7 @@ export default () => {
 			<Overlay visible={displayOverlayColorpickerU} setVisible={setDisplayOverlayColorpickerU}>
 				<Colorpicker team={2} setVisible={setDisplayOverlayColorpickerU} />
 			</Overlay>
+			<Modal />
 			<BottomTab />
 		</>
 	);
