@@ -3,14 +3,28 @@ import Api from "../utils/Api";
 import { scoreboardInterface } from "../utils/ScoreboardInterface";
 import { FunctionType } from "../../../Interfaces/Interfaces";
 
+import Appstate from "../utils/Appstate";
+
 export default ({ username, email, onClickEdit }: { username: string; email: string; onClickEdit: FunctionType }) => {
 	const serial = scoreboardInterface.getSerial();
 
 	const handleClickDeleteUser = async () => {
-		const res = await Api.permission({ type: "removeUser", value: "user", email, serial });
-		if (res) {
-			document.location.reload();
-		}
+		Appstate.updateState("modal", {
+			visible: true,
+			title: "Remove User",
+			message: "Are you sure you want to remove this user?",
+			buttons: [
+				{
+					text: "Confirm",
+					onClick: async () => {
+						const res = await Api.permission({ type: "removeUser", value: "user", email, serial });
+						if (res) {
+							document.location.reload();
+						}
+					},
+				},
+			],
+		});
 	};
 
 	return (

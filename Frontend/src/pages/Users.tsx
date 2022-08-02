@@ -9,6 +9,7 @@ import Backarrow from "../components/Backarrow";
 import Overlay from "../components/Overlay";
 import Switch from "../components/Switch";
 import Api from "../utils/Api";
+import Modal from "../components/Modal";
 
 import { scoreboardInterface } from "../utils/ScoreboardInterface";
 import { emailRegex, Permission, registerData, permissionList } from "../../../Interfaces/Interfaces";
@@ -235,6 +236,7 @@ export default () => {
 					/>
 				</div>
 			</Overlay>
+			<Modal />
 		</>
 	);
 };
