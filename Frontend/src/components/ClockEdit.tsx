@@ -35,7 +35,19 @@ export default ({ setVisible = () => {} }: { setVisible?: (event?: any) => any }
 	};
 
 	const onClickStopMatch = () => {
-		scoreboardInterface.stopMatch();
+		Appstate.updateState("modal", {
+			visible: true,
+			title: "Stop match",
+			message: "Are you sure you want to end the match?",
+			buttons: [
+				{
+					text: "End match",
+					onClick: async () => {
+						scoreboardInterface.stopMatch();
+					},
+				},
+			],
+		});
 	};
 
 	const onClickConfirm = () => {
