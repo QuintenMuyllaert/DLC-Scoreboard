@@ -6,6 +6,7 @@ import Sponsor from "../components/Sponsor";
 import Header from "../components/Header";
 import IconButton from "../components/IconButton";
 import Backarrow from "../components/Backarrow";
+import Modal from "../components/Modal";
 
 import { getQuery } from "../utils/Utils";
 import { scoreboardInterface } from "../utils/ScoreboardInterface";
@@ -27,12 +28,24 @@ export default () => {
 					<Sponsor
 						imgUrl={imgUrl}
 						onClick={() => {
-							scoreboardInterface.emit("sponsors", {
-								type: "delete",
-								value: {
-									folder,
-									file,
-								},
+							Appstate.updateState("modal", {
+								visible: true,
+								title: "Remove Sponsor",
+								message: "Are you sure you want to remove this sponsor?",
+								buttons: [
+									{
+										text: "Confirm",
+										onClick: async () => {
+											scoreboardInterface.emit("sponsors", {
+												type: "delete",
+												value: {
+													folder,
+													file,
+												},
+											});
+										},
+									},
+								],
 							});
 						}}
 					/>,
@@ -72,6 +85,7 @@ export default () => {
 					}></IconButton>
 			</div>
 			<BottomTab />
+			<Modal />
 		</>
 	);
 };

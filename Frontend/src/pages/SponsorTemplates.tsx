@@ -6,6 +6,7 @@ import IconButton from "../components/IconButton";
 import SponsorTemplate from "../components/sponsorTemplate";
 import Header from "../components/Header";
 import Backarrow from "../components/Backarrow";
+import Modal from "../components/Modal";
 
 import { scoreboardInterface } from "../utils/ScoreboardInterface";
 
@@ -18,11 +19,23 @@ export default () => {
 	};
 
 	const onClickDeleteReel = (folder: string) => {
-		scoreboardInterface.emit("sponsors", {
-			type: "delete",
-			value: {
-				folder,
-			},
+		Appstate.updateState("modal", {
+			visible: true,
+			title: "Remove Folder",
+			message: "Are you sure you want to remove this folder?",
+			buttons: [
+				{
+					text: "Confirm",
+					onClick: async () => {
+						scoreboardInterface.emit("sponsors", {
+							type: "delete",
+							value: {
+								folder,
+							},
+						});
+					},
+				},
+			],
 		});
 	};
 
@@ -60,6 +73,7 @@ export default () => {
 					}></IconButton>
 			</div>
 			<BottomTab />
+			<Modal />
 		</>
 	);
 };
