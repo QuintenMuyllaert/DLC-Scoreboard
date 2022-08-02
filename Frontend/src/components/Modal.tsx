@@ -23,7 +23,15 @@ export default () => {
 				<p>{modal.message}</p>
 				<div>
 					{[cancelButton, ...modal.buttons].map((button: any, index: any) => (
-						<IconButton color="white" label={button.text} key={index} onClick={button.onClick} />
+						<IconButton
+							color="white"
+							label={button.text}
+							key={index}
+							onClick={async () => {
+								await button.onClick();
+								updateModal();
+							}}
+						/>
 					))}
 				</div>
 			</div>
@@ -31,6 +39,6 @@ export default () => {
 	);
 };
 
-export const updateModal = (title: string, message: string, buttons: modalButton[]) => {
-	Appstate.updateState("modal", { title, message, buttons, visible: true });
+export const updateModal = (title: string = "", message: string = "", buttons: modalButton[] = [], visible: boolean = false) => {
+	Appstate.updateState("modal", { title, message, buttons, visible });
 };
