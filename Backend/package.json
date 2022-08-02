@@ -6,7 +6,7 @@
 	"scripts": {
 		"build": "npx tsc",
 		"start": "node dist/Backend/src/index.js",
-		"dev": "npm run build && concurrently \"npx tsc --watch\" \"nodemon -q dist/Backend/src/index.js\""
+		"dev": "npm run build && concurrently \"npx tsc --watch\" \"nodemon --ignore ./www/ -q dist/Backend/src/index.js\""
 	},
 	"keywords": [],
 	"author": "",
