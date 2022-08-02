@@ -5,7 +5,8 @@ import BottomTab from "../components/BottomTab";
 import IconButton from "../components/IconButton";
 import Input from "../components/Input";
 import Header from "../components/Header";
-import Backarrow from "../components/Backarrow";
+import Modal from "../components/Modal";
+import Appstate from "../utils/Appstate";
 
 export default () => {
 	const [originalUsername, setOriginalUsername] = useState("");
@@ -28,26 +29,50 @@ export default () => {
 	}, []);
 
 	const onClickSave = async () => {
-		if (newPassword !== newPasswordConfirm) {
-			setNewPassword("");
-			setNewPasswordConfirm("");
-			return;
-		}
+		Appstate.updateState("modal", {
+			visible: true,
+			title: "Change userdata",
+			message: "Are you sure you want to change your userdata?",
+			buttons: [
+				{
+					text: "Modify",
+					onClick: async () => {
+						if (newPassword !== newPasswordConfirm) {
+							setNewPassword("");
+							setNewPasswordConfirm("");
+							return;
+						}
 
-		const res = await Api.postUserdata({
-			newUsername: username,
-			newEmail: email,
-			newPassword,
-			password,
+						const res = await Api.postUserdata({
+							newUsername: username,
+							newEmail: email,
+							newPassword,
+							password,
+						});
+						if (res.status === 200) {
+							document.location.href = "/";
+						}
+					},
+				},
+			],
 		});
-		if (res.status === 200) {
-			document.location.href = "/";
-		}
 	};
 
 	const onClickLogout = () => {
-		localStorage.removeItem("serial");
-		document.location.href = "/logout";
+		Appstate.updateState("modal", {
+			visible: true,
+			title: "Logout",
+			message: "Are you sure you want to logout?",
+			buttons: [
+				{
+					text: "Logout",
+					onClick: async () => {
+						localStorage.removeItem("serial");
+						document.location.href = "/logout";
+					},
+				},
+			],
+		});
 	};
 
 	return (
@@ -55,21 +80,20 @@ export default () => {
 			<Header
 				title="Usersettings"
 				icon={
-					<button onClick={onClickLogout} style={{ padding: "0.5rem" }}>
-						<svg
-							xmlns="http://www.w3.org/2000/svg"
-							height="100%"
-							viewBox="0 0 24 24"
-							fill="none"
-							stroke="#ffffff"
-							strokeWidth="2"
-							strokeLinecap="round"
-							strokeLinejoin="round">
-							<path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
-							<polyline points="16 17 21 12 16 7"></polyline>
-							<line x1="21" y1="12" x2="9" y2="12"></line>
-						</svg>
-					</button>
+					<svg
+						onClick={onClickLogout}
+						xmlns="http://www.w3.org/2000/svg"
+						height="100%"
+						viewBox="0 0 24 24"
+						fill="none"
+						stroke="#ffffff"
+						strokeWidth="2"
+						strokeLinecap="round"
+						strokeLinejoin="round">
+						<path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+						<polyline points="16 17 21 12 16 7"></polyline>
+						<line x1="21" y1="12" x2="9" y2="12"></line>
+					</svg>
 				}
 			/>
 			<div className="p-page p-usersettings">
@@ -84,6 +108,7 @@ export default () => {
 				<IconButton label="OPSLAAN" color="white" onClick={onClickSave} />
 			</div>
 			<BottomTab />
+			<Modal />
 		</>
 	);
 };
