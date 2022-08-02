@@ -17,6 +17,7 @@ export default () => {
 	const [sponsorUri, setSponsorUri] = useState("");
 	const [sponsorLink, setSponsorLink] = useState("");
 	const [sponsorExtention, setSponsorExtention] = useState("");
+	const [disabled, setDisabled] = useState(false);
 
 	const onClickSave = () => {
 		if (sponsorName === "") {
@@ -50,12 +51,20 @@ export default () => {
 			<Header title="Add sponsor" icon={<Backarrow />} />
 			<div className="p-page p-addSponsor">
 				<div className="c-addSponsor__tekst">
-					<p>
-						Aanbevolen aspect ratio: <strong>16:9</strong>
-					</p>
-					<p>
-						Aanbevolen bestandstype: <strong>PNG</strong>
-					</p>
+					{sponsorUri ? (
+						<>
+							<img src={sponsorUri} alt={sponsorName} />
+						</>
+					) : (
+						<>
+							<p>
+								Aanbevolen aspect ratio: <strong>16:9</strong>
+							</p>
+							<p>
+								Aanbevolen bestandstype: <strong>PNG</strong>
+							</p>
+						</>
+					)}
 				</div>
 
 				<div className="p-addSponsor__form">
@@ -67,6 +76,7 @@ export default () => {
 						}}
 					/>
 					<Input
+						disabled={disabled}
 						label="Link"
 						type="text"
 						onChange={(event: React.FormEvent<HTMLInputElement>) => {
@@ -92,6 +102,8 @@ export default () => {
 							if (file) {
 								setSponsorExtention(file?.name?.split(".")?.pop() || "");
 								reader.readAsDataURL(file);
+								setSponsorLink("");
+								setDisabled(true);
 							}
 						}}
 					/>
