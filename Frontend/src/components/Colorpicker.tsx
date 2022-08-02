@@ -19,9 +19,22 @@ export default ({ team, setVisible = () => {} }: { team: 1 | 2; setVisible?: (ev
 
 	const onClickColor = (color: string, position: "B" | "O") => {
 		if (removing) {
-			//remove color from scoreboard.colors
-			const colors = scoreboard.colors.filter((c: string) => c != color);
-			scoreboardInterface.updateColorArray(colors);
+			Appstate.updateState("modal", {
+				visible: true,
+				title: "Remove Color",
+				message: "Are you sure you want to remove this color?",
+				buttons: [
+					{
+						text: "Confirm",
+						onClick: async () => {
+							//remove color from scoreboard.colors
+							const colors = scoreboard.colors.filter((c: string) => c != color);
+							scoreboardInterface.updateColorArray(colors);
+						},
+					},
+				],
+			});
+
 			return;
 		}
 
