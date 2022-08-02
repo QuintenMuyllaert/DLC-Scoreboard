@@ -112,6 +112,18 @@ export interface JWT {
   username: string;
 }
 
+export interface modalButton {
+  onClick: FunctionType;
+  text: string;
+}
+
+export interface modal {
+  title: string;
+  message: string;
+  buttons: modalButton[];
+  visible: boolean;
+}
+
 export interface sponsorFolder {
   name: string;
   children: string[];
@@ -125,6 +137,7 @@ export interface AppState {
   sponsors: sponsorFolder[];
   users: any[];
   jwt: JWT;
+  modal: modal;
 }
 
 export type AppStateKeys = keyof AppState;
@@ -196,6 +209,12 @@ export const defaultAppState: AppState = {
     serial: "",
     snowflake: "",
     username: "",
+  },
+  modal: {
+    title: "",
+    message: "",
+    buttons: [],
+    visible: false,
   },
 };
 
